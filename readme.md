@@ -16,3 +16,6 @@ University Resource Scheduler is a Web application which aims Universities with 
 * Do not try modify or change any middleware groups or middleware routes.
 * All ways comment on every functions [use block comments => /** */ ].
 * Use Meaningful variable names and do not try to create variables every where such as in views, All ways try to keep one object with all the data needed.
+
+
+After checking-out make sure you run ***composer update*** inside your project path
