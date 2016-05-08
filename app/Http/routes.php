@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/home', 'UserLevelController@index');
     
-    Route::get('/profile/{userID}', 'UserLevelController@profileView');
+    Route::get('/profile/', 'UserLevelController@profileView');
 });
 
 /**
