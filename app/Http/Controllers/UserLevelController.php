@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 
 class UserLevelController extends Controller
@@ -22,9 +22,13 @@ class UserLevelController extends Controller
         return view('home');
     }
     
-    public function profileView($userID)
+    /**
+    * This method returns all the currunt authenticatd user data to the 
+    * userprofile view
+    */
+    public function profileView()
     {
-        $user = User::find($userID);
+        $user = Auth::user();
         return view('users.UserProfile')->with('userData',$user);
     }
 }

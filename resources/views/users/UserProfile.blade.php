@@ -51,7 +51,7 @@
                       <div class="form-group">
                         <label for="inputName" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name" value="{{ $userData->name }}">
+                          <input type="name" class="form-control" id="inputName" placeholder="Name" value="{{ $userData->name }}">
                         </div>
                       </div>
                       <div class="form-group">
