@@ -15,7 +15,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-       
+       User Level
     </div>
 </div>
 @endsection

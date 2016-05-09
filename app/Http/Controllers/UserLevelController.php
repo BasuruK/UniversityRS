@@ -19,7 +19,18 @@ class UserLevelController extends Controller
     
     public function index()
     {
-        return view('home');
+        
+        /**
+        * If user is an admin : AdminHome will be returned else UserHome will be returned 
+        */
+        if(!Auth::user()->isAdmin())
+        {
+            return view('home');
+        }
+        else
+        {
+            return view('adminHome');
+        }
     }
     
     /**

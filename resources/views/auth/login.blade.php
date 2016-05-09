@@ -41,7 +41,7 @@
 
                             <div class="col-md-12">
                                <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-lock" aria-hidden="true"> </i></span>
                                 <input type="password" class="form-control" name="password">
                                </div>
                                 @if ($errors->has('password'))

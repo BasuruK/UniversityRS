@@ -68,7 +68,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>U</b>RS</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>UR</b>Scheduler</span>
+      <span class="logo-lg"><b>University</b>RS</span>
     </a>
 
     <!-- Header Navbar -->

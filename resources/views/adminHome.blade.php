@@ -16,7 +16,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <h3></h3>
+        Admin Level
     </div>
 </div>
 @endsection

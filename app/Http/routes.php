@@ -24,7 +24,7 @@ Route::get('/', function(){
 
 Route::group(['middleware' => 'auth'], function() {
 
-    Route::get('/home', 'UserLevelController@index');
+    Route::get('/', 'UserLevelController@index'); // This route will return 2 paths depending on the Admin status
     
     Route::get('/profile/', 'UserLevelController@profileView');
 });
@@ -51,7 +51,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => ['auth','admin']], function() {
     
-    Route::get('/', 'HomeController@AdminDashboard');
     
 });
 
