@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'staff_id', 'name', 'email', 'password',
     ];
 
     /**
@@ -32,5 +32,10 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return (bool) $this->admin;
+    }
+    
+    public function allowedUser()
+    {
+        $this->belongsTo('App\Allowed_User', 'foreign_key', 'staff_id');
     }
 }

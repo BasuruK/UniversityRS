@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('staff_id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
@@ -21,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('picture')->default("avatar5.png");
             $table->rememberToken();
             $table->timestamps();
+            
+            $table->foreign('staff_id')->references('staff_id')->on('allowed_users')->onDelete('cascade');
         });
     }
 
