@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAllowedUsersTabel extends Migration
+class CreateAllowedToRegisterUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class CreateAllowedUsersTabel extends Migration
      */
     public function up()
     {
-        Schema::create('allowedusers', function (Blueprint $table) {
+        Schema::create('allowed_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('staff_id')->unique();
             $table->string('position');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -28,6 +27,6 @@ class CreateAllowedUsersTabel extends Migration
      */
     public function down()
     {
-        Schema::drop('allowedusers');
+        Schema::drop('allowed_users');
     }
 }

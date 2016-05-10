@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Allowed_User extends Model
 {
-  protected $fillable = ['staff_id','position'];
+    protected $table = "allowed_users"; // explicit table name define, to be identified by Eloquent ORM
     
     public function user()
     {
-        $this->hasOne('App\User');
+        return $this->hasOne(User::class);
     }
 }
