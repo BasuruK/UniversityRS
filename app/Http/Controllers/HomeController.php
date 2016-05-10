@@ -29,10 +29,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
-  
-    public function AdminDashboard()
+    
+    public function UserManagement()
     {
-        return view('adminHome');
+        return view('administrator.userManagement');
     }
 
 }

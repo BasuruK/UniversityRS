@@ -51,6 +51,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => ['auth','admin']], function() {
     
+    /**
+    * User Management Routes
+    */
+    Route::get('/UserManagement','HomeController@UserManagement');
+    
+    Route::post('/UserManagement/add', 'UserManagementController@AddUser');
+    //User Management Routes End
     
 });
 

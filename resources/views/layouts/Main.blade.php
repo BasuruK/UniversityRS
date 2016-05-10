@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
-  
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 2.2.0 -->
@@ -265,7 +264,7 @@ desired effect
         <li class="treeview">
           <a href="#"><i class="fa fa-tachometer"></i> <span>Management</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-            <li><a href="#">User Management</a></li>
+            <li><a href="/UserManagement">User Management</a></li>
             <li><a href="#">Requests Management</a></li>
             <li><a href="#">Data Management</a></li>
           </ul>
