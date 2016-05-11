@@ -60,19 +60,26 @@
     </form>
 
   </div>
-</div>
 
-<!--Data Table-->
+
+</div>
 
 <script>
 /**
-* Initialise DataTable
+* Initialise DataTable for Allowed Users
+*/
+$(document).ready(function() {
+    $('#dataTableAllowedUsers').DataTable();
+} );
+
+/**
+* Initialise DataTable for Registered Users
 */
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
 </script>
-
+<!--Data Table-->
 <div class="col-md-8">
     <div class="box">
         <div class="box-header">
@@ -90,11 +97,11 @@ $(document).ready(function() {
                       <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                         <thead>
                             <tr role="row">
-                                <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 111px;" aria-sort="ascending">Staff ID</th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 140px;">Prefix</th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 122px;">Name</th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 93px;">Email</th>
-                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 65px;">Edit/ Delete</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Staff ID</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Prefix</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Name</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Email</th>
+                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,7 +111,10 @@ $(document).ready(function() {
                               <td>{{ $RegUser->allowedUser->position }}</td>
                               <td>{{ $RegUser->name }}</td>
                               <td>{{ $RegUser->email }}</td>
-                              <td></td>
+                              <td>
+                                  <a href="#" class="btn btn-info">Edit</a>
+                                  <a href="#" class="btn btn-danger pull-right">Delete</a>
+                              </td>
                             </tr>
                             @endforeach
                           </tbody>
@@ -121,10 +131,8 @@ $(document).ready(function() {
               </div>
             </div>
         </div>
-            <!-- /.box-body -->
-            
+            <!-- /.box-body -->     
     </div> <!--/.box-->
-    
 </div>
 <!--/.Data Table-->
 @endsection

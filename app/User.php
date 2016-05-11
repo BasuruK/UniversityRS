@@ -36,6 +36,6 @@ class User extends Authenticatable
     
     public function allowedUser()
     {
-        return $this->belongsTo(Allowed_User::class, 'foreign_key', 'staff_id');
+        return $this->belongsTo(Allowed_User::class,'staff_id','staff_id');
     }
 }

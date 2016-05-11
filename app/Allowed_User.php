@@ -11,6 +11,6 @@ class Allowed_User extends Model
     
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'staff_id', 'staff_id');
     }
 }

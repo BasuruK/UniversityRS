@@ -18,8 +18,7 @@ class UserManagementController extends Controller
     
     public function UserManagement()
     {
-        $RegisteredUser = User::with('allowedUser')->find(1);
-        return $RegisteredUser;
+        $RegisteredUser = User::with('allowedUser')->get();
         return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser);
     }
     /**
