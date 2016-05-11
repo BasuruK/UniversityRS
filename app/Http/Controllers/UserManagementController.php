@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Allowed_User;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,12 +16,20 @@ class UserManagementController extends Controller
         $this->middleware('admin');
     }
     
+    public function UserManagement()
+    {
+        $RegisteredUser = User::with('allowedUser')->find(1);
+        return $RegisteredUser;
+        return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser);
+    }
     /**
     * Add a new Allowed_User to the Database
     */
     public function AddUser(Request $request)
     {
-       
+       /**
+       * Validation for the User Add form
+       */
         $this->validate($request,[
             'staff_id'  => 'required|unique:allowed_users',
             'position'  => 'required'  

@@ -29,10 +29,6 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    
-    public function UserManagement()
-    {
-        return view('administrator.userManagement');
-    }
+
 
 }

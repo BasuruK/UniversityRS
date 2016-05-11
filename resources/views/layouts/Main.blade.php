@@ -14,6 +14,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+  <!--DataTables-->
+    <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+    
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 2.2.0 -->
@@ -21,7 +24,10 @@
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <!-- AdminLTE App -->
-  <script src="{{ asset('js/app.min.js') }}"></script>
+  <script src="{{ asset('js/app.min.js') }}"></script> 
+  <!--DataTables Jquery Plugin-->
+  <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
   
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
