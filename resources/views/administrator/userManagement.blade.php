@@ -112,8 +112,27 @@ $(document).ready(function() {
                               <td>{{ $RegUser->name }}</td>
                               <td>{{ $RegUser->email }}</td>
                               <td>
-                                  <a href="#" class="btn btn-info">Edit</a>
-                                  <a href="#" class="btn btn-danger pull-right">Delete</a>
+
+                                  <form method="POST" action="/user/{{$RegUser->id}}">
+                                      {{ method_field('DELETE') }}
+                                      {{ csrf_field() }}
+                                      <a href="#" class="btn btn-info">Edit</a>
+                                      <input type="submit" class="btn btn-danger pull-right" value="Delete" onclick="isDelete()">
+                                      <script>
+                                          function isDelete()
+                                          {
+                                              $.confirm({
+                                                  title: 'Confirm!',
+                                                  content: 'Simple confirm!',
+                                                  confirm: function(){
+                                                      return true;
+                                                  }
+                                              });
+                                              return false;
+
+                                          }
+                                      </script>
+                                  </form>
                               </td>
                             </tr>
                             @endforeach

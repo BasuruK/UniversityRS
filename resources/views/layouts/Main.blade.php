@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
   <!--DataTables-->
     <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
-    
+  <!--JqueryConfirm-->
+  <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 2.2.0 -->
@@ -28,6 +29,10 @@
   <!--DataTables Jquery Plugin-->
   <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <!--JqueryConfirm-->
+  <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+
+
   
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
@@ -38,8 +43,8 @@
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+  <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
   <![endif]-->
 </head>
 <!--

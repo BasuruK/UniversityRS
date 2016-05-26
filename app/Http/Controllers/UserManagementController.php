@@ -15,15 +15,24 @@ class UserManagementController extends Controller
         $this->middleware('auth');
         $this->middleware('admin');
     }
-    
+
+    /**
+     * @return $this
+     *
+     * Returns the view user management compacted with user object
+     */
     public function UserManagement()
     {
         $RegisteredUser = User::with('allowedUser')->get();
         return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser);
     }
+
     /**
-    * Add a new Allowed_User to the Database
-    */
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * Adds a User database record to the database
+     */
     public function AddUser(Request $request)
     {
        /**
@@ -39,6 +48,19 @@ class UserManagementController extends Controller
         $user->position = $request['position'];
         $user->save();
         
+        return back();
+    }
+
+    /**
+     * @param User $staff_id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     *
+     * Deletes the user
+     */
+    public function DeleteUser(User $staff_id)
+    {
+        $staff_id->delete();
         return back();
     }
 }
