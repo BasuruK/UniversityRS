@@ -27,6 +27,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'UserLevelController@index'); // This route will return 2 paths depending on the Admin status
     
     Route::get('/profile/', 'UserLevelController@profileView');
+    
+    Route::get('/subject/', 'subjectController@show');
+    
+    Route::get('/subject/new', 'subjectController@add');
+    
+    Route::get('/subject/Add_Subject', 'subjectController@add');
 });
 
 /**
