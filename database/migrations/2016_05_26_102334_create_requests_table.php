@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestTable extends Migration
+class CreateRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,18 @@ class CreateRequestTable extends Migration
      */
     public function up()
     {
-        Schema::create('request', function (Blueprint $table) {
+        Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('lecturerID');
             $table->string('year');
             $table->string('batchNo');
             $table->string('subjectCode');
             $table->string('timeSlot');
-            $table->string('resourceID');
-            $table->timestamps();
+            $table->integer('resourceID')->unsigned();
 
             $table->foreign('batchNo')->references('batchNo')->on('batch')->onDelete('cascade');
             $table->foreign('subjectCode')->references('subCode')->on('subject')->onDelete('cascade');
             $table->foreign('resourceID')->references('id')->on('resource')->onDelete('cascade');
-
         });
     }
 
@@ -36,6 +34,6 @@ class CreateRequestTable extends Migration
      */
     public function down()
     {
-        Schema::drop('request');
+        Schema::drop('requests');
     }
 }
