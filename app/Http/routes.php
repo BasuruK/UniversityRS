@@ -59,6 +59,10 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::post('/UserManagement/add', 'UserManagementController@AddUser');
 
     Route::get('user/{staff_id}/delete', 'UserManagementController@DeleteUser');
+
+    Route::get('user/{staff_id}/edit', 'UserManagementController@EditPageRedirect');
+
+    Route::patch('user/{staff_id}/edit', 'UserManagementController@EditUserUpdate');
     //User Management Routes End
     
 });

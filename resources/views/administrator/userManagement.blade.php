@@ -11,8 +11,8 @@
 @endsection
 
 @section('content')
-<!--Box 1-->
 
+<!--Box 1-->
 <div class="col-md-4">
   <!-- Horizontal Form -->
   <div class="box box-info">
@@ -91,9 +91,9 @@ function isDelete(id)
     var ID = id;
     $.confirm({
         theme: 'black',
-        title: 'Are Your Sure ?!',
+        title: 'Are Your Sure ?',
         icon: 'fa fa-warning',
-        content: 'Are you sure you want to delete this entry ?',
+        content: 'You will not be able to recover this information again if you delete this entry !',
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
         confirm: function(){
@@ -102,6 +102,24 @@ function isDelete(id)
     });
     return false;
 }
+
+function isEdit(id)
+{
+    var ID = id;
+    $.confirm({
+        theme: 'black',
+        title: 'Are Your Sure ?',
+        icon: 'fa fa-warning',
+        content: 'Are you sure you want to edit this entry ?',
+        confirmButton: 'Yes',
+        confirmButtonClass: 'btn-success',
+        confirm: function(){
+            location.href = "user/"+ID+"/edit";
+        }
+    });
+    return false;
+}
+
 </script>
 <!--Data Table-->
 <div class="col-md-8">
@@ -136,8 +154,8 @@ function isDelete(id)
                                   <td>{{ $RegUser->name }}</td>
                                   <td>{{ $RegUser->email }}</td>
                                   <td>
-                                      <a href="#" class="btn btn-info">Edit</a>
-                                      <a href="#" class="btn btn-danger pull-right" onclick=" return isDelete({{ $RegUser->id }})">Delete</a>
+                                      <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
+                                      <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
                                   </td>
                             </tr>
                             @endforeach
