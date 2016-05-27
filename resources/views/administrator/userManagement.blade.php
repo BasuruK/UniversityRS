@@ -41,7 +41,7 @@
           <label for="inputPosition" class="col-sm-2 control-label">Position</label>
 
           <div class="col-sm-10">
-            <input type="text" name="position" class="form-control" id="inputPosition" placeholder="Position Eg: Dr, Lecturere" value="{{ old('position') }}" required>
+            <input type="text" name="position" class="form-control" id="inputPosition" placeholder="Position Eg: Dr, Lecturer" value="{{ old('position') }}" required>
             @if ($errors->has('staff_id'))
             <span class="help-block">
                 <strong>{{ $errors->first('position') }}</strong>
@@ -78,6 +78,30 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
+
+/**
+ *
+ * @param id
+ * @returns {boolean}
+ *
+ * User confirmation message asking the user to confirm his decision
+ */
+function isDelete(id)
+{
+    var ID = id;
+    $.confirm({
+        theme: 'black',
+        title: 'Are Your Sure ?!',
+        icon: 'fa fa-warning',
+        content: 'Are you sure you want to delete this entry ?',
+        confirmButton: 'Yes',
+        confirmButtonClass: 'btn-danger',
+        confirm: function(){
+            location.href = "user/"+ID+"/delete";
+        }
+    });
+    return false;
+}
 </script>
 <!--Data Table-->
 <div class="col-md-8">
@@ -107,33 +131,14 @@ $(document).ready(function() {
                         <tbody>
                             @foreach($RegisteredUser as $RegUser)
                             <tr role="row" class="odd">
-                              <td class="sorting_1">{{ $RegUser->staff_id }}</td>
-                              <td>{{ $RegUser->allowedUser->position }}</td>
-                              <td>{{ $RegUser->name }}</td>
-                              <td>{{ $RegUser->email }}</td>
-                              <td>
-
-                                  <form method="POST" action="/user/{{$RegUser->id}}">
-                                      {{ method_field('DELETE') }}
-                                      {{ csrf_field() }}
+                                  <td class="sorting_1">{{ $RegUser->staff_id }}</td>
+                                  <td>{{ $RegUser->allowedUser->position }}</td>
+                                  <td>{{ $RegUser->name }}</td>
+                                  <td>{{ $RegUser->email }}</td>
+                                  <td>
                                       <a href="#" class="btn btn-info">Edit</a>
-                                      <input type="submit" class="btn btn-danger pull-right" value="Delete" onclick="isDelete()">
-                                      <script>
-                                          function isDelete()
-                                          {
-                                              $.confirm({
-                                                  title: 'Confirm!',
-                                                  content: 'Simple confirm!',
-                                                  confirm: function(){
-                                                      return true;
-                                                  }
-                                              });
-                                              return false;
-
-                                          }
-                                      </script>
-                                  </form>
-                              </td>
+                                      <a href="#" class="btn btn-danger pull-right" onclick=" return isDelete({{ $RegUser->id }})">Delete</a>
+                                  </td>
                             </tr>
                             @endforeach
                           </tbody>
