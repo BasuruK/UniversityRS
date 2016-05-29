@@ -26,8 +26,10 @@ class UserManagementController extends Controller
     public function UserManagement()
     {
         $RegisteredUser = User::with('allowedUser.priority')->get();
-           $PriorityCategories = DB::table('priority')->get();
-        return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser)->with('PriorityCat',$PriorityCategories);
+        $PriorityCategories = DB::table('priority')->get();
+        $AuthorizedUser = Allowed_User::with('priority')->get();
+
+        return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser)->with('PriorityCat',$PriorityCategories)->with('AuthorizedUser',$AuthorizedUser);
     }
 
     /**

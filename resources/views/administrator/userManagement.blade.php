@@ -48,7 +48,6 @@
         <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
           <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
             <div class="col-sm-10">
-
                 <select name="inputPosition" id="inputPosition" class="js-example-responsive form-control" style="width: 100%" required>
                     <option value="">Please Select</option>
                     @foreach($PriorityCat as $cat)
@@ -134,23 +133,25 @@ function isEdit(id)
 }
 
 </script>
+
+
 <!--Data Table-->
 <div class="col-md-8">
     <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Registered Users</h3>
+            <h3 class="box-title">Registered Users</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <div id="dataTableRegUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-              <div class="row">
-                  <div class="col-sm-6"></div>
-                  <div class="col-sm-6"></div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-12">
-                      <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
-                        <thead>
+            <div id="dataTableRegUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
+                            <thead>
                             <tr role="row">
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Staff ID</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Prefix</th>
@@ -158,36 +159,101 @@ function isEdit(id)
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Email</th>
                                 <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach($RegisteredUser as $RegUser)
-                            <tr role="row" class="odd">
-                                  <td class="sorting_1">{{ $RegUser->staff_id }}</td>
-                                  <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
-                                  <td>{{ $RegUser->name }}</td>
-                                  <td>{{ $RegUser->email }}</td>
-                                  <td>
-                                      <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
-                                      <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
-                                  </td>
-                            </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">{{ $RegUser->staff_id }}</td>
+                                    <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
+                                    <td>{{ $RegUser->name }}</td>
+                                    <td>{{ $RegUser->email }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
+                                        <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
+                                    </td>
+                                </tr>
                             @endforeach
-                          </tbody>
+                            </tbody>
                         </table>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-5">
-                      <div class="dataTables_info" id="dataTableRegUsers_info" role="status" aria-live="polite"></div>
-                  </div>
-                  <div class="col-sm-7">
-                      <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
-                  </div>
-              </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="dataTableRegUsers_info" role="status" aria-live="polite"></div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
+                    </div>
+                </div>
             </div>
         </div>
-            <!-- /.box-body -->     
+        <!-- /.box-body -->
     </div> <!--/.box-->
 </div>
 <!--/.Data Table-->
+
+
+
+<div class="row">
+    <!--Data Table-->
+    <div class="col-md-4" style="top:-80px;">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Authorized Users</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="dataTableAllowedUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="row">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="dataTableAllowedUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableAllowedUsers_info" >
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTableAllowedUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Staff ID</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTableAllowedUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Priority</th>
+                                    <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($AuthorizedUser as $AuthAllowedUser)
+                                        <tr role="row" class="odd">
+                                            <td>
+                                                {{  $AuthAllowedUser->staff_id }}
+                                            </td>
+                                            <td>
+                                                {{ $AuthAllowedUser->priority->priorityName }}
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-info" onclick ="">Edit</a>
+                                                <a href="#" class="btn btn-danger pull-right" onclick="">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="dataTableAllowedUsers_info" role="status" aria-live="polite"></div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="dataTableAllowedUsers_paginate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div> <!--/.box-->
+    </div>
+    <!--/.Data Table-->
+</div>
+
+
+
+
 @endsection
