@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -64,11 +65,24 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        if(($AdminState = DB::table('allowed_users')
+            ->join('priority', 'allowed_users.position', '=', 'priority.id')
+            ->where('allowed_users.staff_id',$data['staff_id'])
+            ->value('priority.priorityName')) == "Administrator")
+        {
+            $AdminState = 1;
+        }
+        else
+        {
+            $AdminState = 0;
+        }
+
         return User::create([
             'staff_id' => $data['staff_id'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'admin' => $AdminState,
         ]);
     }
 }

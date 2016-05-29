@@ -22,32 +22,45 @@
     <!-- /.box-header -->
     <!-- form start -->
     <form class="form-horizontal" method="POST" action="/UserManagement/add" role="form">
-     
-      <div class="box-body">  
-        <div class="form-group{{ $errors->has('staff_id') ? ' has-error' : '' }}">
-          <label for="inputStaff_id" class="col-sm-2 control-label">StaffID</label>
 
-          <div class="col-sm-10">
-            <input type="text" name="staff_id" class="form-control" id="inputStaff_id" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ old('staff_id') }}" required> 
-            @if ($errors->has('staff_id'))
-            <span class="help-block">
-                <strong>{{ $errors->first('staff_id') }}</strong>
-            </span>
-            @endif
-          </div>
+        <div class="box-body">
+            <div class="form-group{{ $errors->has('staff_id') ? ' has-error' : '' }}">
+                <label for="inputStaff_id" class="col-sm-2 control-label">StaffID</label>
+                <div class="col-sm-10">
+                    <input type="text" name="staff_id" class="form-control" id="inputStaff_id" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ old('staff_id') }}" required>
+                    @if ($errors->has('staff_id'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('staff_id') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
 
-        </div>
+            <!-- Select2 Initializer -->
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $(".js-example-responsive").select2({
+                        theme: 'default'
+                    });
+                });
+            </script>
+
         <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
-          <label for="inputPosition" class="col-sm-2 control-label">Position</label>
+          <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
+            <div class="col-sm-10">
 
-          <div class="col-sm-10">
-            <input type="text" name="position" class="form-control" id="inputPosition" placeholder="Position Eg: Dr, Lecturer" value="{{ old('position') }}" required>
-            @if ($errors->has('staff_id'))
-            <span class="help-block">
+                <select name="inputPosition" id="inputPosition" class="js-example-responsive form-control" style="width: 100%" required>
+                    <option value="">Please Select</option>
+                    @foreach($PriorityCat as $cat)
+                        <option value="{{ $cat->id }}">{{ $cat->priorityName }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('position'))
+                    <span class="help-block">
                 <strong>{{ $errors->first('position') }}</strong>
             </span>
-            @endif
-          </div>
+                @endif
+            </div>
 
         </div>
       </div>
@@ -150,7 +163,7 @@ function isEdit(id)
                             @foreach($RegisteredUser as $RegUser)
                             <tr role="row" class="odd">
                                   <td class="sorting_1">{{ $RegUser->staff_id }}</td>
-                                  <td>{{ $RegUser->allowedUser->position }}</td>
+                                  <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
                                   <td>{{ $RegUser->name }}</td>
                                   <td>{{ $RegUser->email }}</td>
                                   <td>

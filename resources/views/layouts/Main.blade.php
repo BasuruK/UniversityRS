@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>University Resource Sheduler</title>
+  <title>University Resource Scheduler </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
   <!--JqueryConfirm-->
   <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 2.2.0 -->
@@ -31,6 +33,8 @@
   <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
   <!--JqueryConfirm-->
   <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+  <!-- Select2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 
   

@@ -30,7 +30,7 @@
                         <label for="inputStaff_id" class="col-sm-2 control-label">StaffID</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="staff_id" class="form-control" id="inputName" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ $userData->staff_id }}" required disabled>
+                            <input type="text" name="staff_id" class="form-control" id="inputName" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ $userData->staff_id }}" required>
                             @if ($errors->has('staff_id'))
                                 <span class="help-block">
                 <strong>{{ $errors->first('staff_id') }}</strong>
@@ -65,23 +65,36 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
-                        <label for="inputPosition" class="col-sm-2 control-label">Position</label>
+                    <!-- Select2 Initializer -->
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $(".select2DropDown").select2()
+                        });
+                    </script>
 
+                    <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
+                        <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
                         <div class="col-sm-10">
-                            <input type="text" name="position" class="form-control" id="inputPosition" placeholder="Position Eg: Dr, Lecturer" value="{{ old('position') }}" required>
-                            @if ($errors->has('staff_id'))
+
+                            <select name="inputPosition" id="inputPosition" class="select2DropDown form-control" style="width: 100%" required>
+                                @foreach($PriorityCat as $cat)
+                                    <option value="{{ $cat->id }}"@if($PriorityLevel=== $cat->id) selected @endif>{{ $cat->priorityName }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('position'))
                                 <span class="help-block">
-                <strong>{{ $errors->first('position') }}</strong>
+                                     <strong>{{ $errors->first('position') }}</strong>
                                 </span>
                             @endif
                         </div>
+
                     </div>
 
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" class="btn btn-info pull-right">Update User</button>
+                    <a href="/UserManagement" class="btn btn-facebook">Back</a>
                 </div>
                 <!-- /.box-footer -->
                 {{ method_field('PATCH') }}

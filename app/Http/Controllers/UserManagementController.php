@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Allowed_User;
 use App\User;
 use Illuminate\Http\Request;
+use DB;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 
 class UserManagementController extends Controller
 {
@@ -23,8 +25,9 @@ class UserManagementController extends Controller
      */
     public function UserManagement()
     {
-        $RegisteredUser = User::with('allowedUser')->get();
-        return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser);
+        $RegisteredUser = User::with('allowedUser.priority')->get();
+           $PriorityCategories = DB::table('priority')->get();
+        return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser)->with('PriorityCat',$PriorityCategories);
     }
 
     /**
@@ -40,12 +43,12 @@ class UserManagementController extends Controller
        */
         $this->validate($request,[
             'staff_id'  => 'required|unique:allowed_users',
-            'position'  => 'required'  
+            'inputPosition'  => 'required'
         ]);
         
         $user           = new Allowed_User();
         $user->staff_id = $request['staff_id'];
-        $user->position = $request['position'];
+        $user->position = $request['inputPosition'];
         $user->save();
         
         return back();
@@ -64,16 +67,24 @@ class UserManagementController extends Controller
         return back();
     }
 
+
     /**
      * @param User $staff_id
+     * @return mixed
      *
-     * redirects the user to edit page
-     * @return UserManagementEdit view
+     * redirects the user to User Edit Page
      */
     public function EditPageRedirect(User $staff_id)
     {
         $userFromStaffId = $staff_id;
-        return view('administrator.UserManagementEdit')->with('userData', $userFromStaffId);
+        $PriorityCat = $PriorityCategories = DB::table('priority')->get();
+        
+        $PriorityLevel = DB::table('allowed_users')
+            ->join('priority','priority.id', '=', 'allowed_users.position')
+            ->where('allowed_users.staff_id',$staff_id->staff_id)
+            ->value('priority.id');
+
+        return view('administrator.UserManagementEdit')->with('userData', $userFromStaffId)->with('PriorityCat',$PriorityCat)->with('PriorityLevel',$PriorityLevel);
     }
 
     /**
@@ -92,15 +103,24 @@ class UserManagementController extends Controller
         $this->validate($request,[
             'staff_id'  => 'required|exists:allowed_users',
             'name'  => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'inputPosition' => 'required'
         ]);
 
+        /**
+         * Update the user table and also allowed_users table
+         */
         $staff_id->update([
             'name' => $request['name'],
             'staff_id' => $request['staff_id'],
             'email' => $request['email']
         ]);
 
-        return back();
+        DB::table('allowed_users')
+            ->where('staff_id',$request['staff_id'])
+            ->update(['position' => $request['inputPosition']]);
+
+
+       return redirect()->action('UserManagementController@UserManagement');
     }
 }

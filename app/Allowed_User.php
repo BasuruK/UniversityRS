@@ -13,4 +13,8 @@ class Allowed_User extends Model
     {
         return $this->hasOne(User::class, 'staff_id', 'staff_id');
     }
+    public function priority()
+    {
+        return $this->hasOne(Priority::class,'id','position');
+    }
 }
