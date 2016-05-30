@@ -28,11 +28,6 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/profile/', 'UserLevelController@profileView');
     
-    Route::get('/subject/', 'subjectController@show');
-    
-    Route::get('/subject/new', 'subjectController@add');
-    
-    Route::get('/subject/Add_Subject', 'subjectController@add');
 });
 
 /**
@@ -64,6 +59,22 @@ Route::group(['middleware' => ['auth','admin']], function() {
     
     Route::post('/UserManagement/add', 'UserManagementController@AddUser');
     //User Management Routes End
+    
+    /*Subject Management*/
+    
+    Route::get('/subject', 'subjectController@show')->Name('Subjectmain');
+    
+    Route::get('/subject/new', 'subjectController@add');
+    
+    Route::post('/subject/Add_Subject', 'subjectController@addSubjects');
+    
+    Route::get('/subject/edit/{subject}', 'subjectController@edit');
+    
+    Route::patch('/subject/Edit_Subject/{subject}', 'subjectController@editSubjects');
+    
+    Route::get('/subject/delete/{subject}', 'subjectController@delete');
+    
+    /*Subject Management ends*/
     
 });
 

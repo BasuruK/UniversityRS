@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('adminHome')
 
 @section('content')
 
@@ -9,35 +9,38 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="POST" action="/subject/Add_Subject">
-                {{ csrf_field() }}
+               
               <div class="box-body">
                   
                 <div class="form-group">
                   <label for="subjectCode">Subject Code</label>
-                  <input type="text" class="form-control" id="subjectCode" placeholder="Enter Subject Code...">
+                  <input type="text" class="form-control" id="subjectCode" name="subjectCode" placeholder="Enter Subject Code..."/>
                 </div>
                   
                   <div class="form-group">
                   <label for="subjectName">Subject Name</label>
-                  <input type="text" class="form-control" id="subjectName" placeholder="Enter Subject Name...">
+                  <input type="text" class="form-control" id="subjectName" name="subjectName" placeholder="Enter Subject Name..."/>
                   </div>
                   
                   <div class="form-group">
                   <label for="semester">Semester</label>
-                  <input type="text" class="form-control" id="semester" placeholder="Enter Semester...">
+                  <input type="text" class="form-control" id="semester" name="semester" placeholder="Enter Semester..."/>
                     </div>
                   
                   <div class="form-group">
                   <label for="year">Year</label>
-                  <input type="text" class="form-control" id="year" placeholder="Enter Year...">
+                  <input type="text" class="form-control" id="year" name="year" placeholder="Enter Year..."/>
                       
                   </div>
+                  <div class="form-group">
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+              </div>
               </div>
               <!-- /.box-body -->
 
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Add</button>
-              </div>
+              {!! csrf_field() !!} 
             </form>
           </div>
 
