@@ -109,13 +109,23 @@ class UserManagementController extends Controller
             'inputPosition' => 'required'
         ]);
 
+        $adminStatus = 1;
+
+        /**
+         * if an Administrator revoke admin privileges then change the admin status to 0 in users table 
+         */
+        if($request['inputPosition'] != 1)
+        {
+            $adminStatus = 0;
+        }
         /**
          * Update the user table and also allowed_users table
          */
         $staff_id->update([
             'name' => $request['name'],
             'staff_id' => $request['staff_id'],
-            'email' => $request['email']
+            'email' => $request['email'],
+            'admin' => $adminStatus
         ]);
 
         DB::table('allowed_users')
