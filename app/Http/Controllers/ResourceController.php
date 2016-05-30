@@ -10,7 +10,8 @@ use Redirect;
 
 class ResourceController extends Controller
 {
-  
+
+ 
     public function Index()
     {
         $resources = DB::table('resource')->get();
