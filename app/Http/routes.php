@@ -116,7 +116,26 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/batch/update/{batch}', 'BatchController@update');
     
     Route::get('/batch/delete/{batch}', 'BatchController@delete');
-    
+
     //Batch Management Routes End
+
+    /**
+     * Subject Management
+     */
+    
+    Route::get('/subject', 'subjectController@show')->Name('Subjectmain');
+    
+    Route::get('/subject/new', 'subjectController@add');
+    
+    Route::post('/subject/Add_Subject', 'subjectController@addSubjects');
+    
+    Route::get('/subject/edit/{subject}', 'subjectController@edit');
+    
+    Route::patch('/subject/Edit_Subject/{subject}', 'subjectController@editSubjects');
+    
+    Route::get('/subject/delete/{subject}', 'subjectController@delete');
+    
+    //Subject Management End
+
 });
 
