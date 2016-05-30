@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     /**
      * Resource Management Routes
      */
-    Route::get('/resource/new', 'ResourceController@AddResourceForm');
+   
 
     Route::get('/resource/show', 'ResourceController@Index');
 
