@@ -31,8 +31,9 @@
                 
                 <div class="box-footer">
                     <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                        <a href="/batch" class="btn btn-primary">Cancel</a>
+                    </div>
                   </div>
                   </div>
               <!-- /.box-body -->

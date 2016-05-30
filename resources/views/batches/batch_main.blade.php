@@ -13,32 +13,6 @@
 @endsection
 
 @section('content')
-<!--
-<div class="container-fulid">
-    <div class="container">
-    <div class="row">
-        <a href='/batch/new' id="btnAdd" class="btn btn-primary">Add Batch</a>
-        <table class="table table-bordered">
-            <th></th>
-            <tr>
-                <th>Batch No.</th>
-                <th>Year</th>
-                <th>No. of Students</th>     
-            </tr>
-            @foreach($batches as $batch)
-                <tr>
-                    <td>{{$batch->batchNo}}</td>
-                    <td>{{$batch->year}}</td>
-                    <td>{{$batch->noOfStudents}}</td>
-                    <td><a href="/batch/{{$batch->id}}" id="btnEdit" class="btn btn-primary">Edit</a></td>
-                    <td><a href="/batch/delete/{{$batch->id}}" id="btnDelete" class="btn btn-danger">Delete</a></td>
-                </tr>
-            @endforeach
-
-        </table>
-    </div>
-        </div>
-</div> -->
 
 <script>
 /**
@@ -63,6 +37,7 @@ $(document).ready(function() {
     <div class="box">
         <div class="box-header">
           <h3 class="box-title">Batches</h3>
+            <a href='/batch/new' id="btnAdd" class="btn btn-primary pull-right">Add Batch</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
