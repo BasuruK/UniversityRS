@@ -194,9 +194,8 @@ function isEdit(id)
 
 
 
-<div class="row">
     <!--Data Table-->
-    <div class="col-md-4" style="top:-80px;">
+    <div class="col-md-4" style="top: -40%;">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Authorized Users</h3>
@@ -251,7 +250,6 @@ function isEdit(id)
         </div> <!--/.box-->
     </div>
     <!--/.Data Table-->
-</div>
 
 
 

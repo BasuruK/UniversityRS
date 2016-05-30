@@ -15,10 +15,10 @@ class CreateAllowedToRegisterUsersTable extends Migration
         Schema::create('allowed_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('staff_id')->unique()->index();
-            $table->integer('position');
+            $table->integer('position')->unsigned();
             $table->timestamps();
 
-            $table->foreign('position')->references('id')->on('priority')->onDelete('cascade');
+
         });
     }
 
