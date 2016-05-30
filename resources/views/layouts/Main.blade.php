@@ -18,18 +18,14 @@
     <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
   <!--JqueryConfirm-->
   <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
-
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
-
-  <!-- Include Required Prerequisites for date range picker -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+  <!-- Date Range Picker -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
   <!-- REQUIRED JS SCRIPTS -->
 
-  <!-- Include Date Range Picker Do not move these imports  -->
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <!--Date Range Picker  -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <!-- jQuery 2.2.0 -->
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
