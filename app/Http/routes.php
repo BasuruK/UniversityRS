@@ -101,5 +101,22 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     // Resource Management Routes End
     
+    /**
+    * Batch Management Routes
+    */
+    
+    Route::get('/batch', 'BatchController@show')->name('batchShow');;
+    
+    Route::get('/batch/new', 'BatchController@add');
+    
+    Route::post('/batch/batch_add', 'BatchController@addBatch');
+    
+    Route::get('/batch/{batch}','BatchController@edit');
+    
+    Route::patch('/batch/update/{batch}', 'BatchController@update');
+    
+    Route::get('/batch/delete/{batch}', 'BatchController@delete');
+    
+    //Batch Management Routes End
 });
 
