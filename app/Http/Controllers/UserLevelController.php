@@ -43,4 +43,9 @@ class UserLevelController extends Controller
         $user = Auth::user();
         return view('users.UserProfile')->with('userData',$user);
     }
+    
+    public function requestFormView()
+    {
+        return view('userRequests.requestForm');
+    }
 }

@@ -21,6 +21,8 @@ class CreateRequestsTable extends Migration
             $table->string('timeSlot');
             $table->integer('resourceID')->unsigned();
             $table->string('status');
+            $table->timestamps();
+
 
             $table->foreign('batchNo')->references('batchNo')->on('batch')->onDelete('cascade');
             $table->foreign('subjectCode')->references('subCode')->on('subject')->onDelete('cascade');
