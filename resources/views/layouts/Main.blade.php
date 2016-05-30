@@ -16,9 +16,16 @@
   <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
   <!--DataTables-->
     <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap.css') }}">
+  <!--JqueryConfirm-->
+  <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
+  <!-- Include Required Prerequisites for date range picker -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     
   <!-- REQUIRED JS SCRIPTS -->
-
+  <!-- Include Date Range Picker Do not move these imports  -->
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <!-- jQuery 2.2.0 -->
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
   <!-- Bootstrap 3.3.6 -->
@@ -28,6 +35,13 @@
   <!--DataTables Jquery Plugin-->
   <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('js/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <!--JqueryConfirm-->
+  <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+  <!-- Include Date Range Picker -->
+  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> 
+    
+  
+
   
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
@@ -38,8 +52,8 @@
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+  <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
   <![endif]-->
 </head>
 <!--
@@ -263,7 +277,15 @@ desired effect
         <li><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
           @if(Auth::user()->admin == 0)
        
-        <li><a href="#"><i class="fa fa-tasks"></i> <span>My Requests</span></a></li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>My Requests</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="index.html"><i class="fa fa-circle-o"></i> Place Request</a></li>
+            <li class=""><a href="index2.html"><i class="fa fa-circle-o"></i>Current Requests</a></li>
+          </ul>
+        </li>
         <li><a href="#"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>
           @endif
         @if(Auth::user()->admin == 1)
@@ -310,6 +332,7 @@ desired effect
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="#">SLIIT</a>.</strong> All rights reserved.
+
   </footer>
 
   <!-- Control Sidebar -->

@@ -38,4 +38,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Allowed_User::class,'staff_id','staff_id');
     }
+    public function userRequests()
+    {
+        return $this->hasMany(userRequest::class);
+    }
 }

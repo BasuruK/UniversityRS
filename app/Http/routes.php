@@ -19,6 +19,7 @@ Route::auth();
 */
 Route::get('/', function(){
     return view('auth.login');
+    
 });
 
 
@@ -27,6 +28,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'UserLevelController@index'); // This route will return 2 paths depending on the Admin status
     
     Route::get('/profile/', 'UserLevelController@profileView');
+    
+    Route::get('/userRequest/requestForm/','userRequestController@AddRequestForm');
+    Route::get('/userRequest/Show/','userRequestController@Index');
+    Route::get('/userRequest/Edit/{userRequest}','userRequestController@EdituserRequestForm');
+    Route::patch('/userRequest/updateUserRequest/{userRequest}','userRequestController@updateuserRequest');
+    Route::post('/userRequest/requestForm/add','userRequestController@AddRequest');
+    Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
 });
 
 /**
@@ -58,6 +66,13 @@ Route::group(['middleware' => ['auth','admin']], function() {
     
     Route::post('/UserManagement/add', 'UserManagementController@AddUser');
     //User Management Routes End
+    
+     Route::get('/resource/new', 'ResourceController@AddResourceForm');
+    Route::get('/resource/show', 'ResourceController@Index');
+    Route::post('/resource/Add', 'ResourceController@AddResource');
+    Route::get('/resource/Edit/{resource}', 'ResourceController@EditResourceForm');
+    Route::patch('/resource/UpdateResource/{resource}','ResourceController@updateResource');
+    Route::get('/resource/DeleteResource/{resource}','ResourceController@deleteResource');
     
 });
 
