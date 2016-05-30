@@ -280,7 +280,7 @@ desired effect
           @if(Auth::user()->admin == 0)
        
         <li class="treeview">
-          <a href="#">
+          <a href="/userRequest/requestForm">
             <i class="fa fa-dashboard"></i> <span>My Requests</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu" style="display: none;">
@@ -297,6 +297,9 @@ desired effect
             <li><a href="/UserManagement">User Management</a></li>
             <li><a href="#">Requests Management</a></li>
             <li><a href="#">Data Management</a></li>
+            <li><a href="/resource/show">Resource Management</a></li>
+            <li><a href="/subject">Subject Management</a></li>
+            <li><a href="/batch">Batch Management</a></li>
           </ul>
         </li>
         <li><a href="#"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>

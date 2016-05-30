@@ -10,15 +10,10 @@ use Redirect;
 
 class ResourceController extends Controller
 {
-    public function AddResourceForm()
-    {
-       
-        return view('resources.addResourceForm');
-    }
-    
+  
     public function Index()
     {
-        $resources = \DB::table('resource')->get();
+        $resources = DB::table('resource')->get();
         return view("resources.addResourceForm",compact('resources'));
     }
     

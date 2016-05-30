@@ -49,6 +49,7 @@ $(document).ready(function() {
                             </tr>
                         </thead>
                           <a href='/subject/new' id="btnAdd" class="btn btn-primary">Add Subject</a>
+                          <br><br>
                         <tbody>
                             @foreach($subjects as $sub)
                             <tr role="row" class="odd">

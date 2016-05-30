@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
-/**
+/*
 |-----------------------------------------------------------------------------------
 | Admin Route Middleware - * DO NOT DELETE *
 |-----------------------------------------------------------------------------------
@@ -60,11 +60,11 @@ Route::group(['middleware' => 'auth'], function() {
 | Contact Administrator before making any changes to this route group
 |
 | Important point to remember is that this middleware group is used only to access 
-| Administrator secific routes. What ever routes in auth middleware , admin can
+| Administrator specific routes. What ever routes in auth middleware , admin can
 | go through it but not vice versa.
 |
 | After adding a new middleware a composer update should be made to add the 
-| middleware to autoloader.
+| middleware to autoload.
 |-----------------------------------------------------------------------------------
 */
 
@@ -87,7 +87,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
     /**
      * Resource Management Routes
      */
-    Route::get('/resource/new', 'ResourceController@AddResourceForm');
 
     Route::get('/resource/show', 'ResourceController@Index');
 
