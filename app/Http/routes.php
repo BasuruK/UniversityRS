@@ -144,5 +144,12 @@ Route::group(['middleware' => ['auth','admin']], function() {
     
     //Subject Management End
 
+    /**
+     * Timetable Management Routes
+     */
+    Route::get('/timetable', 'TimeTableController@ImportExport');
+    Route::post('importExcel', 'TimeTableController@importExcel');
+    //Timetable Management End
+
 });
 

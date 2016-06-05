@@ -47,12 +47,20 @@ class UserLevelController extends Controller
         $user = Auth::user();
         return view('users.UserProfile')->with('userData',$user);
     }
-    
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function requestFormView()
     {
         return view('userRequests.requestForm');
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function editProfile(Request $request, User $user)
     {
         $user->name = $request['nameEdit'];
@@ -60,6 +68,11 @@ class UserLevelController extends Controller
         return back();
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return $this
+     */
     public  function  editPassword(Request $request, User $user)
     {
         $rules = array(
