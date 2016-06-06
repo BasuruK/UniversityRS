@@ -9,17 +9,27 @@ use Redirect;
 
 class subjectController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show()
     {
         $subjects = \DB::table('subject')->get();
         return view("subjects.subject_main",compact('subjects'));
-    } 
-    
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function add()
     {
         return view('subjects.Add_Subject');
     }
-    
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function addSubjects(Request $request)
     {
         //return $request->all();
@@ -42,19 +52,32 @@ class subjectController extends Controller
         
         return Redirect::route('Subjectmain'); 
     }
-    
+
+    /**
+     * @param Subject $subject
+     * @return $this
+     */
     public function edit(Subject $subject)
     {
         return view('subjects.Edit_Subject')->with('subject',$subject); 
     }
-    
+
+    /**
+     * @param Request $request
+     * @param Subject $subject
+     * @return mixed
+     */
     public function editSubjects(Request $request, Subject $subject)
     {
         $subject->update($request->all());
         
         return Redirect::route('Subjectmain'); 
     }
-    
+
+    /**
+     * @param Subject $subject
+     * @return mixed
+     */
     public function delete(Subject $subject)
     {
         Subject::destroy($subject['id']);

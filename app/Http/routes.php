@@ -15,7 +15,7 @@ Route::auth();
 
 /**
 * When a user visits the home page if its a guest then direct to login if not 
-* use the appropiate route to manage its path
+* use the appropriate route to manage its path
 */
 Route::get('/', function(){
     return view('auth.login');
@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'UserLevelController@index'); // This route will return 2 paths depending on the Admin status
     
     Route::get('/profile/', 'UserLevelController@profileView');
+
+    Route::patch('/profile/{user}', 'UserLevelController@editProfile');
+
+    Route::patch('/profile/password/{user}', 'UserLevelController@editPassword');
 
     /**
      * Request Management Routes
@@ -46,7 +50,11 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
 
-    //Request Management Routes End
+    /**
+     * Request Management Routes End
+     */
+
+    
 
 });
 
@@ -137,6 +145,13 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/subject/delete/{subject}', 'subjectController@delete');
     
     //Subject Management End
+
+    /**
+     * Timetable Management Routes
+     */
+    Route::get('/timetable', 'TimeTableController@ImportExport');
+    Route::post('importExcel', 'TimeTableController@importExcel');
+    //Timetable Management End
 
 });
 
