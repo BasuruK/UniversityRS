@@ -18,6 +18,7 @@ class CreateRequestsTable extends Migration
             $table->string('year');
             $table->string('batchNo');
             $table->string('subjectCode');
+            $table->string('requestDate');
             $table->string('timeSlot');
             $table->integer('resourceID')->unsigned();
             $table->string('status');
