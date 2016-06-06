@@ -47,11 +47,14 @@
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="settings">
-                    <form class="form-horizontal">
-                      <div class="form-group">
+                    <form method="POST" class="form-horizontal" action="/profile/{{ $userData->id }}">
+                        {!! csrf_field() !!}
+                        {{ method_field('PATCH') }}
+
+                        <div class="form-group">
                         <label for="inputName" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="name" class="form-control" id="inputName" placeholder="Name" value="{{ $userData->name }}">
+                          <input type="text" class="form-control" id="inputName" name="nameEdit" placeholder="Name" value="{{ $userData->name }}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -69,24 +72,33 @@
                   </div><!-- /.tab-pane -->
                     
                   <div class="tab-pane" id="password">
-                    <form class="form-horizontal">
-                      <div class="form-group">
-                        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <form method="POST" class="form-horizontal" action="/profile/password/{{ $userData->id }}">
+                        {!! csrf_field() !!}
+                        {{ method_field('PATCH') }}
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-2 control-label">Old Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPasswordOld" name="passwordEditOld" placeholder="Old Password">
+                            </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">Confirm Password</label>
-                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputEmail" placeholder="Confirm Password">
+
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-2 control-label">New Password</label>
+                            <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPasswordNew" name="passwordEditNew" placeholder="New Password">
+                            </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Update</button>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-sm-2 control-label">Confirm Password</label>
+                            <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPasswordConfirm" name="passwordEditConfirm" placeholder="Confirm Password">
+                            </div>
                         </div>
-                      </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-danger">Update</button>
+                            </div>
+                        </div>
                     </form>
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
