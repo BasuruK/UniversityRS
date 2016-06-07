@@ -45,7 +45,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/userRequest/updateUserRequest/{userRequest}','userRequestController@updateuserRequest');
 
     Route::post('/userRequest/requestForm/add','userRequestController@AddRequest');
+
     Route::get('/userRequest/requestForm/loadBatches','userRequestController@loadBatches');
+
     Route::get('/userRequest/requestForm/loadHalls','userRequestController@loadAvailabeResources');
 
     Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
@@ -150,6 +152,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
      * Timetable Management Routes
      */
     Route::get('/timetable', 'TimeTableController@ImportExport');
+    
     Route::post('importExcel', 'TimeTableController@importExcel');
     //Timetable Management End
 
