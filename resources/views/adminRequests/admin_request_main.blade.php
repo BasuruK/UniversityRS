@@ -82,6 +82,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Year</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Status</th>
                                         <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                                     </tr>
@@ -96,6 +97,7 @@
                                             <td>{{$request->year}}</td>
                                             <td>{{$request->subName}}</td>
                                             <td>{{$request->timeSlot}}</td>
+                                            <td>{{$request->requestDate}}</td>
                                             <td>{{$request->status}}</td>
                                             <td>
                                                 <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
@@ -119,10 +121,15 @@
                 </div>
                 <!-- /.box-body -->
             </div> <!--/.box-->
-
-
-
-
         </div>
+
+        <!-- Cancelled Request Table -->
+
+
     </div>
+
+
+
+
+
 @endsection

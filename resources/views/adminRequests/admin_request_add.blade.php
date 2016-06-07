@@ -15,7 +15,7 @@
                         {!! csrf_field() !!}
 
                         <!--Date-->
-                            <div class="form-group">
+                           <div class="form-group">
                                 <label>Date:</label>
 
                                 <div class="input-group date">
@@ -26,15 +26,31 @@
                                     <script type="text/javascript">
                                         $(function() {
                                             $('input[name="selectdate"]').daterangepicker({
-                                                timePicker: true,
-                                                timePickerIncrement: 30,
+                                                singleDatePicker: true,
+                                                showDropdowns: true,
                                                 locale: {
-                                                    format: 'DD/MM/YYYY h:mm A'
+                                                    format: 'YYYY-MM-DD-ddd'
                                                 }
-                                            });
+                                            },
+                                            function(start,end,label){
+                                                var years = moment().diff(start,'years');
+                                            }
+                                            );
                                         });
                                     </script>
                                 </div>
+                            </div>
+
+                            <!-- select time slot -->
+                            <div class="form-group">
+                                <label>Time Slot:</label>
+                                <select class="form-control" name="selecttimeslot">
+                                    <option value="8.30-10.30">8.30 - 10.30</option>
+                                    <option value="10.30-12.30">10.30-12.30</option>
+                                    <option value="12.30-1.30">12.30-1.30</option>
+                                    <option value="1.30-3.30">1.30-3.30</option>
+                                    <option value="3.30-5.30">3.30-5.30</option>
+                                </select>
                             </div>
 
                             <!-- select staff member -->
@@ -42,7 +58,7 @@
                                 <label>Staff Member</label>
                                 <select class="form-control" name="selectstaff">
                                     @foreach($users as $user)
-                                        <option value="{{$user->id}}"> {{$user->name}}</option>
+                                        <option value="{{$user->staff_id}}"> {{$user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -74,7 +90,7 @@
                                 <label>Subject</label>
                                 <select class="form-control" name="selectsub">
                                     @foreach($subjects as $subject)
-                                        <option value="{{$subject->subCode}}"> {{$subject->subName}}</option>
+                                        <option value="{{$subject->id}}"> {{$subject->subName}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -85,7 +101,7 @@
                                 <select class="form-control" name="selectres">
 
                                     @foreach($resources as $resource)
-                                        <option value="{{$resource->id}}"> {{$resource->hallNo}}</option>
+                                        <option value="{{$resource->hallNo}}">{{$resource->hallNo}}</option>
                                     @endforeach
 
                                 </select>

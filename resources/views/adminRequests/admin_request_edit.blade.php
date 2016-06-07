@@ -22,30 +22,74 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" class="form-control pull-right" id="datepicker" name="selectdateEdit" value="{{$admin_request->timeSlot}}">
+                                    <input type="text" class="form-control pull-right" id="datepicker" name="selectdateEdit" value="{{$admin_request->requestDate}}">
                                     <script type="text/javascript">
                                         $(function() {
                                             $('input[name="selectdate"]').daterangepicker({
-                                                timePicker: true,
-                                                timePickerIncrement: 30,
-                                                locale: {
-                                                    format: 'DD/MM/YYYY h:mm A'
-                                                }
-                                            });
+                                                        singleDatePicker: true,
+                                                        showDropdowns: true,
+                                                        locale: {
+                                                            format: 'YYYY-MM-DD-ddd'
+                                                        }
+                                                    },
+                                                    function(start,end,label){
+                                                        var years = moment().diff(start,'years');
+                                                    }
+                                            );
                                         });
                                     </script>
                                 </div>
                             </div>
+
+                            <!-- time slot -->
+                            <div class="form-group">
+                                <label>Time Slot:</label>
+                                <select class="form-control" name="selecttimeslotEdit">
+                                    @if ($admin_request->timeSlot === "8.30-10.30")
+                                        <option value="8.30-10.30" selected="selected">8.30 - 10.30</option>
+                                        <option value="10.30-12.30">10.30 - 12.30</option>
+                                        <option value="12.30-1.30">12.30 - 1.30</option>
+                                        <option value="1.30-3.30">1.30 - 3.30</option>
+                                        <option value="3.30-5.30">3.30 - 5.30</option>
+                                    @elseif ($admin_request->timeSlot === "10.30-12.30")
+                                        <option value="8.30-10.30">8.30 - 10.30</option>
+                                        <option value="10.30-12.30" selected="selected">10.30 - 12.30</option>
+                                        <option value="12.30-1.30">12.30 - 1.30</option>
+                                        <option value="1.30-3.30">1.30 - 3.30</option>
+                                        <option value="3.30-5.30">3.30 - 5.30</option>
+                                    @elseif ($admin_request->timeSlot === "12.30-1.30")
+                                        <option value="8.30-10.30">8.30 - 10.30</option>
+                                        <option value="10.30-12.30">10.30 - 12.30</option>
+                                        <option value="12.30-1.30" selected="selected">12.30 - 1.30</option>
+                                        <option value="1.30-3.30">1.30 - 3.30</option>
+                                        <option value="3.30-5.30">3.30 - 5.30</option>
+                                    @elseif ($admin_request->timeSlot === "1.30-3.30")
+                                        <option value="8.30-10.30">8.30 - 10.30</option>
+                                        <option value="10.30-12.30">10.30 - 12.30</option>
+                                        <option value="12.30-1.30">12.30 - 1.30</option>
+                                        <option value="1.30-3.30" selected="selected">1.30 - 3.30</option>
+                                        <option value="3.30-5.30">3.30 - 5.30</option>
+                                    @elseif ($admin_request->timeSlot === "3.30-5.30")
+                                        <option value="8.30-10.30">8.30 - 10.30</option>
+                                        <option value="10.30-12.30">10.30 - 12.30</option>
+                                        <option value="12.30-1.30">12.30 - 1.30</option>
+                                        <option value="1.30-3.30">1.30 - 3.30</option>
+                                        <option value="3.30-5.30" selected="selected">3.30 - 5.30</option>
+                                    @endif
+
+                                </select>
+                            </div>
+
 
                             <div class="form-group">
                                 <label>Staff Member</label>
                                 <select class="form-control" name="selectstaffEdit">
 
                                     @foreach($users as $user)
-                                        @if($admin_request->lecturerID === $user->id)
-                                            <option value="{{$user->id}}" selected="selected">{{$user->name}}</option>
+                                        @if($admin_request->lecturerID === $user->staff_id)
+                                            <option value="{{$user->staff_id}}" selected="selected">{{$user->name}}</option>
                                         @else
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            <option value="{{$user->staff_id}}">{{$user->name}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -101,10 +145,10 @@
                                 <select class="form-control" name="selectsubEdit">
 
                                     @foreach($subjects as $subject)
-                                        @if($admin_request->subjectCode === $subject->subCode)
-                                            <option value="{{$subject->subCode}}" selected="selected"> {{$subject->subName}}</option>
+                                        @if($admin_request->subjectCode === $subject->id)
+                                            <option value="{{$subject->id}}" selected="selected"> {{$subject->subName}}</option>
                                         @else
-                                            <option value="{{$subject->subCode}}"> {{$subject->subName}}</option>
+                                            <option value="{{$subject->id}}"> {{$subject->subName}}</option>
                                             @endif
                                     @endforeach
                                 </select>
@@ -116,10 +160,10 @@
                                 <select class="form-control" name="selectresEdit">
 
                                     @foreach($resources as $resource)
-                                        @if($admin_request->resourceID === $resource->id)
-                                            <option value="{{$resource->id}}" selected="selected"> {{$resource->hallNo}}</option>
+                                        @if($admin_request->resourceID === $resource->hallNo)
+                                            <option value="{{$resource->hallNo}}" selected="selected"> {{$resource->hallNo}}</option>
                                         @else
-                                            <option value="{{$resource->id}}"> {{$resource->hallNo}}</option>
+                                            <option value="{{$resource->hallNo}}"> {{$resource->hallNo}}</option>
                                         @endif
                                     @endforeach
 

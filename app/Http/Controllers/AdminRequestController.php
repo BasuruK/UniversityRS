@@ -11,11 +11,21 @@ class AdminRequestController extends Controller
     public function show()
     {
         $requests = \DB::table('requests')
-            ->join('subject', 'requests.subjectCode', '=', 'subject.subCode')
-            ->join('resource', 'requests.resourceID', '=', 'resource.id')
-            ->join('users', 'requests.lecturerID','=', 'users.id')
+            ->join('subject', 'requests.subjectCode', '=', 'subject.id')
+            ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
+            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
             ->select('requests.*','subject.subName','resource.hallNo','users.name')
+            ->wherein('status',['Approved','Pending'])
             ->get();
+
+        /*$c_requests = \DB::table('requests')
+            ->join('subject', 'requests.subjectCode', '=', 'subject.id')
+            ->join('resource', 'requests.resourceID', '=', 'resource.id')
+            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
+            ->select('requests.*','subject.subName','resource.hallNo','users.name')
+            ->where('status','Pending')
+            ->get();*/
+
         return view("adminRequests.admin_request_main",compact('requests'));
     }
 
@@ -42,7 +52,8 @@ class AdminRequestController extends Controller
         $Admin_Request->year=$request['selectyear'];
         $Admin_Request->batchNo=$request['selectbatch'];
         $Admin_Request->subjectCode=$request['selectsub'];
-        $Admin_Request->timeSlot=$request['selectdate'];
+        $Admin_Request->timeSlot=$request['selecttimeslot'];
+        $Admin_Request->requestDate=$request['selectdate'];
         $Admin_Request->resourceID=$request['selectres'];
         $Admin_Request->status=$request['selectstatus'];
 
@@ -75,7 +86,8 @@ class AdminRequestController extends Controller
         $admin_request->year=$request['selectyearEdit'];
         $admin_request->batchNo=$request['selectbatchEdit'];
         $admin_request->subjectCode=$request['selectsubEdit'];
-        $admin_request->timeSlot=$request['selectdateEdit'];
+        $admin_request->timeSlot=$request['selecttimeslotEdit'];
+        $admin_request->requestDate=$request['selectdateEdit'];
         $admin_request->resourceID=$request['selectresEdit'];
         $admin_request->status=$request['selectStatusEdit'];
         $admin_request->save();
