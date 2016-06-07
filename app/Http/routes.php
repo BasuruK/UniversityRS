@@ -147,6 +147,24 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/subject/delete/{subject}', 'subjectController@delete');
     
     //Subject Management End
+    
+    /**
+     * Request Management
+     */
+
+    Route::get('/adminRequest', 'AdminRequestController@show')->name('adminRequestShow');
+
+    Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
+    
+    Route::post('/adminRequest/add', 'AdminRequestController@add');
+    
+    Route::get('/adminRequest/delete/{admin_request}','AdminRequestController@delete');
+
+    Route::get('/adminRequest/edit/{admin_request}','AdminRequestController@edit');
+
+    Route::patch('/adminRequest/update/{admin_request}','AdminRequestController@update');
+
+    //Request Management End
 
     /**
      * Timetable Management Routes
@@ -154,7 +172,9 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/timetable', 'TimeTableController@ImportExport');
     
     Route::post('importExcel', 'TimeTableController@importExcel');
+    
     //Timetable Management End
+
 
 });
 

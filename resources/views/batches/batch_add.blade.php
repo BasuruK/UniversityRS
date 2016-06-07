@@ -29,7 +29,8 @@
                   
                   <div class="form-group">
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Add Batch</button>
+                    <button type="submit" class="btn btn-primary pull-right">Add Batch</button>
+                      <a href="/batch" class="btn btn-primary">Cancel</a>
                   </div>
               </div>
               </div>
