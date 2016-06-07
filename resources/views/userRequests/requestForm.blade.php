@@ -63,26 +63,58 @@
 
                       <!-- select Time Slot  -->
                       <div class="form-group">
-                          <label>Year</label>
+                          <label>Time Slot</label>
                           <select class="form-control" name="selecttime" id="selecttime">
-                              <option value="8.30-10.30"> 8.30-10.30</option>
-                              <option value="10.30-12.30"> 10.30-12.30</option>
-                              <option value="12.30-1.30"> 12.30-1.30</option>
-                              <option value="1.30-3.30"> 1.30-3.30</option>
-                              <option value="3.30-5.30"> 3.30-5.30</option>
+                              <option value="">Please Select</option>
+                              <option value="8.30-10.30">8.30-10.30</option>
+                              <option value="10.30-12.30">10.30-12.30</option>
+                              <option value="12.30-1.30">12.30-1.30</option>
+                              <option value="1.30-3.30">1.30-3.30</option>
+                              <option value="3.30-5.30">3.30-5.30</option>
                           </select>
                       </div>
 
+
+                      <script>
+                          $(document).ready(function()
+                          {
+                              $('#selectdate').change(function(){
+
+                                  $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
+
+                                          function(data) {
+
+                                              var availableHalls = $('#selectres');
+
+                                              availableHalls.empty();
+
+                                              $.each(data, function(key, value) {
+
+                                                  availableHalls
+
+                                                          .append($("<option></option>")
+
+                                                                  .attr("value",value)
+
+                                                                  .text(value));
+                                              });
+
+                                          });
+
+                              });
+
+                          });
+                      </script>
                 <!-- select Year  -->
                 <div class="form-group">
                   <label>Year</label>
 
                   <select class="form-control" name="selectyear" id="selectyear">
                       <option value="">Please select</option>
-                    <option value="Y1"> 1</option>
-                    <option value="Y2"> 2</option>
-                    <option value="Y3"> 3</option>
-                    <option value="Y4"> 4</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
                   </select>
                 </div>
 
@@ -117,7 +149,38 @@
 
                           });
 
+                          //load halls
+                          $(document).ready(function()
+                          {
+                              $('#selecttime').change(function(){
+
+                                  $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdate').val() },
+
+                                          function(data) {
+
+                                              var availableHalls = $('#selectres');
+
+                                              availableHalls.empty();
+
+                                              $.each(data, function(key, value) {
+
+                                                  availableHalls
+
+                                                          .append($("<option></option>")
+
+                                                                  .attr("value",value)
+
+                                                                  .text(value));
+                                              });
+
+                                          });
+
+                              });
+
+                          });
+
                       </script>
+
                   <!-- select Batch -->
                 <div class="form-group">
                   <label>Batch</label>
@@ -137,54 +200,28 @@
                 </div>
 
 
-                      <script>
-                          $(document).ready(function()
-                          {
-                              $('#selecttime').change(function(){
-
-                                  $.get("{{ url('/userRequest/requestForm/loadHalls')}}", { option: $(this).val() },
-
-                                          function(data) {
-
-                                              var availableHalls = $('#selectres');
-
-                                              availableHalls.empty();
-
-                                              $.each(data, function(key, value) {
-
-                                                  availableHalls
-
-                                                          .append($("<option></option>")
-
-                                                                  .attr("value",key)
-
-                                                                  .text(value));
-                                              });
-
-                                          });
-
-                              });
-
-                          });
-
-                      </script>
-
-
-
-
-
-
                    <!-- select Hall -->
                 <div class="form-group">
                   <label>Lecture Hall/Lab</label>
                   <select class="form-control" name="selectres" id="selectres">
-                      <option value=""></option>
-
-
+                      <option value="">Please select</option>
                   </select>
                 </div>
 
-                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
+
+
+                      @if (count($errors) > 0)
+                          <div class="alert alert-danger">
+                              <ul>
+                                  @foreach ($errors->all() as $error)
+                                      <li>{{ $error }}</li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                      @endif
+
+
+                      <button type="submit " class="btn btn-primary pull-right">Submit</button>
               </form>
             </div>
             <!-- /.box-body -->

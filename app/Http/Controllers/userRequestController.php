@@ -27,7 +27,11 @@ class userRequestController extends Controller
         //return $request->all();
         
         $this->validate($request, [
-            'selectdate'=>'required',   
+            'selectdate'=>'required',
+            'selectyear'=>'required',
+            'selectbatch'=>'required',
+            'selecttime'=>'required',
+            'selectres'=>'required',
         ]);
         
         $userRequest= new userRequest();
@@ -43,26 +47,23 @@ class userRequestController extends Controller
         
         
         $userRequest->save();
+        //return $userRequest;
 
         return redirect::to('/userRequest/Show/');
     }
     public function Index()
     {
 
-        //$requests = \DB::table('requests')->where('id', '{{Auth::user()->id}}')->all();
-        //$requests = \DB::table('requests')->select('id', '{{Auth::user()->id}}')->get();
       $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
-            ->join('resource', 'requests.resourceID', '=', 'resource.id')
-            ->select('requests.*','subject.subName','resource.hallNo','batch.batchNo')
+            ->select('requests.*','subject.subName','batch.batchNo')
             ->where('requests.lecturerID', \Auth::user()->staff_id)
             ->get();
         $acceptedrequests=\DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
-            ->join('resource', 'requests.resourceID', '=', 'resource.id')
-            ->select('requests.*','subject.subName','resource.hallNo','batch.batchNo')
+            ->select('requests.*','subject.subName','batch.batchNo')
             ->where('requests.lecturerID', \Auth::user()->staff_id)
             ->where('requests.status','=','Accepted')
             ->get();
@@ -119,20 +120,54 @@ class userRequestController extends Controller
 
     }
 
-    public function loadAvailabeResources()
+
+    public function loadAvailabeResourcesDate()
+    {
+        $time= Input::get('option2');
+        $date= Input::get('option');
+        $nonavailableHalls=DB::table('resource')
+            ->join('requests', 'resource.hallNo', '=', 'requests.resourceID')
+            ->select('resource.hallNo')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','=',$time)
+            ->lists('hallNo');
+
+        $availableHalls=DB::table('resource')
+            ->whereNotIn('hallNo',$nonavailableHalls)
+            ->orderBy('id', 'desc')
+            ->lists('hallNo','id');
+
+
+        //return $availableHalls;
+
+
+        return Response::json($availableHalls);
+
+    }
+
+    public function loadAvailabeResourcesTime()
     {
         $time= Input::get('option');
         $date= Input::get('option2');
-        $availableHalls=\DB::table('resource')
-            ->join('requests', 'resource.id', '=', 'requests.resourceID')
-            ->where('status','!=','Accepted')
-            ->where('requestDate','!=',$date)
-            ->where('timeSlot','!=',$time)
-            ->orderBy('resource.id', 'desc')
-            ->lists('resource.id','hallNo');
-        //return $time;
+        $nonavailableHalls=DB::table('resource')
+            ->join('requests', 'resource.hallNo', '=', 'requests.resourceID')
+            ->select('resource.hallNo')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','=',$time)
+            ->lists('hallNo');
 
-       return Response::json($availableHalls);
+        $availableHalls=DB::table('resource')
+            ->whereNotIn('hallNo',$nonavailableHalls)
+            ->orderBy('id', 'desc')
+            ->lists('hallNo','id');
+
+
+        //return $availableHalls;
+
+
+        return Response::json($availableHalls);
 
     }
     

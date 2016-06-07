@@ -34,7 +34,7 @@ class TimeTableController extends Controller
             {
                 foreach ($data as $key => $value)
                 {
-                    $insert[] = ['day' => $value->day, 'timeslot' => $value->timeslot, 'resourceName' => $value->resourceName, 'lecturerName' => $value->lecturerName, 'subjectCode' => $value->subjectCode];
+                    $insert[] = ['day' => $value->day, 'timeslot' => $value->timeslot, 'resourceName' => $value->resourcename, 'lecturername' => $value->lecturername, 'subjectcode' => $value->subjectcode, 'year' => $value->year, 'batchno' => $value->batch];
                 }
                 if(!empty($insert))
                 {

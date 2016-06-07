@@ -20,7 +20,7 @@ class CreateRequestsTable extends Migration
             $table->string('subjectCode');
             $table->string('requestDate');
             $table->string('timeSlot');
-            $table->integer('resourceID')->unsigned();
+            $table->string('resourceID');
             $table->string('status');
             $table->timestamps();
 

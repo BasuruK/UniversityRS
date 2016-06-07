@@ -47,8 +47,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/userRequest/requestForm/add','userRequestController@AddRequest');
 
     Route::get('/userRequest/requestForm/loadBatches','userRequestController@loadBatches');
-
+    
     Route::get('/userRequest/requestForm/loadHalls','userRequestController@loadAvailabeResources');
+
+    Route::get('/userRequest/requestForm/loadHallsDate','userRequestController@loadAvailabeResourcesDate');
+
+    Route::get('/userRequest/requestForm/loadHallsTime','userRequestController@loadAvailabeResourcesTime');
 
     Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
 
