@@ -88,19 +88,19 @@
                 <div class="form-group">
                   <label>Year</label>
                   <select class="form-control" name="selectyearEdit">
-                    @if ($userRequest->year === "Y1")
-                        <option value="Y1" selected="selected"> 1</option>
-                     @elseif ($userRequest->year === "Y2")
-                        <option value="Y3" selected="selected"> 2</option>
-                       @elseif ($userRequest->year === "Y3")
-                        <option value="Y3" selected="selected"> 3</option>
-                       @elseif ($userRequest->year === "Y4")
-                        <option value="Y4" selected="selected"> 4</option>
+                    @if ($userRequest->year === "1")
+                        <option value="1" selected="selected">1</option>
+                     @elseif ($userRequest->year === "2")
+                        <option value="2" selected="selected">2</option>
+                       @elseif ($userRequest->year === "3")
+                        <option value="3" selected="selected">3</option>
+                       @elseif ($userRequest->year === "4")
+                        <option value="4" selected="selected">4</option>
                       @endif
-                    <option value="Y1" > 1</option>
-                    <option value="Y2"> 2</option>
-                    <option value="Y3"> 3</option>
-                    <option value="Y4"> 4</option>
+                    <option value="1" > 1</option>
+                    <option value="2"> 2</option>
+                    <option value="3"> 3</option>
+                    <option value="4"> 4</option>
 
                   </select>
                 </div>

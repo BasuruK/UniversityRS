@@ -88,7 +88,7 @@ function isEdit(id)
                             @foreach($requests as $request)
                             <tr role="row" class="odd">
                               <td class="sorting_1">{{$request->id}}</td>
-                              <td>{{$request->hallNo}}</td>
+                              <td>{{$request->resourceID}}</td>
                               <td>{{$request->batchNo}}</td>
                               <td>{{$request->year}}</td>
                               <td>{{$request->subName}}</td>
@@ -157,7 +157,7 @@ function isEdit(id)
                                 @foreach($acceptedrequests as $acceptedrequest)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $acceptedrequest->id }}</td>
-                                        <td>{{ $acceptedrequest->hallNo }}</td>
+                                        <td>{{ $acceptedrequest->resourceID }}</td>
                                         <td>{{ $acceptedrequest->batchNo }}</td>
                                         <td>{{ $acceptedrequest->year }}</td>
                                         <td>{{ $acceptedrequest->subName }}</td>
