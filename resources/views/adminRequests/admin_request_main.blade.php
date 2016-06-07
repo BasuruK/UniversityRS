@@ -103,6 +103,7 @@
                                                 <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
                                                 <a class="btn btn-danger" onclick="return isDelete({{$request->id}})">Delete</a>
                                             </td>
+                                            <td><a href="/adminRequest/notify/{{ $request->id }}" class="btn btn-warning">Notify</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
