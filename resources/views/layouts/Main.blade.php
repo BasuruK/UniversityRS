@@ -284,8 +284,8 @@ desired effect
             <i class="fa fa-dashboard"></i> <span>My Requests</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <li><a href="index.html"></i> Place Request</a></li>
-            <li class=""><a href="index2.html"></i>Current Requests</a></li>
+            <li><a href="/userRequest/requestForm"></i> Place Request</a></li>
+            <li class=""><a href="/userRequest/Show"></i>Current Requests</a></li>
           </ul>
         </li>
         <li><a href="#"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>
