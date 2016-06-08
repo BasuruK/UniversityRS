@@ -20,7 +20,11 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../dist/img/{{ $userData->picture }}" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="{{ $userData->picture }}" alt="User profile picture">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <a href='/profile/ChangePicture/{{  $userData->id  }}' class="btn btn-primary btn-xs btn-block"><b>Change Picture</b></a>
+                </div>
+                <br/>
               <h3 class="profile-username text-center">{{ $userData->name }}</h3>
               <p class="text-muted text-center">
                   @if($userData->admin == 1)
@@ -29,7 +33,6 @@
                     Lecturer
                   @endif
                 </p>
-
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Subjects Tought</b> <a class="pull-right">5</a>
@@ -38,13 +41,14 @@
             </div><!-- /.box-body -->
           </div><!-- /.box -->
         </div>
-        
+
         <div class="col-md-9">
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
                   <li class=""><a href="#password" data-toggle="tab" aria-expanded="false">Password</a></li>
                 </ul>
+                  <!-- Settings tabbed pain -->
                 <div class="tab-content">
                   <div class="tab-pane active" id="settings">
                     <form method="POST" class="form-horizontal" action="/profile/{{ $userData->id }}">
@@ -70,7 +74,8 @@
                       </div>
                     </form>
                   </div><!-- /.tab-pane -->
-                    
+
+                    <!-- Settings tabbed pain -->
                   <div class="tab-pane" id="password">
                     <form method="POST" class="form-horizontal" action="/profile/password/{{ $userData->id }}">
                         {!! csrf_field() !!}

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Allowed_User;
 use App\User;
 //use Dotenv\Validator;
+//use Faker\Provider\Image;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Hash;
 use Validator;
+use Redirect;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Input;
 
 class UserLevelController extends Controller
@@ -113,5 +117,39 @@ class UserLevelController extends Controller
                     ->withErrors($message);
             }
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function UploadPictureForm()
+    {
+        $user = Auth::user();
+        return view('users.ChangePicture')->with('user',$user);
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return mixed
+     */
+    public function pictureUpload(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'image' => 'required'
+        ]);
+        //if($request->hasFile('image'))
+        //{
+            $file = Input::file('image')->getRealPath();;
+            $image = Image::make($file);
+            //Response::make($image->encode('jpeg'));
+            //$user->picture = $request['image'];
+            $user->picture = $image;
+            $user->save();
+
+            return Redirect::route('profile');
+
+        //}
+
     }
 }
