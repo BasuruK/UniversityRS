@@ -129,7 +129,7 @@ function isEdit(id)
         </script>
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Registered Users</h3>
+                <h3 class="box-title">Accepted Requests</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

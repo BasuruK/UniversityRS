@@ -37,17 +37,15 @@
                     <input type="text" class="form-control pull-right" id="datepicker" name="selectdateEdit" value="{{$userRequest->requestDate}}">
                         <script type="text/javascript">
                             $(function() {
-                                $('input[name="selectdateEdit"]').daterangepicker({
-                                            singleDatePicker: true,
-                                            showDropdowns: true,
-                                            locale: {
-                                                format: 'YYYY-MM-DD-ddd'
-                                            },
-                                        },
-                                        function(start, end, label) {
-                                            var years = moment().diff(start, 'years');
+                                $('input[name="selectdate"]').daterangepicker({
+                                    singleDatePicker: true,
+                                    minDate:new Date(),
+                                    maxDate:'2016-12-31',
+                                    locale: {
+                                        format: 'YYYY-MM-DD-ddd'
+                                    },
+                                });
 
-                                        });
                             });
                         </script>
                     </div>

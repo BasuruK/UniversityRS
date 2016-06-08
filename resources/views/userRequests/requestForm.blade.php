@@ -36,19 +36,19 @@
                         </div>
                     <input type="text" class="form-control pull-right" id="selectdate" name="selectdate">
                         <script type="text/javascript">
+
                             $(function() {
                                 $('input[name="selectdate"]').daterangepicker({
                                             singleDatePicker: true,
-                                            showDropdowns: true,
+                                            minDate:new Date(),
+                                            maxDate:'2016-12-31',
                                             locale: {
                                                 format: 'YYYY-MM-DD-ddd'
                                             },
-                                        },
-                                        function(start, end, label) {
-                                            var years = moment().diff(start, 'years');
-
                                         });
+
                             });
+
 
                         </script>
                     </div>
