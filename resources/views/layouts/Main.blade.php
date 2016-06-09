@@ -278,7 +278,7 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <li><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
           @if(Auth::user()->admin == 0)
-       
+
         <li class="treeview">
           <a href="/userRequest/requestForm">
             <i class="fa fa-dashboard"></i> <span>My Requests</span> <i class="fa fa-angle-left pull-right"></i>
@@ -295,7 +295,7 @@ desired effect
           <a href="#"><i class="fa fa-tachometer"></i> <span>Management</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
             <li><a href="/UserManagement">User Management</a></li>
-            <li><a href="#">Requests Management</a></li>
+            <li><a href="/adminRequest">Requests Management</a></li>
             <li><a href="#">Data Management</a></li>
             <li><a href="/resource/show">Resource Management</a></li>
             <li><a href="/subject">Subject Management</a></li>
