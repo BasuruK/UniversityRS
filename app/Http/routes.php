@@ -98,6 +98,13 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('user/{staff_id}/edit', 'UserManagementController@EditPageRedirect');
 
     Route::patch('user/{staff_id}/edit', 'UserManagementController@EditUserUpdate');
+
+    Route::get('AuthorizedUser/{staff_id}/edit', 'UserManagementController@EditAuthorizedUserRedirect');
+    
+    Route::patch('AuthorizedUser/{staff_id}/edit', 'UserManagementController@EditAuthorizedUserUpdate');
+    
+    Route::get('AuthorizedUser/{staff_id}/delete', 'UserManagementController@DeleteAuthorizedUser');
+    
     //User Management Routes End
 
     /**

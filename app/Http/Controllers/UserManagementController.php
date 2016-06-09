@@ -103,7 +103,7 @@ class UserManagementController extends Controller
          * Validation for the User Add form
          */
         $this->validate($request,[
-            'staff_id'  => 'required|exists:allowed_users',
+            'staff_id'  => 'required|exists:allowed_users|max:10',
             'name'  => 'required',
             'email' => 'required',
             'inputPosition' => 'required'
@@ -134,5 +134,65 @@ class UserManagementController extends Controller
 
 
        return redirect()->action('UserManagementController@UserManagement');
+    }
+
+    /**
+     * @param Allowed_User $staff_id
+     * @return mixed
+     *
+     * redirects the user to authorized user edit page
+     */
+    public function EditAuthorizedUserRedirect(Allowed_User $staff_id)
+    {
+        $PriorityCat = DB::table('priority')->get();
+
+        $PriorityLevel = DB::table('allowed_users')
+            ->join('priority','priority.id', '=', 'allowed_users.position')
+            ->where('allowed_users.staff_id',$staff_id->staff_id)
+            ->value('priority.id');
+
+        return view('administrator.UserManagementAllowedEdit')->with('userData',$staff_id)->with('PriorityCat',$PriorityCat)->with('PriorityLevel',$PriorityLevel);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param Allowed_User $staff_id
+     *
+     * Edits the Authorized user
+     */
+    public function EditAuthorizedUserUpdate(Request $request,Allowed_User $staff_id)
+    { 
+        /**
+         * Validation for the User Add form
+         */
+        $this->validate($request,[
+            'staff_id'  => 'required|max:10',
+            'inputPosition' => 'required'
+        ]);
+
+        /**
+         * Update allowed_users table
+         */
+        $staff_id->update([
+            'staff_id' => $request['staff_id'],
+            'position' => $request['inputPosition']
+        ]);
+
+        return redirect()->action('UserManagementController@UserManagement');
+    }
+
+    /**
+     * @param Allowed_User $staff_id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     *
+     * Delete the Authorized user, if the authorized user is a registered user then the details regarding that will be deleted
+     */
+    public function DeleteAuthorizedUser(Allowed_User $staff_id)
+    {
+        $staff_id->user()->delete();
+        $staff_id->delete();
+        return back();
     }
 }

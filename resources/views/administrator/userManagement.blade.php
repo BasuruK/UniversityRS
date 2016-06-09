@@ -129,6 +129,50 @@
                 return false;
             }
 
+            /**
+             *
+             * @param id
+             * @returns {boolean}
+             *
+             * User confirmation message asking the user to confirm his decision
+             */
+            function authorizeDelete(id)
+            {
+                var ID = id;
+                $.confirm({
+                    theme: 'black',
+                    title: 'Are Your Sure ?',
+                    icon: 'fa fa-warning',
+                    content: 'You will not be able to recover this information again if you delete this entry !',
+                    confirmButton: 'Yes',
+                    confirmButtonClass: 'btn-danger',
+                    confirm: function(){
+                        location.href = "AuthorizedUser/"+ID+"/delete";
+                    }
+                });
+                return false;
+            }
+
+            function authorizEdit(id)
+            {
+                var ID = id;
+                $.confirm({
+                    theme: 'black',
+                    title: 'Are Your Sure ?',
+                    icon: 'fa fa-warning',
+                    content: 'Are you sure you want to edit this entry ?',
+                    confirmButton: 'Yes',
+                    confirmButtonClass: 'btn-success',
+                    confirm: function(){
+                        location.href = "AuthorizedUser/"+ID+"/edit";
+                    }
+                });
+                return false;
+            }
+
+
+
+
         </script>
 
 
@@ -224,8 +268,8 @@
                                                 {{ $AuthAllowedUser->priority->priorityName }}
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-info" onclick ="">Edit</a>
-                                                <a href="#" class="btn btn-danger pull-right" onclick="">Delete</a>
+                                                <a href="#" class="btn btn-info" onclick ="authorizEdit({{ $AuthAllowedUser->id }})">Edit</a>
+                                                <a href="#" class="btn btn-danger pull-right" onclick=authorizeDelete({{ $AuthAllowedUser->id }})>Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
