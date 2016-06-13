@@ -76,6 +76,9 @@
 
 
                       <script>
+                          /**
+                           * Dynamically populate the select options for resources
+                           */
                           $(document).ready(function()
                           {
                               $('#selectdate').change(function(){
@@ -120,6 +123,9 @@
 
 
                       <script>
+                          /**
+                           * Dynamically populate the select options for batches
+                           */
                           $(document).ready(function()
                           {
                               $('#selectyear').change(function(){
@@ -149,7 +155,9 @@
 
                           });
 
-                          //load halls
+                          /**
+                           * Dynamically populate the select options for resources
+                           */
                           $(document).ready(function()
                           {
                               $('#selecttime').change(function(){

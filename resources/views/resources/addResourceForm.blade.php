@@ -70,7 +70,7 @@
         <div class="col col-sm-8">
             <script>
 /**
-* Initialise DataTable for Registered Users
+* Initialise DataTable for Resources
 */
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
