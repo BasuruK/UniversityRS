@@ -16,11 +16,46 @@
 <div>
 <script>
 /**
-* Initialise DataTable for Registered Users
+* Initialise DataTable for subjects
 */
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
+
+function isDelete(id)
+{
+    var ID =id;
+    $.confirm({
+        theme: 'black',
+        title: 'Confirm Deletion',
+        icon: 'fa fa-warning',
+        content: 'Are you sure want to remove this subject?',
+        confirmButton: 'Yes',
+        confirmButtonClass: 'btn-danger',
+        confirm: function(){
+            location.href="/subject/delete/"+ID;
+        }
+
+    });
+    return false;
+}
+function isEdit(id)
+{
+    var ID =id;
+    $.confirm({
+        theme: 'black',
+        title: 'Confirm Deletion',
+        icon: 'fa fa-warning',
+        content: 'Are you sure want to Edit this subject?',
+        confirmButton: 'Yes',
+        confirmButtonClass: 'btn-danger',
+        confirm: function(){
+            location.href="/subject/edit/"+ID;
+        }
+
+    });
+    return false;
+}
 </script>
 <!--Data Table-->
 <div class="col-md-12">
@@ -59,8 +94,8 @@ $(document).ready(function() {
                               <td>{{$sub->semester}}</td>
                               <td>{{$sub->year}}</td>
                               <td>
-                                  <a href='/subject/edit/{{ $sub->id }}' id="btnEdit" class="btn btn-primary">Edit</a>
-                                  <a href='/subject/delete/{{ $sub->id }}' id="btnDelete" class="btn btn-danger">Delete</a>
+                                  <a onclick="return isEdit({{ $sub->id }})" class="btn btn-primary">Edit</a>
+                                  <a onclick="return isDelete({{ $sub->id }})" class="btn btn-danger">Delete</a>
                               </td>
                             </tr>
                             @endforeach

@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::patch('/upload/image/{user}','UserLevelController@pictureUpload');
 
-    
+    Route::get('image/{id}', 'UserLevelController@showImage');
 
     /**
      * Request Management Routes

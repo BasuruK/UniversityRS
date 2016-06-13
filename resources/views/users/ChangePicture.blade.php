@@ -24,12 +24,11 @@
                 <h4>Upload Picture</h4>
             </div>
             <div id="validation-errors"></div>
-            <form class="form-horizontal" id="upload" method="POST" action="/upload/image/{{  $user->id  }}">
+            <form class="form-horizontal" id="upload" enctype="multipart/form-data" method="POST" action="/upload/image/{{  $user->id  }}">
                 {!! csrf_field() !!}
                 {{ method_field('PATCH') }}
                 <div class="form-group">
                     <div class="col-sm-10 ">
-                       <!--<input type="hidden" name="_token" value="{{ csrf_token() }}" />-->
                         <input type="file" name="image" id="image" />
                         <button class="btn btn-primary pull-right"> Import File </button>
                     </div>
