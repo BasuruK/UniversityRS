@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Allowed_User;
 use App\User;
+use App\Subject;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -68,30 +69,35 @@ class DatabaseSeeder extends Seeder
         $subject->semester = "1";
         $subject->subName = "Software Components";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "PDM300";
         $subject->semester = "1";
         $subject->subName = "Project Design and Management";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT300";
         $subject->semester = "2";
         $subject->subName = "Operating Systems";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT240";
         $subject->semester = "1";
         $subject->subName = "Computer Graphics and Multimedia";
         $subject->year = "2";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT200";
         $subject->semester = "2";
         $subject->subName = "Mathematics for Information Technology";
         $subject->year = "1";
+        $subject->save();
 
     }
 }
