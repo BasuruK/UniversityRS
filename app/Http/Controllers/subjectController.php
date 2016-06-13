@@ -35,7 +35,7 @@ class subjectController extends Controller
     public function addSubjects(Request $request)
     {
         $rules = array(
-            'subjectCode' => 'required',
+            'subjectCode' => 'required|unique',
             'subjectName' => 'required',
             'semester' => 'required|numeric',
             'year' => 'required|numeric'
@@ -59,6 +59,7 @@ class subjectController extends Controller
 
             $subject->save();
 
+            $request->session()->flash('alert-success', 'Subject was successful added!');
             return Redirect::route('Subjectmain');
         }
     }

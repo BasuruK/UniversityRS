@@ -68,6 +68,7 @@ class UserLevelController extends Controller
     {
         $user->name = $request['nameEdit'];
         $user->save();
+        $request->session()->flash('alert-success', 'Successfully updated the username!');
         return back();
     }
 

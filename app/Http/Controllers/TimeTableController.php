@@ -21,9 +21,10 @@ class TimeTableController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function importExcel()
+    public function importExcel(Request $request)
     {
         if(Input::hasFile('import_file'))
         {
@@ -39,7 +40,7 @@ class TimeTableController extends Controller
                 if(!empty($insert))
                 {
                     DB::table('timetable')->insert($insert);
-                    //dd('Records Inserted successfully!!!');
+                    $request->session()->flash('alert-success', 'Timetable was successful added!');
                     return back();
                 }
             }
