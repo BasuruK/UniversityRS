@@ -69,5 +69,36 @@ class DatabaseSeeder extends Seeder
         $User->admin = 1;
         $User->save();
 
+
+        $subject = new Subject();
+        $subject->subCode = "SC400";
+        $subject->semester = "1";
+        $subject->subName = "Software Components";
+        $subject->year = "3";
+
+        $subject = new Subject();
+        $subject->subCode = "PDM300";
+        $subject->semester = "1";
+        $subject->subName = "Project Design and Management";
+        $subject->year = "3";
+
+        $subject = new Subject();
+        $subject->subCode = "IT300";
+        $subject->semester = "2";
+        $subject->subName = "Operating Systems";
+        $subject->year = "3";
+
+        $subject = new Subject();
+        $subject->subCode = "IT240";
+        $subject->semester = "1";
+        $subject->subName = "Computer Graphics and Multimedia";
+        $subject->year = "2";
+
+        $subject = new Subject();
+        $subject->subCode = "IT200";
+        $subject->semester = "2";
+        $subject->subName = "Mathematics for Information Technology";
+        $subject->year = "1";
+
     }
 }
