@@ -6,6 +6,7 @@ use App\User;
 use App\Subject;
 use App\Batch;
 use App\Resource;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -56,6 +57,11 @@ class DatabaseSeeder extends Seeder
         $AllowedUser->position = 1;
         $AllowedUser->save();
 
+        $AllowedUser = new Allowed_User();
+        $AllowedUser->staff_id = "IT14000000";
+        $AllowedUser->position = 1;
+        $AllowedUser->save();
+
         $User = new User();
         $User->staff_id = "IT14020254";
         $User->name = "Basuru Kusal";
@@ -69,6 +75,14 @@ class DatabaseSeeder extends Seeder
         $User->name = "Sandamini Bandara";
         $User->email = "sheydenb31@gmail.com";
         $User->password = bcrypt("SandyB12");
+        $User->admin = 1;
+        $User->save();
+
+        $User = new User();
+        $User->staff_id = "IT14000000";
+        $User->name = "Default User";
+        $User->email = "notify.urscheduler@gmail.com";
+        $User->password = bcrypt("1234");
         $User->admin = 1;
         $User->save();
 
@@ -146,29 +160,36 @@ class DatabaseSeeder extends Seeder
         $subject->semester = "1";
         $subject->subName = "Software Components";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "PDM300";
         $subject->semester = "1";
         $subject->subName = "Project Design and Management";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT300";
         $subject->semester = "2";
         $subject->subName = "Operating Systems";
         $subject->year = "3";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT240";
         $subject->semester = "1";
         $subject->subName = "Computer Graphics and Multimedia";
         $subject->year = "2";
+        $subject->save();
 
         $subject = new Subject();
         $subject->subCode = "IT200";
         $subject->semester = "2";
         $subject->subName = "Mathematics for Information Technology";
         $subject->year = "1";
+        $subject->save();
+
+
     }
 }

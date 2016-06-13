@@ -20,7 +20,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="{{ $userData->picture }}" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="/dist/img/{{ $userData->picture }}" alt="User profile picture">
                 <div class="col-sm-offset-2 col-sm-8">
                     <a href='/profile/ChangePicture/{{  $userData->id  }}' class="btn btn-primary btn-xs btn-block"><b>Change Picture</b></a>
                 </div>
