@@ -13,9 +13,9 @@ class CreateTimetableTable extends Migration
     public function up()
     {
         Schema::create('timetable', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('year');
-            $table->string('batchNo');
+            $table->increments('id')->index();
+            $table->string('year')->index();
+            $table->string('batchNo')->index();
             $table->string('subjectCode');
             $table->string('timeSlot');
             $table->string('day');

@@ -27,11 +27,17 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/', 'UserLevelController@index'); // This route will return 2 paths depending on the Admin status
     
-    Route::get('/profile/', 'UserLevelController@profileView');
+    Route::get('/profile/', 'UserLevelController@profileView')->Name('profile');
 
     Route::patch('/profile/{user}', 'UserLevelController@editProfile');
 
     Route::patch('/profile/password/{user}', 'UserLevelController@editPassword');
+
+    Route::get('/profile/ChangePicture/{user}', 'UserLevelController@UploadPictureForm');
+
+    Route::patch('/upload/image/{user}','UserLevelController@pictureUpload');
+
+    
 
     /**
      * Request Management Routes
@@ -47,7 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/userRequest/requestForm/add','userRequestController@AddRequest');
 
     Route::get('/userRequest/requestForm/loadBatches','userRequestController@loadBatches');
-    
+
     Route::get('/userRequest/requestForm/loadHalls','userRequestController@loadAvailabeResources');
 
     Route::get('/userRequest/requestForm/loadHallsDate','userRequestController@loadAvailabeResourcesDate');
@@ -127,7 +133,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     * Batch Management Routes
     */
     
-    Route::get('/batch', 'BatchController@show')->name('batchShow');;
+    Route::get('/batch', 'BatchController@show')->name('batchShow');
     
     Route::get('/batch/new', 'BatchController@add');
     
