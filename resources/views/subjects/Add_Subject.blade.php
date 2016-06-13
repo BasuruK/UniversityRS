@@ -34,7 +34,9 @@
                   </div>
                   <div class="form-group">
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary pull-right">Add</button>
+                    <a href="/subject" class="btn btn-primary">Cancel</a>
+
                   </div>
               </div>
               </div>

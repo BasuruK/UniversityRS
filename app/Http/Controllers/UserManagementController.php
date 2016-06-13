@@ -44,7 +44,7 @@ class UserManagementController extends Controller
        * Validation for the User Add form
        */
         $this->validate($request,[
-            'staff_id'  => 'required|unique:allowed_users',
+            'staff_id'  => 'required|unique:allowed_users|max:10',
             'inputPosition'  => 'required'
         ]);
         
