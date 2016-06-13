@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
         $User->save();
 
 
+        //Subject Seeds
         $subject = new Subject();
         $subject->subCode = "SC400";
         $subject->semester = "1";
@@ -100,5 +101,44 @@ class DatabaseSeeder extends Seeder
         $subject->subName = "Mathematics for Information Technology";
         $subject->year = "1";
 
+        //Batch Seeds
+
+        $batch = new Batch();
+        $batch->batchNo = '1';
+        $batch->year = '1';
+        $batch->noOfStudents = '120';
+        $batch->save();
+
+        $batch = new Batch();
+        $batch->batchNo = '2';
+        $batch->year = '1';
+        $batch->noOfStudents = '135';
+        $batch->save();
+
+        $batch = new Batch();
+        $batch->batchNo = '3';
+        $batch->year = '1';
+        $batch->noOfStudents = '90';
+        $batch->save();
+
+        $batch = new Batch();
+        $batch->batchNo = '1';
+        $batch->year = '2';
+        $batch->noOfStudents = '70';
+        $batch->save();
+
+        $batch = new Batch();
+        $batch->batchNo = '2';
+        $batch->year = '2';
+        $batch->noOfStudents = '65';
+        $batch->save();
+
+        $batch = new Batch();
+        $batch->batchNo = '1';
+        $batch->year = '3';
+        $batch->noOfStudents = '20';
+        $batch->save();
+
+        //end of Batch seeds
     }
 }
