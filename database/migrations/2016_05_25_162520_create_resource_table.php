@@ -14,7 +14,7 @@ class CreateResourceTable extends Migration
     {
         Schema::create('resource', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('hallNo');
+            $table->string('hallNo')->index();
             $table->string('type');
             $table->string('capacity');
             $table->timestamps();
