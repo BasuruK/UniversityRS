@@ -62,5 +62,29 @@ class DatabaseSeeder extends Seeder
         $User->admin = 1;
         $User->save();
 
+        $Resource= new Resource();
+        $Resource->hallNo = "B501";
+        $Resource->type = "Lecture Hall";
+        $Resource->capacity = "100";
+        $Resource->save();
+
+        $Resource= new Resource();
+        $Resource->hallNo = "B502";
+        $Resource->type = "Lecture Hall";
+        $Resource->capacity = "130";
+        $Resource->save();
+
+        $Resource= new Resource();
+        $Resource->hallNo = "B506";
+        $Resource->type = "Lecture Hall";
+        $Resource->capacity = "70";
+        $Resource->save();
+
+        $Resource= new Resource();
+        $Resource->hallNo = "B403";
+        $Resource->type = "Lab";
+        $Resource->capacity = "46";
+        $Resource->save();
+
     }
 }
