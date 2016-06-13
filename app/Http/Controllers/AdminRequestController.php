@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Admin_Request;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Redirect;
 use App\Http\Requests;
 
@@ -91,6 +92,42 @@ class AdminRequestController extends Controller
         $admin_request->resourceID=$request['selectresEdit'];
         $admin_request->status=$request['selectStatusEdit'];
         $admin_request->save();
+
+        return redirect::route('adminRequestShow');
+    }
+
+    public function notify(Admin_Request $admin_request)
+    {
+
+        $user = \DB::table('users')
+            ->select('users.*')
+            ->where('users.staff_id','like',$admin_request->lecturerID)
+            ->get();
+
+        $user_request= \DB::table('requests')
+            ->select('requests.*')
+            ->where('requests.id','=',$admin_request->id)
+            ->get();
+
+        $user_email = array_pluck($user, 'email');
+        $request_hall = array_pluck($user_request,'resourceID');
+        $request_status = array_pluck($user_request,'status');
+        $request_date = array_pluck($user_request,'requestDate');
+        $request_timeslot = array_pluck($user_request,'timeSlot');
+        
+
+
+        Mail::send([], [], function ($message) use ($user_email,$request_hall,$request_status,$request_date,$request_timeslot) {
+            $message->to($user_email)
+                    ->subject('A Request Has Been Approved')
+
+                    ->setBody('Your Request For
+                               Resource: '.$request_hall[0].'
+                               On: '.$request_date[0].'
+                               For:  '.$request_timeslot[0].' Time Slot
+                               is '.$request_status[0]);
+        });
+
 
         return redirect::route('adminRequestShow');
     }

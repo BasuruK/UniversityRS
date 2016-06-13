@@ -181,6 +181,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::patch('/adminRequest/update/{admin_request}','AdminRequestController@update');
 
+    Route::get('/adminRequest/notify/{admin_request}','AdminRequestController@notify');
+
     //Request Management End
 
     /**
