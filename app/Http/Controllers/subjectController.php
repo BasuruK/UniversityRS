@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Subject;
 use App\Http\Requests;
 use Redirect;
+use Validator;
+use Illuminate\Support\Facades\Input;
 
 class subjectController extends Controller
 {
@@ -32,25 +34,33 @@ class subjectController extends Controller
      */
     public function addSubjects(Request $request)
     {
-        //return $request->all();
-        
-//        $this->validate($request,[
-//            'subCode'  => 'required',
-//            'subName'  => 'required',
-//            'semester'  => 'required',
-//            'year'  => 'required'
-//        ]);
-        
-        $subject = new Subject();
-        
-        $subject->subCode = $request['subjectCode'];
-        $subject->subName = $request['subjectName'];
-        $subject->semester = $request['semester'];
-        $subject->year = $request['year'];
-        
-        $subject->save();
-        
-        return Redirect::route('Subjectmain'); 
+        $rules = array(
+            'subjectCode' => 'required',
+            'subjectName' => 'required',
+            'semester' => 'required|numeric',
+            'year' => 'required|numeric'
+        );
+
+        $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'semester', 'year'), $rules);
+
+        if($validator->fails())
+        {
+            return back()->withErrors($validator);
+        }
+        else
+        {
+
+            $subject = new Subject();
+
+            $subject->subCode = $request['subjectCode'];
+            $subject->subName = $request['subjectName'];
+            $subject->semester = $request['semester'];
+            $subject->year = $request['year'];
+
+            $subject->save();
+
+            return Redirect::route('Subjectmain');
+        }
     }
 
     /**

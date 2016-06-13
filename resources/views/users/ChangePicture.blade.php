@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="box box-primary">
@@ -25,6 +26,7 @@
                     </div>
                     <div class="span8">
                         <h4>Upload Picture</h4>
+
                     </div>
                     <div id="validation-errors"></div>
                     <form class="form-horizontal" id="upload" method="POST" enctype="multipart/form-data" action="/upload/image/{{  $user->id  }}">
@@ -35,7 +37,8 @@
                             <!--<input type="hidden" name="_token" value="{{ csrf_token() }}" />-->
                                 <input type="file" name="image" id="image" />
                                 <br>
-                                <button class="btn btn-primary pull-right"> Import File </button>
+                                <button class="btn btn-primary pull-right"> Upload Picture </button>
+                                <a href="/profile" class="btn btn-primary">Cancel</a>
                             </div>
                         </div>
                     </form>

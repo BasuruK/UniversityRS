@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Allowed_User;
 use App\User;
-//use Dotenv\Validator;
-//use Faker\Provider\Image;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
@@ -15,23 +12,25 @@ use Validator;
 use Redirect;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class UserLevelController extends Controller
 {
     /**
-    * Specifies that this Controller can only be accessed if user is Authenticated.
-    */
+     * Specifies that this Controller can only be accessed if user is Authenticated.
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
-        
+
         /**
-        * If user is an admin : AdminHome will be returned else UserHome will be returned 
-        */
+         * If user is an admin : AdminHome will be returned else UserHome will be returned
+         */
         if(!Auth::user()->isAdmin())
         {
             return view('home');
@@ -41,11 +40,11 @@ class UserLevelController extends Controller
             return view('adminHome');
         }
     }
-    
+
     /**
-    * This method returns all the current authenticated user data to the
-    * user profile view
-    */
+     * This method returns all the current authenticated user data to the
+     * user profile view
+     */
     public function profileView()
     {
         $user = Auth::user();
@@ -138,18 +137,26 @@ class UserLevelController extends Controller
         $this->validate($request, [
             'image' => 'required'
         ]);
-        //if($request->hasFile('image'))
-        //{
-            $file = Input::file('image')->getRealPath();;
-            $image = Image::make($file);
-            //Response::make($image->encode('jpeg'));
-            //$user->picture = $request['image'];
-            $user->picture = $image;
+        if($request->hasFile('image'))
+        {
+            $file = Input::file('image');
+
+            $destination = '/public/Pictures/';
+
+// ex: photo-5396e3816cc3d.jpg
+            $filename = Str::lower(
+                pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)
+                .'.'
+                .$file->getClientOriginalExtension()
+            );
+            $file->move($destination, $filename);
+            $user->picture = $filename;
             $user->save();
 
             return Redirect::route('profile');
 
-        //}
+        }
 
     }
+
 }
