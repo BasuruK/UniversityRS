@@ -11,17 +11,25 @@ use Redirect;
 class ResourceController extends Controller
 {
 
- 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * displays the available resources and the form to add a resource
+     */
     public function Index()
     {
         $resources = DB::table('resource')->get();
         return view("resources.addResourceForm",compact('resources'));
     }
-    
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * Adds a new resource to the system
+     */
     public function AddResource(Request $request)
     {
         $this->validate($request,[
-            'hallNo'  => 'required|alpha_num',
+            'hallNo'  => 'required',
             'capacity'  => 'required|numeric',
         ]);
         
@@ -36,14 +44,25 @@ class ResourceController extends Controller
 
         return redirect::to('resource/show');
     }
-    
+
+    /**
+     * @param Resource $resource
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * redirects the user to a form to edit current resource details
+     */
     public function EditResourceForm(Resource $resource)
     {
        
         return view('resources.editResource',compact('resource'));  
         
     }
-    
+
+    /**
+     * @param Request $request
+     * @param Resource $resource
+     * @return mixed
+     * Updates the details of the resource as provided by the user
+     */
      public function updateResource(Request $request,Resource $resource)
     {
 
@@ -61,7 +80,12 @@ class ResourceController extends Controller
          
          return redirect::to('resource/show');
     }
-    
+
+    /**
+     * @param Resource $resource
+     * @return mixed
+     * deletes a resource from the system
+     */
     public function deleteResource(Resource $resource)
     {
         Resource::destroy($resource['id']);

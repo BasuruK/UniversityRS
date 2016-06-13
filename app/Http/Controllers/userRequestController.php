@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Input;
 use Response;
 class userRequestController extends Controller
 {
-    
-    
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *  Redirects user to the form to add a request
+     */
     public function AddRequestForm()
     {
         
@@ -22,9 +25,15 @@ class userRequestController extends Controller
         $resources=\DB::table('resource')->get();
         return view('userRequests.requestForm',compact('batches','subjects','resources','user'));
     }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     *  Adds a user request to the system
+     */
     public function AddRequest(Request $request)
     {
-        //return $request->all();
         
         $this->validate($request, [
             'selectdate'=>'required',
@@ -47,10 +56,15 @@ class userRequestController extends Controller
         
         
         $userRequest->save();
-        //return $userRequest;
+
 
         return redirect::to('/userRequest/Show/');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Display details of current requests placed by the user and the accepted requests
+     */
     public function Index()
     {
 
@@ -59,6 +73,7 @@ class userRequestController extends Controller
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
             ->select('requests.*','subject.subName','batch.batchNo')
             ->where('requests.lecturerID', \Auth::user()->staff_id)
+            ->where('requests.status','!=','Accepted')
             ->get();
         $acceptedrequests=\DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
@@ -74,6 +89,7 @@ class userRequestController extends Controller
     /**
      * @param userRequest $userRequest
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Redirects user to the edit user request form
      */
     public function EdituserRequestForm(userRequest $userRequest)
     {
@@ -82,11 +98,17 @@ class userRequestController extends Controller
         $subjects=\DB::table('subject')->get();
         $resources=\DB::table('resource')->get();
         
-        //return $userRequest;
+
         return view('userRequests.editRequest',compact('userRequest','batches','subjects','resources'));
         
     }
-    
+
+    /**
+     * @param Request $request
+     * @param userRequest $userRequest
+     * @return mixed
+     * Update the placed user request
+     */
      public function updateuserRequest(Request $request,userRequest $userRequest)
     {
           
@@ -100,7 +122,12 @@ class userRequestController extends Controller
          
          return redirect::to('/userRequest/Show/');
     }
-    
+
+    /**
+     * @param userRequest $userRequest
+     * @return mixed
+     * delete the user request from the system
+     */
     public function deleteUserRequest(userRequest $userRequest)
     {
         userRequest::destroy($userRequest['id']);
@@ -108,6 +135,10 @@ class userRequestController extends Controller
         
     }
 
+    /**
+     * @return the set of selected batches
+     * populates the batches select option according to the year selected
+     */
     public function loadBatches()
     {
         $year= Input::get('option');
@@ -120,7 +151,10 @@ class userRequestController extends Controller
 
     }
 
-
+    /**
+     * @return an array of available resources
+     * populate the resources selet option with the available resources on the date selected
+     */
     public function loadAvailabeResourcesDate()
     {
         $time= Input::get('option2');
@@ -139,13 +173,14 @@ class userRequestController extends Controller
             ->lists('hallNo','id');
 
 
-        //return $availableHalls;
-
-
         return Response::json($availableHalls);
 
     }
 
+    /**
+     * @return an array of available resources
+     * populate the resources selet option with the available resources on the date selected and the time selected
+     */
     public function loadAvailabeResourcesTime()
     {
         $time= Input::get('option');
@@ -162,9 +197,6 @@ class userRequestController extends Controller
             ->whereNotIn('hallNo',$nonavailableHalls)
             ->orderBy('id', 'desc')
             ->lists('hallNo','id');
-
-
-        //return $availableHalls;
 
 
         return Response::json($availableHalls);

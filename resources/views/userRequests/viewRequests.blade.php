@@ -30,12 +30,15 @@
                   <div class="col-sm-12">
                       <script>
 /**
-* Initialise DataTable for Registered Users
+* Initialise DataTable for Pending requests
 */
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
-                          
+
+/**
+ * Confirmation messages for delete and edit
+ */
 function isDelete(id)
 {
     var ID =id;
@@ -119,14 +122,7 @@ function isEdit(id)
 </div><!--/.row-->
         <!----second box-->
     <div class="row">
-        <script>
-            /**
-             * Initialise DataTable for Registered Users
-             */
-            $(document).ready(function() {
-                $('#dataTableRegUsers').DataTable();
-            } );
-        </script>
+
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Accepted Requests</h3>
@@ -140,11 +136,19 @@ function isEdit(id)
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                            <script>
+                                /**
+                                 * Initialise DataTable for Accepted requests Users
+                                 */
+                                $(document).ready(function() {
+                                    $('#dataTableRegUsers').DataTable();
+                                } );
+                            </script>
                             <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Hall Number</th>
+                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall Number</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Batch</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Year</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
