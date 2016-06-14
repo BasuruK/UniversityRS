@@ -36,7 +36,7 @@ class subjectController extends Controller
     public function addSubjects(Request $request)
     {
         $rules = array(
-            'subjectCode' => 'required|unique',
+            'subjectCode' => 'required',
             'subjectName' => 'required',
             'semester' => 'required|numeric',
             'year' => 'required|numeric'
@@ -83,7 +83,13 @@ class subjectController extends Controller
      */
     public function editSubjects(Request $request, Subject $subject)
     {
-        $subject->update($request->all());
+        //$subject->update($request->all());
+        $subject->subCode = $request['subjectCode'];
+        $subject->subName = $request['subjectName'];
+        $subject->semester = $request['semester'];
+        $subject->year = $request['year'];
+
+        $subject->save();
         
         return Redirect::route('Subjectmain'); 
     }
