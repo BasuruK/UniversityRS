@@ -14,6 +14,7 @@ class TimeTableController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * time table upload view
      */
     public function ImportExport()
     {
@@ -21,9 +22,11 @@ class TimeTableController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * to store the timetable using an excel sheet
      */
-    public function importExcel()
+    public function importExcel(Request $request)
     {
         if(Input::hasFile('import_file'))
         {
@@ -40,7 +43,7 @@ class TimeTableController extends Controller
                 if(!empty($insert))
                 {
                     DB::table('timetable')->insert($insert);
-                    //dd('Records Inserted successfully!!!');
+                    $request->session()->flash('alert-success', 'Timetable was successful added!');
                     return back();
                 }
             }
