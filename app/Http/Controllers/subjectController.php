@@ -31,6 +31,7 @@ class subjectController extends Controller
     /**
      * @param Request $request
      * @return mixed
+     * Add subjects to the system by providing subject details
      */
     public function addSubjects(Request $request)
     {
@@ -45,6 +46,7 @@ class subjectController extends Controller
 
         if($validator->fails())
         {
+            $request->session()->flash('alert-danger', 'Cannot have empty fields!!');
             return back()->withErrors($validator);
         }
         else
@@ -67,6 +69,7 @@ class subjectController extends Controller
     /**
      * @param Subject $subject
      * @return $this
+     * edit subject view
      */
     public function edit(Subject $subject)
     {

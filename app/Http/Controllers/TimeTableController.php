@@ -14,6 +14,7 @@ class TimeTableController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * time table upload view
      */
     public function ImportExport()
     {
@@ -23,6 +24,7 @@ class TimeTableController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * to store the timetable using an excel sheet
      */
     public function importExcel(Request $request)
     {
