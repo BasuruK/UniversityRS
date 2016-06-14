@@ -300,6 +300,7 @@ desired effect
             <li><a href="/resource/show">Resource Management</a></li>
             <li><a href="/subject">Subject Management</a></li>
             <li><a href="/batch">Batch Management</a></li>
+            <li><a href="/timetable">Timetable Management</a></li>
           </ul>
         </li>
         <li><a href="#"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>
