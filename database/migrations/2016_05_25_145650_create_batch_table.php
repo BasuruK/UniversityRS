@@ -13,7 +13,7 @@ class CreateBatchTable extends Migration
     public function up()
     {
         Schema::create('batch', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->index();
             $table->string('year')->index();
             $table->string('noOfStudents');
             $table->string('batchNo')->index();

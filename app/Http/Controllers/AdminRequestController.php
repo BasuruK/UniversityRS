@@ -23,7 +23,6 @@ class AdminRequestController extends Controller
             ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
             ->join('users', 'requests.lecturerID','=', 'users.staff_id')
             ->select('requests.*','subject.subName','resource.hallNo','users.name')
-            ->wherein('status',['Approved','Pending'])
             ->get();
 
         /*$c_requests = \DB::table('requests')
@@ -34,6 +33,7 @@ class AdminRequestController extends Controller
             ->where('status','Pending')
             ->get();*/
 
+        
         return view("adminRequests.admin_request_main",compact('requests'));
     }
 

@@ -11,9 +11,33 @@
 
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        Admin Level
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>User Management</h3>
+
+                        <p>User Registrations</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="/UserManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>Resource Management</h3>
+
+                    <p>Resource Management</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="/resource/show" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
     </div>
-</div>
 @endsection

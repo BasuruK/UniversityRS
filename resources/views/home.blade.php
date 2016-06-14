@@ -14,8 +14,33 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
-       User Level
+        <div class="row">
+            <div class="col-md-3">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>Requests</h3>
+
+                        <p>Place Requests</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-aperture"></i>
+                    </div>
+                    <a href="/userRequest/requestForm" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>My Requests</h3>
+
+                        <p>View Requests</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-map"></i>
+                    </div>
+                    <a href="/userRequest/Show" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
     </div>
 </div>
 @endsection
