@@ -170,7 +170,7 @@ class userRequestController extends Controller
         $availableHalls=DB::table('resource')
             ->whereNotIn('hallNo',$nonavailableHalls)
             ->orderBy('id', 'desc')
-            ->lists('hallNo','id');
+            ->lists('type','hallNo');
 
 
         return Response::json($availableHalls);
@@ -196,11 +196,13 @@ class userRequestController extends Controller
         $availableHalls=DB::table('resource')
             ->whereNotIn('hallNo',$nonavailableHalls)
             ->orderBy('id', 'desc')
-            ->lists('hallNo','id');
+            ->lists('type','hallNo');
 
 
         return Response::json($availableHalls);
 
     }
+
+    
     
 }

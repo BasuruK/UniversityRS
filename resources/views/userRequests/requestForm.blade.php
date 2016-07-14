@@ -61,16 +61,64 @@
                     <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
                 </div>
 
+                      {{--Select time slot type--}}
+                      <div class="form-group">
+                          <label>Time Slot Type</label>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="SlotType" id="SlotType1" value="1"  onclick="setSelect('1hr')" >
+                                  One hour Slot
+                              </label>
+                          </div>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="SlotType" id="SlotType2" value="2"  onclick="setSelect('2hr')" checked>
+                                  Two Hour Slot
+                              </label>
+                          </div>
+
+                      </div>
+
+                      <script>
+                          /**
+                           * Dynamically populate the select options for timeslots
+                           */
+                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-1.30','1.30-2.30','2.30-3.30','3.30-4.30','4.30-5.30'];
+                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','1.30-3.30','3.30-5.30'];
+
+
+                          function setSelect(v) {
+                              var x = document.getElementById("selecttime");
+                              for (i = 0; i < x.length; ) {
+                                  x.remove(x.length -1);
+                              }
+                              var a;
+                              if (v=='1hr'){
+                                  a = OneHourSet;
+                              } else if (v=='2hr'){
+                                  a = TwoHourSet
+                              }
+                              for (i = 0; i < a.length; ++i) {
+                                  var option = document.createElement("option");
+                                  option.text = a[i];
+                                  x.add(option);
+                              }
+                          }
+                          function load() {
+                              setSelect('2hr');
+                          }
+                          window.onload = load;
+
+
+
+                      </script>
+
+
                       <!-- select Time Slot  -->
                       <div class="form-group">
                           <label>Time Slot</label>
                           <select class="form-control" name="selecttime" id="selecttime">
-                              <option value="">Please Select</option>
-                              <option value="8.30-10.30">8.30-10.30</option>
-                              <option value="10.30-12.30">10.30-12.30</option>
-                              <option value="12.30-1.30">12.30-1.30</option>
-                              <option value="1.30-3.30">1.30-3.30</option>
-                              <option value="3.30-5.30">3.30-5.30</option>
+
                           </select>
                       </div>
 
@@ -97,9 +145,9 @@
 
                                                           .append($("<option></option>")
 
-                                                                  .attr("value",value)
+                                                                  .attr("value",key)
 
-                                                                  .text(value));
+                                                                  .text(key+value));
                                               });
 
                                           });
@@ -176,9 +224,9 @@
 
                                                           .append($("<option></option>")
 
-                                                                  .attr("value",value)
+                                                                  .attr("value",key)
 
-                                                                  .text(value));
+                                                                  .text(key+value));
                                               });
 
                                           });
@@ -208,9 +256,11 @@
                 </div>
 
 
+
                    <!-- select Hall -->
                 <div class="form-group">
                   <label>Lecture Hall/Lab</label>
+
                   <select class="form-control" name="selectres" id="selectres">
                       <option value="">Please select</option>
                   </select>
