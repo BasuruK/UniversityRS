@@ -53,7 +53,7 @@
                         </script>
                     </div>
                 </div> 
-                  
+
                   <div class="form-group"  hidden="">
                     <input type="text"  class="form-control"  name="userID" value="{{Auth::user()->id}}">
                 </div> 
@@ -76,7 +76,49 @@
                                   Two Hour Slot
                               </label>
                           </div>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="SlotType" id="SlotType3" value="3"  onclick="setSelect('other')" >
+                                  Special events
+                              </label>
+                          </div>
 
+                      </div>
+
+                      <div  class="form-group">
+                          <label>Start Time</label>
+                          <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
+
+                          <script>
+                              $('input[name="selectTimeSpecialST"]').timepicker({
+                                  timeFormat: 'h:mm ',
+                                  interval: 30,
+                                  minTime: '60',
+                                  maxTime: '6:00pm',
+                                  defaultTime: '8.30',
+                                  startTime: '8:30',
+                                  dynamic: true,
+                                  dropdown: true,
+                                  scrollbar: true
+                              });
+                          </script>
+
+                          <label>End Time</label>
+                          <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+
+                          <script>
+                              $('input[name="selectTimeSpecialEN"]').timepicker({
+                                  timeFormat: 'h:mm ',
+                                  interval: 30,
+                                  minTime: '60',
+                                  maxTime: '6:00pm',
+                                  defaultTime: '9.30',
+                                  startTime: '9:30',
+                                  dynamic: true,
+                                  dropdown: true,
+                                  scrollbar: true
+                              });
+                          </script>
                       </div>
 
                       <script>
@@ -94,9 +136,17 @@
                               }
                               var a;
                               if (v=='1hr'){
+                                  document.getElementById("selectTimeSpecialST").disabled = true;
+                                  document.getElementById("selectTimeSpecialEN").disabled = true;
                                   a = OneHourSet;
                               } else if (v=='2hr'){
+                                  document.getElementById("selectTimeSpecialST").disabled = true;
+                                  document.getElementById("selectTimeSpecialEN").disabled = true;
                                   a = TwoHourSet
+                              }
+                              else if (v=='other'){
+                                  document.getElementById("selectTimeSpecialST").disabled = false;
+                                  document.getElementById("selectTimeSpecialEN").disabled = false;
                               }
                               for (i = 0; i < a.length; ++i) {
                                   var option = document.createElement("option");
@@ -110,9 +160,16 @@
                           window.onload = load;
 
 
-
                       </script>
+<script>
 
+        $('#selectTimeSpecialEN').change(function()
+        {
+            alert("LOL");
+
+
+        });
+</script>
 
                       <!-- select Time Slot  -->
                       <div class="form-group">
@@ -130,6 +187,7 @@
                           $(document).ready(function()
                           {
                               $('#selectdate').change(function(){
+
 
                                   $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
 
