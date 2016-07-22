@@ -23,7 +23,7 @@
   <!-- Date Range Picker -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
   <!-- Include Time Picker CSS -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+  <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
 
   <!-- REQUIRED JS SCRIPTS -->
 
@@ -45,7 +45,7 @@
   <!-- Include Date Range Picker -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
   <!-- Include Time Picker -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
 
 
   

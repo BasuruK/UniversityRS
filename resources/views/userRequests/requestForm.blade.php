@@ -90,34 +90,20 @@
                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
 
                           <script>
-                              $('input[name="selectTimeSpecialST"]').timepicker({
-                                  timeFormat: 'h:mm ',
-                                  interval: 30,
-                                  minTime: '60',
-                                  maxTime: '6:00pm',
-                                  defaultTime: '8.30',
-                                  startTime: '8:30',
-                                  dynamic: true,
-                                  dropdown: true,
-                                  scrollbar: true
-                              });
+                              $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
+                                  'maxTime': '4:30', });
+
+
+
                           </script>
 
                           <label>End Time</label>
                           <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
 
                           <script>
-                              $('input[name="selectTimeSpecialEN"]').timepicker({
-                                  timeFormat: 'h:mm ',
-                                  interval: 30,
-                                  minTime: '60',
-                                  maxTime: '6:00pm',
-                                  defaultTime: '9.30',
-                                  startTime: '9:30',
-                                  dynamic: true,
-                                  dropdown: true,
-                                  scrollbar: true
-                              });
+                              $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
+                                  'maxTime': '5:30',});
+
                           </script>
                       </div>
 
@@ -160,17 +146,88 @@
                           window.onload = load;
 
 
+
+
                       </script>
-<script>
-
-        $('#selectTimeSpecialEN').change(function()
-        {
-            alert("LOL");
 
 
-        });
-</script>
+                        <script>
+                                    $('#selectTimeSpecialST').change(function ()
+                                    {
+                                        start_time=$('#selectTimeSpecialST').val();
+                                        end_time=$('#selectTimeSpecialEN').val();
+                                        var special=start_time+ "-" +end_time;
 
+
+                                        $('#selecttime').empty().append($('<option>',
+                                                {
+                                                    value: special,
+                                                    text : special
+                                                }));
+                                        $('#selecttime').val(special);
+                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
+
+                                                function(data) {
+
+                                                    var availableHalls = $('#selectres');
+
+                                                    availableHalls.empty();
+
+                                                    $.each(data, function(key, value) {
+
+                                                        availableHalls
+
+                                                                .append($("<option></option>")
+
+                                                                        .attr("value",key)
+
+                                                                        .text(key+value));
+                                                    });
+
+                                                });
+                                    });
+
+
+                        </script>
+
+                      <script>
+                          $('#selectTimeSpecialEN').change(function ()
+                          {
+
+                              start_time=$('#selectTimeSpecialST').val();
+                              end_time=$('#selectTimeSpecialEN').val();
+                              special=start_time+ "-" +end_time;
+
+
+                              $('#selecttime').empty().append($('<option>',
+                                      {
+                                          value: special,
+                                          text : special
+                                      }));
+
+                              $('#selecttime').val(special);
+                              $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
+
+                                      function(data) {
+
+                                          var availableHalls = $('#selectres');
+
+                                          availableHalls.empty();
+
+                                          $.each(data, function(key, value) {
+
+                                              availableHalls
+
+                                                      .append($("<option></option>")
+
+                                                              .attr("value",key)
+
+                                                              .text(key+value));
+                                          });
+
+                                      });
+                          });
+                      </script>
                       <!-- select Time Slot  -->
                       <div class="form-group">
                           <label>Time Slot</label>
@@ -187,6 +244,7 @@
                           $(document).ready(function()
                           {
                               $('#selectdate').change(function(){
+
 
 
                                   $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
@@ -214,6 +272,7 @@
 
                           });
                       </script>
+
                 <!-- select Year  -->
                 <div class="form-group">
                   <label>Year</label>
