@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // Commands\Inspire::class,
+         Commands\Inspire::class,
     ];
 
     /**
@@ -25,6 +27,22 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')
-        //          ->hourly();
+        // ->everyMinute();
+
+
+        $schedule->call(function () {
+             
+            $date = Carbon::now()->toDateString();
+
+            $name = "Basuru Kusal";
+            $email = "bestbasuru@live.com";
+            
+            Mail::send('email.deadlineNotification',['date' => $date],function ($message) use($name,$email) {
+                $message->from('notify.urscheduler@gmail.com','Admin');
+                $message->to($email,$name);
+                $message->subject('Deadline Notification');
+            });
+
+        })->everyMinute();
     }
 }

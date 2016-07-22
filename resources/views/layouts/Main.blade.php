@@ -21,7 +21,9 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
   <!-- Date Range Picker -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="{{ asset('css/datepicker3.css') }}">
 
   <!-- REQUIRED JS SCRIPTS -->
 
@@ -41,7 +43,10 @@
   <!-- Select2 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <!-- Include Date Range Picker -->
-  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> 
+  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <!-- Date Picker -->
+  <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+
 
 
   
@@ -268,7 +273,7 @@ desired effect
             <li><a href="/timetable">Timetable Management</a></li>
           </ul>
         </li>
-        <li><a href="#"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>
+        <li><a href="AdminOptions"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>
         @endif
       </ul>
       <!-- /.sidebar-menu -->

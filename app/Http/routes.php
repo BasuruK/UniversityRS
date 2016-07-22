@@ -195,5 +195,19 @@ Route::group(['middleware' => ['auth','admin']], function() {
     //Timetable Management End
 
 
+
+    /**
+     * Administrator Options Routes
+     */
+
+    Route::get('/AdminOptions','AdministratorOptionsController@index');
+    
+    Route::get('/AdminOptions/Send','AdministratorOptionsController@sendMail');
+    
+    Route::post('/AdminOptions/DeadlineSave','AdministratorOptionsController@deadlineSave');
+
+    Route::get('/AdminOptions/{id}/DeadlineDelete','AdministratorOptionsController@deadlineDelete');
+
+    // Administrator Options Routes End
 });
 

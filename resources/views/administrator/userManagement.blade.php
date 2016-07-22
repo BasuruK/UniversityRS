@@ -205,13 +205,13 @@
                                     @foreach($RegisteredUser as $RegUser)
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">{{ $RegUser->staff_id }}</td>
+                                            </td>
                                             <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
                                             <td>{{ $RegUser->name }}</td>
                                             <td>{{ $RegUser->email }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
                                                 <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
-                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
