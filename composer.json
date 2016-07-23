@@ -9,8 +9,7 @@
         "laravel/framework": "5.2.*",
         "almasaeed2010/adminlte": "~2.0",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "intervention/image": "dev-master",
-        "snowfire/beautymail": "dev-master"
+        "intervention/image": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

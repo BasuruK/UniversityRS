@@ -41,6 +41,21 @@
                     <a href="/userRequest/Show" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>My Timetable<sup style="font-size: 20px"></sup></h3>
+
+                        <p>View Timetable</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion-ios-calendar-outline"></i>
+                    </div>
+                    <a href="/myTables" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
     </div>
 </div>
 @endsection

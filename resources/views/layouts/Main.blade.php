@@ -258,7 +258,7 @@ desired effect
             <li class=""><a href="/userRequest/Show"></i>Current Requests</a></li>
           </ul>
         </li>
-        <li><a href="#"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>
+        <li><a href="/myTables"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>
           @endif
         @if(Auth::user()->admin == 1)
         <li class="treeview">

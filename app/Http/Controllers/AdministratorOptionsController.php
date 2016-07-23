@@ -7,7 +7,6 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests;
-use Carbon\Carbon;
 
 class AdministratorOptionsController extends Controller
 {
@@ -36,8 +35,7 @@ class AdministratorOptionsController extends Controller
             $name   = $UserDetails->name;
             $email  = $UserDetails->email;
 
-            $beautymail = app()->make(\Snowfire\Beautymail\Beautymail::class);
-            $beautymail->send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) {
+            Mail::send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) {
                 $message->from('notify.urscheduler@gmail.com','Admin');
                 $message->to($email,$name);
                 $message->subject('Deadline Notification');
@@ -77,5 +75,6 @@ class AdministratorOptionsController extends Controller
         $id->delete();
         return back();
     }
+    
 
 }

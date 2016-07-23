@@ -62,10 +62,13 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
 
+    // Request Management Route End
+
     /**
-     * Request Management Routes End
+     * Lecturer Timetable Management
      */
 
+    Route::get('/myTables','userTimetableController@index');
     
 
 });
