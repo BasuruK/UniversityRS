@@ -150,6 +150,18 @@ class userRequestController extends Controller
         return Response::json($selectedbatch);
 
     }
+    public function loadSubjects()
+    {
+        $year= Input::get('option');
+        $selectedSubject=\DB::table('subject')
+            ->where('year',$year)
+            ->orderBy('id', 'desc')
+            ->lists('subName','id');
+
+        return Response::json($selectedSubject);
+
+    }
+
 
     /**
      * @return an array of available resources

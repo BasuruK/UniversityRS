@@ -124,15 +124,18 @@
                               if (v=='1hr'){
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("selectsub").disabled = false;
                                   a = OneHourSet;
                               } else if (v=='2hr'){
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("selectsub").disabled = false;
                                   a = TwoHourSet
                               }
                               else if (v=='other'){
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
+                                  document.getElementById("selectsub").disabled = true;
                               }
                               for (i = 0; i < a.length; ++i) {
                                   var option = document.createElement("option");
@@ -361,17 +364,48 @@
                       <option value="">Please select</option>
                   </select>
                 </div>
-                  
+                      <script>
+                          /**
+                           * Dynamically populate the select options for subjects
+                           */
+                          $(document).ready(function()
+                          {
+                              $('#selectyear').change(function(){
+
+                                  $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
+
+                                          function(data) {
+
+                                              var selectedSub = $('#selectsub');
+
+                                              selectedSub.empty();
+
+                                              $.each(data, function(key, value) {
+
+                                                  selectedSub
+
+                                                          .append($("<option></option>")
+
+                                                                  .attr("value",key)
+
+                                                                  .text(value));
+                                              });
+
+                                          });
+
+                              });
+
+                          });
+                      </script>
                   <!-- select Subject -->
                 <div class="form-group">
                   <label>Subject</label>
-                  <select class="form-control" name="selectsub">
+                  <select class="form-control" name="selectsub" id="selectsub">
                     @foreach($subjects as $subject)
                     <option value="{{$subject->id}}"> {{$subject->subName}}</option>
                     @endforeach
                   </select>
                 </div>
-
 
 
                    <!-- select Hall -->
