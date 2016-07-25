@@ -16,13 +16,16 @@ class AdminRequestController extends Controller
      * This function creates the collection of requests and pass the collection to the
      * Admin Request Management's main page.
      */
+
     public function show()
     {
         $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
             ->join('users', 'requests.lecturerID','=', 'users.staff_id')
-            ->select('requests.*','subject.subName','resource.hallNo','users.name')
+            ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
+            ->select('requests.*','subject.subName','resource.hallNo','users.name','allowed_users.position')
+            ->orderby('allowed_users.position','asc')
             ->get();
 
         /*$c_requests = \DB::table('requests')
@@ -33,7 +36,29 @@ class AdminRequestController extends Controller
             ->where('status','Pending')
             ->get();*/
 
-        
+
+        return view("adminRequests.admin_request_main",compact('requests'));
+    }
+    public function SortByDate()
+    {
+        $requests = \DB::table('requests')
+            ->join('subject', 'requests.subjectCode', '=', 'subject.id')
+            ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
+            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
+            ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
+            ->select('requests.*','subject.subName','resource.hallNo','users.name','allowed_users.position')
+            ->orderby('requests.requestDate','asc')
+            ->get();
+
+        /*$c_requests = \DB::table('requests')
+            ->join('subject', 'requests.subjectCode', '=', 'subject.id')
+            ->join('resource', 'requests.resourceID', '=', 'resource.id')
+            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
+            ->select('requests.*','subject.subName','resource.hallNo','users.name')
+            ->where('status','Pending')
+            ->get();*/
+
+
         return view("adminRequests.admin_request_main",compact('requests'));
     }
 

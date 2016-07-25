@@ -18,7 +18,11 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Requests</h3>
-                    <a href='/adminRequest/newForm' id="btnAdd" class="btn btn-primary pull-right">Add Request</a>
+                    <tr>
+                        <td><a href='/adminRequest/newForm' id="btnAdd" class="btn btn-primary pull-right">Add Request</a></td>
+                        <td><a href='/adminRequest/DateSort' id="btnDateSort" class="btn btn-primary">Sort By Date</a></td>
+                    </tr>
+
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -35,7 +39,11 @@
                                      */
                                     $(document).ready(function() {
                                         $('#dataTableRegUsers').DataTable();
+
                                     } );
+
+
+
 
                                     function isDelete(id)
                                     {

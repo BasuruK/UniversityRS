@@ -53,7 +53,7 @@
                         </script>
                     </div>
                 </div> 
-                  
+
                   <div class="form-group"  hidden="">
                     <input type="text"  class="form-control"  name="userID" value="{{Auth::user()->id}}">
                 </div> 
@@ -76,7 +76,35 @@
                                   Two Hour Slot
                               </label>
                           </div>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="SlotType" id="SlotType3" value="3"  onclick="setSelect('other')" >
+                                  Special events
+                              </label>
+                          </div>
 
+                      </div>
+
+                      <div  class="form-group">
+                          <label>Start Time</label>
+                          <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
+
+                          <script>
+                              $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
+                                  'maxTime': '4:30', });
+
+
+
+                          </script>
+
+                          <label>End Time</label>
+                          <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+
+                          <script>
+                              $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
+                                  'maxTime': '5:30',});
+
+                          </script>
                       </div>
 
                       <script>
@@ -94,9 +122,20 @@
                               }
                               var a;
                               if (v=='1hr'){
+                                  document.getElementById("selectTimeSpecialST").disabled = true;
+                                  document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("selectsub").disabled = false;
                                   a = OneHourSet;
                               } else if (v=='2hr'){
+                                  document.getElementById("selectTimeSpecialST").disabled = true;
+                                  document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("selectsub").disabled = false;
                                   a = TwoHourSet
+                              }
+                              else if (v=='other'){
+                                  document.getElementById("selectTimeSpecialST").disabled = false;
+                                  document.getElementById("selectTimeSpecialEN").disabled = false;
+                                  document.getElementById("selectsub").disabled = true;
                               }
                               for (i = 0; i < a.length; ++i) {
                                   var option = document.createElement("option");
@@ -111,9 +150,87 @@
 
 
 
+
                       </script>
 
 
+                        <script>
+                                    $('#selectTimeSpecialST').change(function ()
+                                    {
+                                        start_time=$('#selectTimeSpecialST').val();
+                                        end_time=$('#selectTimeSpecialEN').val();
+                                        var special=start_time+ "-" +end_time;
+
+
+                                        $('#selecttime').empty().append($('<option>',
+                                                {
+                                                    value: special,
+                                                    text : special
+                                                }));
+                                        $('#selecttime').val(special);
+                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
+
+                                                function(data) {
+
+                                                    var availableHalls = $('#selectres');
+
+                                                    availableHalls.empty();
+
+                                                    $.each(data, function(key, value) {
+
+                                                        availableHalls
+
+                                                                .append($("<option></option>")
+
+                                                                        .attr("value",key)
+
+                                                                        .text(key+value));
+                                                    });
+
+                                                });
+                                    });
+
+
+                        </script>
+
+                      <script>
+                          $('#selectTimeSpecialEN').change(function ()
+                          {
+
+                              start_time=$('#selectTimeSpecialST').val();
+                              end_time=$('#selectTimeSpecialEN').val();
+                              special=start_time+ "-" +end_time;
+
+
+                              $('#selecttime').empty().append($('<option>',
+                                      {
+                                          value: special,
+                                          text : special
+                                      }));
+
+                              $('#selecttime').val(special);
+                              $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
+
+                                      function(data) {
+
+                                          var availableHalls = $('#selectres');
+
+                                          availableHalls.empty();
+
+                                          $.each(data, function(key, value) {
+
+                                              availableHalls
+
+                                                      .append($("<option></option>")
+
+                                                              .attr("value",key)
+
+                                                              .text(key+value));
+                                          });
+
+                                      });
+                          });
+                      </script>
                       <!-- select Time Slot  -->
                       <div class="form-group">
                           <label>Time Slot</label>
@@ -130,6 +247,8 @@
                           $(document).ready(function()
                           {
                               $('#selectdate').change(function(){
+
+
 
                                   $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
 
@@ -156,6 +275,7 @@
 
                           });
                       </script>
+
                 <!-- select Year  -->
                 <div class="form-group">
                   <label>Year</label>
@@ -244,17 +364,48 @@
                       <option value="">Please select</option>
                   </select>
                 </div>
-                  
+                      <script>
+                          /**
+                           * Dynamically populate the select options for subjects
+                           */
+                          $(document).ready(function()
+                          {
+                              $('#selectyear').change(function(){
+
+                                  $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
+
+                                          function(data) {
+
+                                              var selectedSub = $('#selectsub');
+
+                                              selectedSub.empty();
+
+                                              $.each(data, function(key, value) {
+
+                                                  selectedSub
+
+                                                          .append($("<option></option>")
+
+                                                                  .attr("value",key)
+
+                                                                  .text(value));
+                                              });
+
+                                          });
+
+                              });
+
+                          });
+                      </script>
                   <!-- select Subject -->
                 <div class="form-group">
                   <label>Subject</label>
-                  <select class="form-control" name="selectsub">
+                  <select class="form-control" name="selectsub" id="selectsub">
                     @foreach($subjects as $subject)
                     <option value="{{$subject->id}}"> {{$subject->subName}}</option>
                     @endforeach
                   </select>
                 </div>
-
 
 
                    <!-- select Hall -->

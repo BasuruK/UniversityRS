@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/userRequest/requestForm/loadBatches','userRequestController@loadBatches');
 
+    Route::get('/userRequest/requestForm/loadSubjects','userRequestController@loadSubjects');
+
     Route::get('/userRequest/requestForm/loadHalls','userRequestController@loadAvailabeResources');
 
     Route::get('/userRequest/requestForm/loadHallsDate','userRequestController@loadAvailabeResourcesDate');
@@ -175,6 +177,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/adminRequest', 'AdminRequestController@show')->name('adminRequestShow');
 
     Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
+
+    Route::get('/adminRequest/DateSort', 'AdminRequestController@SortByDate');
     
     Route::post('/adminRequest/add', 'AdminRequestController@add');
     
