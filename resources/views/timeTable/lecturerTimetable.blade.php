@@ -31,29 +31,76 @@
                             <th>Saturday</th>
                             <th>Sunday</th>
                         </tr>
+
                         @foreach($fullTimeTable as $timeTable)
 
                         <!-- Time -->
                         <tr>
                             <td>{{ $timeTable->time }}</td>
                             <!-- Monday -->
-                            <td>{{ $timeTable->monday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-monday"> </td>
                             <!-- Tuesday -->
-                            <td>{{ $timeTable->tuesday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-tuesday"> </td>
                             <!-- Wednesday -->
-                            <td>{{ $timeTable->wednesday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-wednesday"> </td>
                             <!-- Thursday -->
-                            <td>{{ $timeTable->thursday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-thursday"> </td>
                             <!-- Friday -->
-                            <td>{{ $timeTable->friday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-friday"> </td>
                             <!-- Saturday -->
-                            <td>{{ $timeTable->saturday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-saturday"> </td>
                             <!-- Sunday -->
-                            <td>{{ $timeTable->sunday }}</td>
+                            <td id="{{ $timeTable->time24Format }}-sunday"> </td>
                         </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    <script>
+
+                        var LecturerTimeData = 0;
+                        LecturerTimeData = <?php echo json_encode($LecturesTimeDetails) ?>;
+                        //console.log(LecturerTimeData);
+
+                        try {
+                            for (var i = 0; i < 9; i++) {
+
+                                timeSlotFromDatabase = LecturerTimeData[i].timeSlot;
+                                durationFrom = timeSlotFromDatabase.split(" ")[0];
+                                durationTo = timeSlotFromDatabase.split(" ")[2];
+                                //console.log(durationFrom + " - " + durationTo);
+                                totalHoursNeed = durationTo - durationFrom;
+
+                                //console.log("start Time : " + durationFrom);
+                                //console.log("duration  : " + totalHoursNeed);
+
+                                endTimeOfPeriod = parseFloat(durationFrom) + totalHoursNeed;
+
+                                //
+
+                                /**
+                                 * 1. make start time end time pairs as hourly.
+                                 * 2. assign it to the id of the field.
+                                 * 3.  assign days array values to get the day.
+                                 *
+                                 */
+
+                                for (var k = 0; k < totalHoursNeed; k++) {
+
+                                    hourlyTime = parseFloat(durationFrom) + 1;
+                                    timeOfBeginingAndEnd = durationFrom + " " + "-" + " " + hourlyTime + "0";
+                                    //console.log("Final Output : " + timeOfBeginingAndEnd);
+                                    durationFrom = parseFloat(durationFrom) + 1 + ("0");
+
+                                    document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).innerHTML = LecturerTimeData[i].subjectCode + " | " + LecturerTimeData[i].resourceName + "<br>Year : " + LecturerTimeData[i].year + "  " + "Batch : " + LecturerTimeData[i].batchNo;
+                                }
+
+                            }
+                        }
+                        catch (exception)
+                        {
+                            //ignore the errors
+                        }
+                    </script>
                 </div>
                 <!-- /.box-body -->
             </div>

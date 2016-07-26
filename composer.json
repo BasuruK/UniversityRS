@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "almasaeed2010/adminlte": "~2.0",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "intervention/image": "dev-master"
+        "intervention/image": "dev-master",
+        "laracasts/utilities": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

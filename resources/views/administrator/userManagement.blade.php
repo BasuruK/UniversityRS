@@ -170,9 +170,6 @@
                 return false;
             }
 
-
-
-
         </script>
 
 
@@ -233,10 +230,12 @@
         </div>
         <!--/.Data Table-->
 
+    </div> <!--/.row-->
 
+<div class="row">
 
         <!--Data Table-->
-        <div class="col-md-4">
+        <div class="col-md-8 col-md-offset-4">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Authorized Users</h3>
@@ -291,6 +290,6 @@
             </div> <!--/.box-->
         </div>
         <!--/.Data Table-->
+</div>
 
-    </div> <!--/.row-->
 @endsection

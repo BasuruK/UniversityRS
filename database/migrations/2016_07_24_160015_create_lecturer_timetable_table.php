@@ -15,13 +15,7 @@ class CreateLecturerTimetableTable extends Migration
         Schema::create('lecturer_timetable', function (Blueprint $table) {
             $table->increments('id');
             $table->string('time');
-            $table->string('monday')->nullable();
-            $table->string('tuesday')->nullable();
-            $table->string('wednesday')->nullable();
-            $table->string('thursday')->nullable();
-            $table->string('friday')->nullable();
-            $table->string('saturday')->nullable();
-            $table->string('sunday')->nullable();
+            $table->string('time24Format');
             $table->timestamps();
         });
     }
