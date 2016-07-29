@@ -20,7 +20,7 @@
                     <h3 class="box-title">Requests</h3>
                     <tr>
                         <td><a href='/adminRequest/newForm' id="btnAdd" class="btn btn-primary pull-right">Add Request</a></td>
-                        <td><a href='/adminRequest/DateSort' id="btnDateSort" class="btn btn-primary">Sort By Date</a></td>
+                        <td><a href='/adminRequest/BatchSort' id="btnDateSort" class="btn btn-primary">Sort By Batch</a></td>
                     </tr>
 
                 </div>

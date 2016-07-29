@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function() {
      * Request Management Routes
      */
     Route::get('/userRequest/requestForm/','userRequestController@AddRequestForm');
+    
+    Route::get('/userRequest/requestFormSemester/','userRequestController@AddRequestFormSemester');
 
     Route::get('/userRequest/Show/','userRequestController@Index');
 
@@ -178,7 +180,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
 
-    Route::get('/adminRequest/DateSort', 'AdminRequestController@SortByDate');
+    Route::get('/adminRequest/BatchSort', 'AdminRequestController@SortByBatchYear');
     
     Route::post('/adminRequest/add', 'AdminRequestController@add');
     

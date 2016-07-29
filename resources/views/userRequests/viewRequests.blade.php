@@ -73,6 +73,12 @@ function isEdit(id)
     });
     return false;
 }
+{{--function LoadEdit(id) {--}}
+    {{--var ID=id;--}}
+
+    {{--$.get("{{ url('/userRequest/Edit/loadEditDetails')}}", {option:id})--}}
+{{--}--}}
+
                       </script>
                       <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                         <thead>

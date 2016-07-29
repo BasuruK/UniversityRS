@@ -26,6 +26,15 @@ class userRequestController extends Controller
         return view('userRequests.requestForm',compact('batches','subjects','resources','user'));
     }
 
+    public function AddRequestFormSemester()
+    {
+
+        $batches=\DB::table('batch')->get();
+        $subjects=\DB::table('subject')->get();
+        $resources=\DB::table('resource')->get();
+        return view('userRequests.semesterRequestForm',compact('batches','subjects','resources','user'));
+    }
+
 
     /**
      * @param Request $request
@@ -86,6 +95,7 @@ class userRequestController extends Controller
         return view('userRequests.viewRequests',compact('requests','acceptedrequests'));
     }
 
+
     /**
      * @param userRequest $userRequest
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -97,9 +107,12 @@ class userRequestController extends Controller
         $batches=\DB::table('batch')->get();
         $subjects=\DB::table('subject')->get();
         $resources=\DB::table('resource')->get();
-        
 
-        return view('userRequests.editRequest',compact('userRequest','batches','subjects','resources'));
+        $selectedSub=\DB::table('subject')
+            ->where('id',$userRequest->subjectCode)
+            ->first();
+
+        return view('userRequests.editRequest',compact('userRequest','batches','subjects','resources','selectedSub'));
         
     }
 
@@ -111,7 +124,14 @@ class userRequestController extends Controller
      */
      public function updateuserRequest(Request $request,userRequest $userRequest)
     {
-          
+
+        $this->validate($request, [
+            'selectdateEdit'=>'required',
+            'selectyearEdit'=>'required',
+            'selectbatchEdit'=>'required',
+            'selecttimeEdit'=>'required',
+            'selectresEdit'=>'required',
+        ]);
          $userRequest->year=$request['selectyearEdit'];
          $userRequest->batchNo=$request['selectbatchEdit'];
          $userRequest->subjectCode=$request['selectsubEdit'];

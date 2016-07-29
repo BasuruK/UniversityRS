@@ -111,8 +111,8 @@
                           /**
                            * Dynamically populate the select options for timeslots
                            */
-                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-1.30','1.30-2.30','2.30-3.30','3.30-4.30','4.30-5.30'];
-                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','1.30-3.30','3.30-5.30'];
+                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
+                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
 
 
                           function setSelect(v) {
@@ -147,10 +147,6 @@
                               setSelect('2hr');
                           }
                           window.onload = load;
-
-
-
-
                       </script>
 
 
@@ -231,6 +227,7 @@
                                       });
                           });
                       </script>
+
                       <!-- select Time Slot  -->
                       <div class="form-group">
                           <label>Time Slot</label>
@@ -384,6 +381,7 @@
 
                                                   selectedSub
 
+
                                                           .append($("<option></option>")
 
                                                                   .attr("value",key)
@@ -397,13 +395,12 @@
 
                           });
                       </script>
+
                   <!-- select Subject -->
                 <div class="form-group">
                   <label>Subject</label>
                   <select class="form-control" name="selectsub" id="selectsub">
-                    @foreach($subjects as $subject)
-                    <option value="{{$subject->id}}"> {{$subject->subName}}</option>
-                    @endforeach
+                      <option value="">Please select</option>
                   </select>
                 </div>
 
@@ -428,9 +425,16 @@
                               </ul>
                           </div>
                       @endif
+<script>
+    function Success()
+    {
+        $notify("Your request has been successfully logged", "success",
+                {position:"center"}
+        );
+    }
+</script>
 
-
-                      <button type="submit " class="btn btn-primary pull-right">Submit</button>
+                      <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
               </form>
             </div>
             <!-- /.box-body -->

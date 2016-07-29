@@ -50,6 +50,8 @@
   <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <!-- Include Time Picker -->
   <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
+  <script src="{{ asset('js/notify.min.js') }}"></script>
+  <script src="{{ asset('js/notify.js') }}"></script>
 
   
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
