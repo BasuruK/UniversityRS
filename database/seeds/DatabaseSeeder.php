@@ -16,27 +16,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //Priority Seeds
         DB::table('priority')->insert([
             'priorityName' => 'Administrator',
             'priorityValue' => '100',
         ]);
         DB::table('priority')->insert([
-            'priorityName' => 'Professor',
+            'priorityName' => 'Dean',
             'priorityValue' => '10',
         ]);
         DB::table('priority')->insert([
-            'priorityName' => 'Doctor',
+            'priorityName' => 'Professor',
             'priorityValue' => '9',
         ]);
         DB::table('priority')->insert([
-            'priorityName' => 'Senior Lecturer',
+            'priorityName' => 'Doctor',
             'priorityValue' => '8',
         ]);
         DB::table('priority')->insert([
-            'priorityName' => 'Assistant Lecturer',
+            'priorityName' => 'Senior Lecturer',
             'priorityValue' => '7',
         ]);
+        DB::table('priority')->insert([
+            'priorityName' => 'Assistant Lecturer',
+            'priorityValue' => '6',
+        ]);
 
+        //Allowed User Seeds
         $AllowedUser = new Allowed_User();
         $AllowedUser->staff_id = "IT14020254";
         $AllowedUser->position = 1;
@@ -62,6 +68,7 @@ class DatabaseSeeder extends Seeder
         $AllowedUser->position = 1;
         $AllowedUser->save();
 
+        //Registered User seeds
         $User = new User();
         $User->staff_id = "IT14020254";
         $User->name = "Basuru Kusal";
@@ -191,5 +198,85 @@ class DatabaseSeeder extends Seeder
         $subject->save();
 
 
+        // Time Seeds
+        
+        DB::table('timeFormatTable')->insert([
+            'time' => '8.30 - 9.30',
+            'time24Format' => '8.30 - 9.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '9.30 - 10.30',
+            'time24Format' => '9.30 - 10.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '10.30 - 11.30',
+            'time24Format' => '10.30 - 11.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '11.30 - 12.30',
+            'time24Format' => '11.30 - 12.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '12.30 - 1.30',
+            'time24Format' => '12.30 - 13.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '1.30 - 2.30',
+            'time24Format' => '13.30 - 14.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '2.30 - 3.30',
+            'time24Format' => '14.30 - 15.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '3.30 - 4.30',
+            'time24Format' => '15.30 - 16.30',
+        ]);
+        
+        DB::table('timeFormatTable')->insert([
+            'time' => '4.30 - 5.30',
+            'time24Format' => '16.30 - 17.30',
+        ]);
+
+        //Timetable Seeds
+
+        DB::table('timetable')->insert([
+            'year' => '3',
+            'batchNo' => '1',
+            'subjectCode' => 'SC400',
+            'timeSlot' => '8.30 - 10.30',
+            'day' => 'monday',
+            'resourceName' => 'B509',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3',
+            'batchNo' => '1',
+            'subjectCode' => 'PDM3000',
+            'timeSlot' => '8.30 - 10.30',
+            'day' => 'thursday',
+            'resourceName' => 'B502',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3',
+            'batchNo' => '1',
+            'subjectCode' => 'SM220',
+            'timeSlot' => '13.30 - 15.30',
+            'day' => 'wednesday',
+            'resourceName' => 'B307',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        
     }
 }

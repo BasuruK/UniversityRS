@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Allowed_User;
+
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +14,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use DB;
 
 class UserLevelController extends Controller
 {
@@ -33,7 +34,8 @@ class UserLevelController extends Controller
          */
         if(!Auth::user()->isAdmin())
         {
-            return view('home');
+            $adminOptionsSemesterReqForm = DB::table('administrator_options')->where('id',1)->value('semesterRequestForm');
+            return view('home')->with('SemesterRegForm', $adminOptionsSemesterReqForm);
         }
         else
         {

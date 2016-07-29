@@ -148,20 +148,184 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- /.box-body -->
+                </div> <!-- /.box-body -->
             </div> <!--/.box-->
-        </div>
-        <!--/.Data Table-->
+        </div> <!--/.Data Table-->
 
+    </div>
 
         <script>
+
         //Date picker initializer
         $('#datepicker').datepicker({
             autoclose: true,
             startDate: '-0d'
         });
+
+        //Check box for Semester vice form
+        $(document).ready(function(){
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-purple',
+                radioClass: 'iradio_square-red',
+                increaseArea: '20%' // optional
+            });
+        });
+
+
     </script>
 
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <i class="fa fa-gears"></i>
+                    <h3 class="box-title">Options</h3> <small> *Enable or disable options</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <input type="checkbox" id="semesterRegForm"> <i id="enableOrDisableSemRegForm" style="padding-left: 3%;"> Enable semester registration form </i>
+                    <br><br>
+                    <input type="checkbox" id="SMSNotification"> <i id="enableOrDisableSMSNotifications" style="padding-left: 3%;"> Enable SMS notifications for users </i>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        //Check for already selected variables
+        adminOptionsFromServer = <?php echo json_encode($AdminOptions) ?>;
+        var cancelEvent = 0; // cancelEvent variable stops notify js popup if user press cancel in the alert message.
+
+
+        //Semester vice form
+        if(adminOptionsFromServer.semesterRequestForm == 1)
+        {
+            $('#semesterRegForm').iCheck('check');
+            document.getElementById("enableOrDisableSemRegForm").innerHTML = "Disable semester registration form";
+        }
+
+        //Ajax call for checkbox check Semester vice Reg form
+        $('#semesterRegForm').on('ifChecked', function(event){
+
+            cancelEvent = 1;
+                $.confirm({
+                    theme: 'black',
+                    title: 'Are Your Sure ?',
+                    icon: 'fa fa-warning',
+                    content: 'Are you sure you want to enable the Semester Requests Form ?',
+                    confirmButton: 'Yes',
+                    confirmButtonClass: 'btn-success',
+                    confirm: function(){
+
+                        $.ajax({
+                            type    : 'GET',
+                            url     : "/AdminOptions/SemesterDeadlineChecked",
+                            success : function () {
+
+                                $.notify("Semester Request form enabled",{
+
+                                    position : 'bottom right',
+                                    className: 'success'
+                                });
+                                document.getElementById("enableOrDisableSemRegForm").innerHTML = "Disable semester registration form";
+                                cancelEvent = 0;
+                            }
+                        });
+                    },
+                    cancel: function () {
+                            $('#semesterRegForm').iCheck('uncheck');
+                        cancelEvent = 1;
+                    }
+                });
+
+
+            });
+
+        //Ajax call for checkbox un-check Semester vice Reg form
+        $('#semesterRegForm').on('ifUnchecked', function(event){
+
+            if(cancelEvent != 1) {
+                $.ajax({
+                    type: 'GET',
+                    url: "/AdminOptions/SemesterDeadlineUnchecked",
+                    success: function () {
+
+                        $.notify("Semester Request form disabled", {position: 'bottom right'});
+                        document.getElementById("enableOrDisableSemRegForm").innerHTML = "Enable semester registration form";
+                    }
+                });
+            }
+
+        });
+
+
+        //SMS Option
+
+        var cancelEventForSMS = 0;
+        if(adminOptionsFromServer.SMSNotificationsForUsers == 1)
+        {
+            $('#SMSNotification').iCheck('check');
+            document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Disable SMS notifications for users";
+        }
+
+        //Ajax call for checkbox check SMS Notification checkbox
+        $('#SMSNotification').on('ifChecked', function(event){
+
+            cancelEventForSMS = 1;
+            $.confirm({
+                theme: 'black',
+                title: 'Are Your Sure ?',
+                icon: 'fa fa-warning',
+                content: 'Are you sure you want to enable SMS notifications ?',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-success',
+                confirm: function(){
+
+                    $.ajax({
+                        type    : 'GET',
+                        url     : "/AdminOptions/SMSNotificationChecked",
+                        success : function () {
+
+                            $.notify("SMS Notifications enabled",{
+
+                                position : 'bottom right',
+                                className: 'success'
+                            });
+                            document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Disable SMS notifications for users";
+                            cancelEventForSMS = 0;
+                        }
+                    });
+                },
+                cancel: function () {
+                    $('#SMSNotification').iCheck('uncheck');
+                    cancelEventForSMS = 1;
+                }
+            });
+
+
+        });
+
+        //Ajax call for checkbox un-check SMS Notification checkbox
+        $('#SMSNotification').on('ifUnchecked', function(event){
+
+            if(cancelEvent != 1) {
+                $.ajax({
+                    type: 'GET',
+                    url: "/AdminOptions/SMSNotificationUnchecked",
+                    success: function () {
+
+                        $.notify("SMS Notifications disabled", {position: 'bottom right'});
+                        document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Enable SMS notifications for users";
+                    }
+                });
+            }
+
+        });
+
+    </script>
 
 @endsection

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Deadline;
 use App\User;
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests;
+use App\SmsGateway;
 
 class AdministratorOptionsController extends Controller
 {
@@ -17,11 +19,20 @@ class AdministratorOptionsController extends Controller
      */
     public function index()
     {
-        $Deadlines = Deadline::all();
+        $deadlines = Deadline::all();
+        $adminOptions = DB::table('administrator_options')->first();
 
-        return view('administrator.AdministratorOptions')->with('Deadlines',$Deadlines);
+        if($adminOptions == null)
+        {
+            $adminOptions = 999;
+        }
+
+        return view('administrator.AdministratorOptions')->with('Deadlines',$deadlines)->with('AdminOptions',$adminOptions);
     }
 
+    /**
+     * Sends a mail to all the users notifying the deadlines
+     */
     public function sendMail()
     {
         $userData   = User::all();
@@ -54,8 +65,8 @@ class AdministratorOptionsController extends Controller
     public function deadlineSave(Request $request)
     {
         $this->validate($request,[
-            'semester' => 'required|max:5|min:1|numeric|digits:1',
-            'year' => 'required|min:1',
+            'semester'   => 'required|max:5|min:1|numeric|digits:1',
+            'year'       => 'required|min:1',
             'datepicker' => 'required|date_format:m/d/Y'
         ]);
         
@@ -70,11 +81,105 @@ class AdministratorOptionsController extends Controller
         return back();
     }
 
+    /**
+     * Deletes Deadlines
+     * 
+     * @param Deadline $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function deadlineDelete(Deadline $id)
     {
         $id->delete();
         return back();
     }
-    
+
+    /**
+     * If SemesterRequest checkbox is checked update or insert the variable to the database
+     */
+    public function semesterRequestChecked()
+    {
+        $alreadyFilledStatus = DB::table('administrator_options')->count();
+        if($alreadyFilledStatus == 0)
+        {
+            DB::table('administrator_options')->insert([
+                'semesterRequestForm' => '1'
+            ]);
+        }
+        else
+        {
+            DB::table('administrator_options')
+                ->where('id','1')
+                ->update([
+                    'semesterRequestForm' => '1'
+                ]);
+        }
+    }
+
+    /**
+     * If SemesterRequest checkbox is unchecked update the variable to 0 on the database
+     */
+    public function semesterRequestUnchecked()
+    {
+        DB::table('administrator_options')
+            ->where('id','1')
+            ->update([
+                'semesterRequestForm' => '0'
+            ]);
+    }
+
+    /**
+     * If SMS Notifications checkbox is checked update or insert the variable to the database
+     */
+    public function SMSNotificationChecked()
+    {
+        $alreadyFilledStatus = DB::table('administrator_options')->count();
+        if($alreadyFilledStatus == 0)
+        {
+            DB::table('administrator_options')->insert([
+                'SMSNotificationsForUsers' => '1'
+            ]);
+        }
+        else
+        {
+            DB::table('administrator_options')
+                ->where('id','1')
+                ->update([
+                    'SMSNotificationsForUsers' => '1'
+                ]);
+        }
+    }
+
+    /**
+     * If SemesterRequest checkbox is unchecked update the variable to 0 on the database
+     */
+    public function SMSNotificationUnchecked()
+    {
+        DB::table('administrator_options')
+            ->where('id','1')
+            ->update([
+                'SMSNotificationsForUsers' => '0'
+            ]);
+    }
+
+    /**
+     * Sends an SMS to the number specified
+     *
+     * @return mixed
+     *
+     */
+    public function sendSMS()
+    {
+        $smsGateway = new SmsGateway('www.basururoxyouall@gmail.com','rrk10ict');
+
+        $deviceID   = 26223;
+        $number     = '+94773259133';
+        $message    = 'Your request for SC400 on Wed 8.30 - 10.30 has been accepted';
+
+        $result = $smsGateway->sendMessageToNumber($number,$message,$deviceID);
+
+        return $result;
+
+    }
 
 }

@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{ asset('css/datepicker3.css') }}">
   <!-- Time Picker CSS -->
   <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
+  <!-- iCheck CSS -->
+  <link rel="stylesheet" href="{{ asset('css/iCheck/iCheck-all.css') }}">
 
   <!-- REQUIRED JS SCRIPTS -->
 
@@ -50,6 +52,10 @@
   <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <!-- Include Time Picker -->
   <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
+  <!-- iCheck -->
+  <script src="{{ asset('js/icheck.min.js') }}"></script>
+  <!-- Notify.js -->
+  <script src="{{ asset('js/notify.js') }}"></script>
 
   
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

@@ -25,9 +25,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
   
-    /*
-    *Checks when an Admin is logged in by checking the database column admin
-    *@return boolean
+    /**
+    * Checks when an Admin is logged in by checking the database column admin
+    * @return boolean
     */
     public function isAdmin()
     {

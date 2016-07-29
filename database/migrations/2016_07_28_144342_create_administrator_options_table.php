@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLecturerTimetableTable extends Migration
+class CreateAdministratorOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateLecturerTimetableTable extends Migration
      */
     public function up()
     {
-        Schema::create('lecturer_timetable', function (Blueprint $table) {
+        Schema::create('administrator_options', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('time');
-            $table->string('time24Format');
+            $table->boolean('semesterRequestForm')->default('0');
+            $table->boolean('SMSNotificationsForUsers')->defualt('0');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateLecturerTimetableTable extends Migration
      */
     public function down()
     {
-        Schema::drop('lecturer_timetable');
+        Schema::drop('administrator_options');
     }
 }

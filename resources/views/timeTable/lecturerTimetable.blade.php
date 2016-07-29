@@ -65,35 +65,18 @@
                             for (var i = 0; i < 9; i++) {
 
                                 timeSlotFromDatabase = LecturerTimeData[i].timeSlot;
-                                durationFrom = timeSlotFromDatabase.split(" ")[0];
-                                durationTo = timeSlotFromDatabase.split(" ")[2];
-                                //console.log(durationFrom + " - " + durationTo);
-                                totalHoursNeed = durationTo - durationFrom;
-
-                                //console.log("start Time : " + durationFrom);
-                                //console.log("duration  : " + totalHoursNeed);
-
-                                endTimeOfPeriod = parseFloat(durationFrom) + totalHoursNeed;
-
-                                //
-
-                                /**
-                                 * 1. make start time end time pairs as hourly.
-                                 * 2. assign it to the id of the field.
-                                 * 3.  assign days array values to get the day.
-                                 *
-                                 */
+                                durationFrom         = timeSlotFromDatabase.split(" ")[0];
+                                durationTo           = timeSlotFromDatabase.split(" ")[2];
+                                totalHoursNeed       = durationTo - durationFrom;
+                                endTimeOfPeriod      = parseFloat(durationFrom) + totalHoursNeed;
 
                                 for (var k = 0; k < totalHoursNeed; k++) {
 
-                                    hourlyTime = parseFloat(durationFrom) + 1;
+                                    hourlyTime           = parseFloat(durationFrom) + 1;
                                     timeOfBeginingAndEnd = durationFrom + " " + "-" + " " + hourlyTime + "0";
-                                    //console.log("Final Output : " + timeOfBeginingAndEnd);
-                                    durationFrom = parseFloat(durationFrom) + 1 + ("0");
-
+                                    durationFrom         = parseFloat(durationFrom) + 1 + ("0");
                                     document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).innerHTML = LecturerTimeData[i].subjectCode + " | " + LecturerTimeData[i].resourceName + "<br>Year : " + LecturerTimeData[i].year + "  " + "Batch : " + LecturerTimeData[i].batchNo;
                                 }
-
                             }
                         }
                         catch (exception)
