@@ -151,29 +151,48 @@ desired effect
           </li>
           <!-- /.messages-menu -->
 
-          <!-- Notifications Menu -->
-          <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header"><!-- Your Notification goes here --></li>
-              <li>
-                <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> <!-- New message count -->
-                    </a>
-                  </li>
-                  <!-- end notification -->
+           <!-- Notifications -->
+
+        <?php
+        use App\Notifications;
+        use Carbon\Carbon;
+
+        /**
+         * Get all the notifications available
+         */
+        $adminStatus                 = Auth::user()->admin;
+        $Notifications               = Notifications::where('updated_at', '>=',Carbon::now()->subDays(7))->where('forAdmin','=',$adminStatus)->get();
+        ?>
+        <!-- Notifications Menu -->
+            <li class="dropdown notifications-menu">
+                <!-- Menu toggle button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell-o"></i>
+                    @if($Notifications->count() > 0)
+                        <span class="label label-warning">
+                            {{ $Notifications->count() }}
+                        </span>
+                    @endif
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header"><!-- Your Notification goes here --></li>
+                    @foreach($Notifications as $notification)
+                        <li>
+                            <!-- Inner Menu: contains the notifications -->
+                            <ul class="menu">
+                                <li><!-- start notification -->
+                                    <a href="{{ $notification->url }}">
+                                        <i class="fa fa-flag text-red"></i> <!-- New message count -->
+                                        {{ $notification->notification }}
+                                    </a>
+                                </li>
+                                <!-- end notification -->
+                            </ul>
+                        </li>
+                    @endforeach
+                    <li class="footer"><a href="#">View all</a></li>
                 </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
+            </li>
 
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">

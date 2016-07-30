@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Deadline;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests;
 use App\SmsGateway;
+use App\Notifications;
 
 class AdministratorOptionsController extends Controller
 {
@@ -52,8 +54,6 @@ class AdministratorOptionsController extends Controller
                 $message->subject('Deadline Notification');
             });
         }
-
-      
     }
 
     /**
@@ -94,6 +94,10 @@ class AdministratorOptionsController extends Controller
         return back();
     }
 
+
+
+
+//    Administrator options
     /**
      * If SemesterRequest checkbox is checked update or insert the variable to the database
      */
@@ -103,7 +107,10 @@ class AdministratorOptionsController extends Controller
         if($alreadyFilledStatus == 0)
         {
             DB::table('administrator_options')->insert([
-                'semesterRequestForm' => '1'
+                'semesterRequestForm' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
             ]);
         }
         else
@@ -111,9 +118,11 @@ class AdministratorOptionsController extends Controller
             DB::table('administrator_options')
                 ->where('id','1')
                 ->update([
-                    'semesterRequestForm' => '1'
+                    'semesterRequestForm' => '1',
+                    'updated_at' => Carbon::now()
                 ]);
         }
+        Notifications::sendNotification('Semester Form now Available',0 , 'semesterRequestFormNotification','/semesterRequests');
     }
 
     /**
@@ -124,8 +133,12 @@ class AdministratorOptionsController extends Controller
         DB::table('administrator_options')
             ->where('id','1')
             ->update([
-                'semesterRequestForm' => '0'
+                'semesterRequestForm' => '0',
+                'updated_at' => Carbon::now(),
             ]);
+
+        //Delete the notification regarding the semester request table
+        Notifications::where('type','semesterRequestFormNotification')->delete();
     }
 
     /**
@@ -137,7 +150,9 @@ class AdministratorOptionsController extends Controller
         if($alreadyFilledStatus == 0)
         {
             DB::table('administrator_options')->insert([
-                'SMSNotificationsForUsers' => '1'
+                'SMSNotificationsForUsers' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
         }
         else
@@ -145,7 +160,8 @@ class AdministratorOptionsController extends Controller
             DB::table('administrator_options')
                 ->where('id','1')
                 ->update([
-                    'SMSNotificationsForUsers' => '1'
+                    'SMSNotificationsForUsers' => '1',
+                    'updated_at' => Carbon::now(),
                 ]);
         }
     }
@@ -158,7 +174,8 @@ class AdministratorOptionsController extends Controller
         DB::table('administrator_options')
             ->where('id','1')
             ->update([
-                'SMSNotificationsForUsers' => '0'
+                'SMSNotificationsForUsers' => '0',
+                'updated_at' => Carbon::now(),
             ]);
     }
 
@@ -179,7 +196,6 @@ class AdministratorOptionsController extends Controller
         $result = $smsGateway->sendMessageToNumber($number,$message,$deviceID);
 
         return $result;
-
     }
 
 }

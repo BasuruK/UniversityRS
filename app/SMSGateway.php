@@ -115,4 +115,3 @@ class SmsGateway extends Model{
 }
 
 ?>
-}
