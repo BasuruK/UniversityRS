@@ -312,7 +312,7 @@
         //Ajax call for checkbox un-check SMS Notification checkbox
         $('#SMSNotification').on('ifUnchecked', function(event){
 
-            if(cancelEvent != 1) {
+            if(cancelEventForSMS != 1) {
                 $.ajax({
                     type: 'GET',
                     url: "/AdminOptions/SMSNotificationUnchecked",

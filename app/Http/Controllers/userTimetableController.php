@@ -6,9 +6,15 @@ use App\TimeFormatTable;
 use Illuminate\Support\Facades\Auth;
 use App\TimeTable;
 use DB;
+use Excel;
 
 class userTimetableController extends Controller
 {
+    /**
+     * returns the Timetable view with timetable data
+     *
+     * @return mixed
+     */
     public function index()
     {
         $userName       = Auth::user()->name;

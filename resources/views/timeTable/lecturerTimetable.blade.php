@@ -16,10 +16,19 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Timetable <small> *Timetable for year 2016</small></h3>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-gear"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" id="test" onclick="exportXLS()">Export excel</a></li>
+                            <li><a href="#">Export PDF</a></li>
+                        </ul>
+                    </div>
+
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered">
+                    <table id="LecturerTimetable" class="table table-bordered">
                         <tbody>
                         <tr>
                             <th>Time</th>
@@ -57,9 +66,9 @@
                     </table>
                     <script>
 
+                        //Generate the timetable
                         var LecturerTimeData = 0;
                         LecturerTimeData = <?php echo json_encode($LecturesTimeDetails) ?>;
-                        //console.log(LecturerTimeData);
 
                         try {
                             for (var i = 0; i < 9; i++) {
@@ -83,6 +92,28 @@
                         {
                             //ignore the errors
                         }
+
+
+                        /**
+                         * Exports the timetable in excel format
+                         */
+                        function exportXLS() {
+
+                            var table_content = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+                            table_content = table_content + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+                            table_content = table_content +  '<x:Name>Semester Timetable</x:Name>';
+                            table_content = table_content +  '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+                            table_content = table_content +  '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+                            table_content = table_content +  "<table border='2px'";
+                            table_content = table_content +  $('#LecturerTimetable').html();
+                            table_content = table_content +  '</table></body></html>';
+
+                            var data_type = 'data:application/vnd.ms-excel';
+
+                            $('#test').attr('href',data_type + ', ' + encodeURIComponent(table_content));
+                            $('#test').attr('download','Semester Timetable.xls');
+                        }
+
                     </script>
                 </div>
                 <!-- /.box-body -->
