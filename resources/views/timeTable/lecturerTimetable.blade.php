@@ -20,15 +20,15 @@
                         <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-gear"></i></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" id="test" onclick="exportXLS()">Export excel</a></li>
-                            <li><a href="#">Export PDF</a></li>
+                            <li><a href="#" id="exportXLS" onclick="exportXLS()">Export excel</a></li>
+                            <li><a href="#" id="exportPDF" onclick="exportPDF()">Export PDF</a></li>
                         </ul>
                     </div>
 
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="LecturerTimetable" class="table table-bordered">
+                <div id="TableTable" class="box-body">
+                    <table id="LecturerTimetable" class="table table-bordered" >
                         <tbody>
                         <tr>
                             <th>Time</th>
@@ -71,7 +71,7 @@
                         LecturerTimeData = <?php echo json_encode($LecturesTimeDetails) ?>;
 
                         try {
-                            for (var i = 0; i < 9; i++) {
+                            for (var i = 0; i < LecturerTimeData.length; i++) {
 
                                 timeSlotFromDatabase = LecturerTimeData[i].timeSlot;
                                 durationFrom         = timeSlotFromDatabase.split(" ")[0];
@@ -84,9 +84,35 @@
                                     hourlyTime           = parseFloat(durationFrom) + 1;
                                     timeOfBeginingAndEnd = durationFrom + " " + "-" + " " + hourlyTime + "0";
                                     durationFrom         = parseFloat(durationFrom) + 1 + ("0");
-                                    document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).innerHTML = LecturerTimeData[i].subjectCode + " | " + LecturerTimeData[i].resourceName + "<br>Year : " + LecturerTimeData[i].year + "  " + "Batch : " + LecturerTimeData[i].batchNo;
+                                    document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).innerHTML = LecturerTimeData[i].subjectCode + " <div class='pull-right'>Hall: " + LecturerTimeData[i].resourceName + "</div><br>" + " Year: " + LecturerTimeData[i].year + "<div class='pull-right'> Batch: " + LecturerTimeData[i].batchNo + "</div>";
+
+
+                                    // Css styling
+                                    document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-width"]= "2px";
+
+                                    if(totalHoursNeed >= 1) {
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-top-color"] = "#000000";
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-left-color"] = "#000000";
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-right-color"] = "#000000";
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "transparent";
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["background-color"] = "lightyellow";
+
+
+                                    }
+                                    if(k >= 1)
+                                    {
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "#000000";
+
+                                    }
+                                    if(totalHoursNeed == 1)
+                                    {
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "#000000";
+                                    }
+
                                 }
                             }
+
+
                         }
                         catch (exception)
                         {
@@ -99,19 +125,57 @@
                          */
                         function exportXLS() {
 
-                            var table_content = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+                            var table_content = '<html xmlns:o="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
+                            table_content = table_content + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"/>';
                             table_content = table_content + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
                             table_content = table_content +  '<x:Name>Semester Timetable</x:Name>';
                             table_content = table_content +  '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
                             table_content = table_content +  '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+                            table_content = table_content +  '<h2 style="text-align: center;">SLIIT Lecturer Timetable</h2>';
+                            table_content = table_content +  '<h3 style="text-align: right;">2016</h3>';
                             table_content = table_content +  "<table border='2px'";
                             table_content = table_content +  $('#LecturerTimetable').html();
                             table_content = table_content +  '</table></body></html>';
 
-                            var data_type = 'data:application/vnd.ms-excel';
+                            var data_type = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-                            $('#test').attr('href',data_type + ', ' + encodeURIComponent(table_content));
-                            $('#test').attr('download','Semester Timetable.xls');
+                            $('#exportXLS').attr('href',data_type + ', ' + encodeURIComponent(table_content));
+                            $('#exportXLS').attr('download','Semester Timetable.xls');
+                        }
+
+
+                        /**
+                         * Exports the table as a pdf file
+                         */
+                        function exportPDF() {
+
+                            var pdf = new jsPDF('l', 'mm', [550, 400]);
+                            pdf.text("Lecturer Timetable",400,20);
+
+                            source = $('#TableTable')[0];
+
+                            specialElementHandlers = {
+                                '#bypassme': function (element, renderer) {
+                                    return true
+                                }
+                            };
+                            pdf.setFont("times");
+                            margins = {
+                                top: 20,
+                                //bottom: 20,
+                                left: 50,
+                                //width: 522
+                            };
+
+                            pdf.fromHTML(
+                                    source, margins.left, margins.top, {
+                                        'width': margins.width, // max width of content on PDF
+                                        'elementHandlers': specialElementHandlers
+                                    },
+                                    function (dispose) {
+                                        pdf.save('Semester Timetable.pdf');
+                                    }
+                                    , margins);
                         }
 
                     </script>

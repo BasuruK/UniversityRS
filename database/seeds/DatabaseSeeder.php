@@ -248,35 +248,118 @@ class DatabaseSeeder extends Seeder
         //Timetable Seeds
 
         DB::table('timetable')->insert([
-            'year' => '3',
+            'year' => '3 Curtin IT',
             'batchNo' => '1',
-            'subjectCode' => 'SC400',
-            'timeSlot' => '8.30 - 10.30',
+            'subjectCode' => 'NSD(P)',
+            'timeSlot' => '10.30 - 12.30',
             'day' => 'monday',
-            'resourceName' => 'B509',
+            'resourceName' => 'B402',
             'lecturerName' => 'Sandamini Bandara',
         ]);
 
         DB::table('timetable')->insert([
-            'year' => '3',
+            'year' => '3 Curtin IT',
             'batchNo' => '1',
-            'subjectCode' => 'PDM3000',
+            'subjectCode' => 'HCI(L)',
             'timeSlot' => '8.30 - 10.30',
-            'day' => 'thursday',
-            'resourceName' => 'B502',
+            'day' => 'tuesday',
+            'resourceName' => 'A307',
             'lecturerName' => 'Sandamini Bandara',
         ]);
 
         DB::table('timetable')->insert([
-            'year' => '3',
+            'year' => '3 Curtin IT',
             'batchNo' => '1',
-            'subjectCode' => 'SM220',
-            'timeSlot' => '13.30 - 15.30',
-            'day' => 'wednesday',
-            'resourceName' => 'B307',
+            'subjectCode' => 'HCI(P)',
+            'timeSlot' => '10.30 - 12.30',
+            'day' => 'tuesday',
+            'resourceName' => 'B402',
             'lecturerName' => 'Sandamini Bandara',
         ]);
 
-        
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'HCI(T)',
+            'timeSlot' => '12.30 - 13.30',
+            'day' => 'tuesday',
+            'resourceName' => 'A307',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'NSD(L)',
+            'timeSlot' => '8.30 - 12.30',
+            'day' => 'wednesday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'NSD(T)',
+            'timeSlot' => '11.30 - 12.30',
+            'day' => 'wednesday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'ACC(L)',
+            'timeSlot' => '11.30 - 13.30',
+            'day' => 'thursday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'ACC(T)',
+            'timeSlot' => '13.30 - 15.30',
+            'day' => 'thursday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'ACC(P)',
+            'timeSlot' => '15.30 - 17.30',
+            'day' => 'thursday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'SEP(L)',
+            'timeSlot' => '13.30 - 15.30',
+            'day' => 'friday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+        DB::table('timetable')->insert([
+            'year' => '3 Curtin IT',
+            'batchNo' => '1',
+            'subjectCode' => 'SEP(P)',
+            'timeSlot' => '15.30 - 17.30',
+            'day' => 'friday',
+            'resourceName' => 'D201',
+            'lecturerName' => 'Sandamini Bandara',
+        ]);
+
+
+
     }
 }

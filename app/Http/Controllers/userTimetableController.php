@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Request;
 use App\TimeFormatTable;
 use Illuminate\Support\Facades\Auth;
 use App\TimeTable;
@@ -22,5 +23,10 @@ class userTimetableController extends Controller
         $fullTable      = TimeFormatTable::all();
 
         return view('timeTable.lecturerTimetable')->with('fullTimeTable',$fullTable)->with('LecturesTimeDetails',$LecturerTimes);
+    }
+
+    public function viewTable(Request $request)
+    {
+        return json_encode("LOLOLOLO");
     }
 }

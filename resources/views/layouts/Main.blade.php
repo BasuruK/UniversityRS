@@ -56,8 +56,10 @@
   <script src="{{ asset('js/icheck.min.js') }}"></script>
   <!-- Notify.js -->
   <script src="{{ asset('js/notify.js') }}"></script>
+  <!-- jsPDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
 
-  
+
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
@@ -175,7 +177,7 @@ desired effect
                     @endif
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="header"><!-- Your Notification goes here --></li>
+                    <li class="header">You have {{ $Notifications->count() }} notifications</li>
                     @foreach($Notifications as $notification)
                         <li>
                             <!-- Inner Menu: contains the notifications -->

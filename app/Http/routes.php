@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/myTables','userTimetableController@index');
 
+    Route::post('/myTables/view','userTimetableController@viewTable');
+
 
 });
 
