@@ -22,7 +22,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}" >
+              <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}"  name="editrequesForm">
                    {{method_field('PATCH')}}
                   {!! csrf_field() !!}
                   
@@ -40,7 +40,7 @@
                             $(function() {
                                 $('input[name="selectdateEdit"]').daterangepicker({
                                     singleDatePicker: true,
-                                    minDate:new Date(),
+                                 //   minDate:new Date(),
                                     maxDate:'2016-12-31',
                                     locale: {
                                         format: 'YYYY-MM-DD-ddd'
@@ -58,24 +58,53 @@
                    <div class="form-group" hidden="">
                     <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
                 </div>
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevhall" id="prevhall" value="{{$userRequest->resourceID}}">
+                       </div>
+
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$userRequest->batchNo}}">
+                       </div>
+
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$userRequest->subjectCode}}">
+                       </div>
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
+                       </div>
+
                        {{--Select time slot type--}}
                        <div class="form-group">
                            <label>Time Slot Type</label>
                            <div class="radio">
                                <label>
-                                   <input type="radio" name="SlotType" id="SlotType1" value="1"  onclick="setSelect('1hr')" >
+                                   @if($userRequest->timeslotType=='1')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')" checked>
+                                       @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')">
+                                   @endif
                                    One hour Slot
                                </label>
                            </div>
+
                            <div class="radio">
                                <label>
-                                   <input type="radio" name="SlotType" id="SlotType2" value="2"  onclick="setSelect('2hr')" checked>
+                                   @if($userRequest->timeslotType=='2')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')" checked>
+                                   @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')">
+                                   @endif
                                    Two Hour Slot
                                </label>
                            </div>
+
                            <div class="radio">
                                <label>
-                                   <input type="radio" name="SlotType" id="SlotType3" value="3"  onclick="setSelect('other')" >
+                                   @if($userRequest->timeslotType=='3')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" checked>
+                                   @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" >
+                                   @endif
                                    Special events
                                </label>
                            </div>
@@ -108,8 +137,8 @@
                            /**
                             * Dynamically populate the select options for timeslots
                             */
-                           var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
-                           var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
+                           var OneHourSet=['8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
+                           var TwoHourSet=['8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
 
 
                            function setSelect(v) {
@@ -118,30 +147,44 @@
                                    x.remove(x.length -1);
                                }
                                var a;
-                               if (v=='1hr'){
+                               if (v=='1'){
                                    document.getElementById("selectTimeSpecialST").disabled = true;
                                    document.getElementById("selectTimeSpecialEN").disabled = true;
                                    document.getElementById("selectsubEdit").disabled = false;
                                    a = OneHourSet;
-                               } else if (v=='2hr'){
+                               } else if (v=='2'){
                                    document.getElementById("selectTimeSpecialST").disabled = true;
                                    document.getElementById("selectTimeSpecialEN").disabled = true;
                                    document.getElementById("selectsubEdit").disabled = false;
                                    a = TwoHourSet
                                }
-                               else if (v=='other'){
+                               else if (v=='3'){
                                    document.getElementById("selectTimeSpecialST").disabled = false;
                                    document.getElementById("selectTimeSpecialEN").disabled = false;
                                    document.getElementById("selectsubEdit").disabled = true;
                                }
                                for (i = 0; i < a.length; ++i) {
-                                   var option = document.createElement("option");
-                                   option.text = a[i];
-                                   x.add(option);
+
+                                   if(a[i]==document.getElementById("prevtimeslot").value)
+                                   {
+                                       var option = document.createElement("option");
+                                       option.text = a[i];
+                                       option.selected='selected';
+                                       x.add(option);
+                                   }
+                                   else
+                                   {
+                                       var option = document.createElement("option");
+                                       option.text = a[i];
+                                       x.add(option);
+                                   }
+
                                }
                            }
                            function load() {
-                               setSelect('2hr');
+                               var currentType=document.editrequesForm.SlotTypeEdit.value;
+
+                              setSelect(currentType);
                            }
                            window.onload = load;
                        </script>
@@ -171,19 +214,32 @@
 
                                            $.each(data, function(key, value) {
 
-                                               availableHalls
+                                               if(key==$('#prevhall').val())
+                                               {
+                                                   availableHalls
 
-                                                       .append($("<option></option>")
+                                                           .append($("<option selected='selected'></option >")
 
-                                                               .attr("value",key)
+                                                                   .attr("value",key)
 
-                                                               .text(key+value));
+                                                                   .text(key+value));
+
+
+                                               }
+                                               else
+                                               {
+                                                   availableHalls
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(key+value));
+                                               }
                                            });
 
                                        });
                            });
-
-
                        </script>
 
                        <script>
@@ -212,24 +268,50 @@
 
                                            $.each(data, function(key, value) {
 
-                                               availableHalls
 
-                                                       .append($("<option></option>")
+                                               if(key==$('#prevhall').val())
+                                               {
+                                                   availableHalls
 
-                                                               .attr("value",key)
+                                                           .append($("<option selected='selected'></option >")
 
-                                                               .text(key+value));
+                                                                   .attr("value",key)
+
+                                                                   .text(key+value));
+
+
+                                               }
+                                               else
+                                               {
+                                                   availableHalls
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(key+value));
+                                               }
                                            });
 
                                        });
                            });
                        </script>
 
+
+                       <!-- special event -->
+                       <div class="form-group">
+                           <label>Special event details</label>
+                           <input class="form-control" type="text" name="specialEventEdit" id="specialEventEdit" value="{{$userRequest->specialEvent}}">
+
+                       </div>
+
+
+
                        <!-- select Time Slot  -->
                        <div class="form-group">
 
                            <label>Time Slot</label><br>
-                           <label>Previous Time Slot: {{$userRequest->timeSlot}}</label>
+                           <p>Previous Time Slot: {{$userRequest->timeSlot}}</p>
                            <select class="form-control" name="selecttimeEdit" id="selecttimeEdit">
                            </select>
                        </div>
@@ -240,9 +322,43 @@
                             */
                            $(document).ready(function()
                            {
+
+                               $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
+
+                                       function(data) {
+
+                                           var availableHalls = $('#selectresEdit');
+
+                                           availableHalls.empty();
+
+                                           $.each(data, function(key, value) {
+
+                                               if(key==$('#prevhall').val())
+                                               {
+                                                   availableHalls
+
+                                                           .append($("<option selected='selected'></option >")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(key+value));
+
+
+                                               }
+                                               else
+                                               {
+                                                   availableHalls
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(key+value));
+                                               }
+                                           });
+
+                                       });
                                $('#selectdateEdit').change(function(){
-
-
 
                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttimeEdit').val()},
 
@@ -253,14 +369,29 @@
                                                availableHalls.empty();
 
                                                $.each(data, function(key, value) {
+                                                   if(key==$('#prevhall').val())
+                                                   {
+                                                       availableHalls
 
-                                                   availableHalls
+                                                               .append($("<option selected='selected'></option >")
 
-                                                           .append($("<option></option>")
+                                                                       .attr("value",key)
 
-                                                                   .attr("value",key)
+                                                                       .text(key+value));
 
-                                                                   .text(key+value));
+
+                                                   }
+                                                   else
+                                                   {
+                                                       availableHalls
+
+                                                               .append($("<option></option>")
+
+                                                                       .attr("value",key)
+
+                                                                       .text(key+value));
+                                                   }
+
                                                });
 
                                            });
@@ -299,6 +430,41 @@
                             */
                            $(document).ready(function()
                            {
+                               $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $('#selectyearEdit').val()},
+
+                                       function(data) {
+
+                                           var selectedbatch = $('#selectbatchEdit');
+
+                                           selectedbatch.empty();
+
+                                           $.each(data, function(key, value) {
+                                               if(key==$('#prevbatch').val())
+                                               {
+                                                   selectedbatch
+
+                                                           .append($("<option selected='selected'></option >")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(value));
+                                               }
+                                               else
+                                               {
+                                                   selectedbatch
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(value));
+                                               }
+
+
+
+                                           });
+
+                                       });
                                $('#selectyearEdit').change(function(){
 
                                    $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $(this).val()},
@@ -311,13 +477,28 @@
 
                                                $.each(data, function(key, value) {
 
-                                                   selectedbatch
+                                                   if(key==$('#prevbatch').val())
+                                                   {
+                                                       selectedbatch
 
-                                                           .append($("<option></option>")
+                                                               .append($("<option selected='selected'></option >")
 
-                                                                   .attr("value",key)
+                                                                       .attr("value",key)
 
-                                                                   .text(value));
+                                                                       .text(value));
+                                                   }
+                                                   else
+                                                   {
+                                                       selectedbatch
+
+                                                               .append($("<option></option>")
+
+                                                                       .attr("value",key)
+
+                                                                       .text(value));
+                                                   }
+
+
                                                });
 
                                            });
@@ -343,13 +524,29 @@
 
                                                $.each(data, function(key, value) {
 
-                                                   availableHalls
 
-                                                           .append($("<option></option>")
+                                                   if(key==$('#prevhall').val())
+                                                   {
+                                                       availableHalls
 
-                                                                   .attr("value",key)
+                                                               .append($("<option selected='selected'></option >")
 
-                                                                   .text(key+value));
+                                                                       .attr("value",key)
+
+                                                                       .text(key+value));
+
+
+                                                   }
+                                                   else
+                                                   {
+                                                       availableHalls
+
+                                                               .append($("<option></option>")
+
+                                                                       .attr("value",key)
+
+                                                                       .text(key+value));
+                                                   }
                                                });
 
                                            });
@@ -360,14 +557,12 @@
 
                        </script>
 
-
                        <!-- select Batch -->
                        <div class="form-group">
 
                            <label>Batch</label><br>
-                           <label>Pevious Batch: {{ $userRequest->batchNo}}</label>
+                           <p>Pevious Batch: {{ $userRequest->batchNo}}</p>
                            <select class="form-control" name="selectbatchEdit" id="selectbatchEdit">
-                               <option value="">Please select</option>
                            </select>
                        </div>
 
@@ -377,6 +572,36 @@
                             */
                            $(document).ready(function()
                            {
+                               $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $('#selectyearEdit').val()},
+
+                                       function(data) {
+
+                                           var selectedSub = $('#selectsubEdit');
+
+                                           selectedSub.empty();
+
+                                           $.each(data, function(key, value) {
+                                               if(key==$('#prevsub').val())
+                                               {
+                                                   selectedSub
+
+                                                           .append($("<option selected='selected'></option>")
+                                                                   .attr("value",key)
+                                                                   .text(value));
+                                               }
+                                               else
+                                               {
+                                                   selectedSub
+
+                                                           .append($("<option></option>")
+                                                                   .attr("value",key)
+                                                                   .text(value));
+                                               }
+                                           });
+
+                                       });
+
+
                                $('#selectyearEdit').change(function(){
 
                                    $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
@@ -388,16 +613,22 @@
                                                selectedSub.empty();
 
                                                $.each(data, function(key, value) {
+                                                if(key==$('#prevsub').val())
+                                                {
+                                                    selectedSub
 
-                                                   selectedSub
+                                                        .append($("<option selected='selected'></option>")
+                                                                .attr("value",key)
+                                                                .text(value));
+                                                }
+                                                   else
+                                                {
+                                                    selectedSub
 
-                                                           .append($("<option></option>")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(value));
-
-
+                                                            .append($("<option></option>")
+                                                                    .attr("value",key)
+                                                                    .text(value));
+                                                }
                                                });
 
                                            });
@@ -444,9 +675,8 @@
                        <div class="form-group">
 
                            <label>Subject</label><br>
-                           <label>Previous Subject: {{$selectedSub->subName}}</label>
+                           <p>Previous Subject: {{$selectedSub->subName}}</p>
                            <select class="form-control" name="selectsubEdit" id="selectsubEdit">
-                               <option value="">Please select</option>
                            </select>
                        </div>
 
@@ -454,10 +684,9 @@
                        <div class="form-group">
 
                            <label>Lecture Hall/Lab</label><br>
-                           <label>Previous Lecture Hall/Lab: {{$userRequest->resourceID}}</label>
+                           <p>Previous Lecture Hall/Lab: {{$userRequest->resourceID}}</p>
 
                            <select class="form-control" name="selectresEdit" id="selectresEdit">
-                               <option value="">Please select</option>
                            </select>
                        </div>
 
@@ -475,7 +704,7 @@
                        <script>
                            function Success()
                            {
-                               $notify("Your request has been successfully logged", "success",
+                               $notify("Your request has been successfully Edited", "success",
                                        {position:"center"}
                                );
                            }

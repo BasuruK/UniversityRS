@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(userRequest::class);
     }
+    public function semesterRequests()
+    {
+        return $this->hasMany(SemesterRequests::class);
+    }
 }

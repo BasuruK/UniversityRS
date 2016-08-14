@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestsTable extends Migration
+class CreateSemesterRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,24 +12,19 @@ class CreateRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('semester_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('lecturerID');
-            $table->string('year')->nullable();
-            $table->string('batchNo')->nullable();
-            $table->string('subjectCode')->nullable();
+            $table->string('year');
+            $table->string('batchNo');
+            $table->string('subjectCode');
             $table->string('requestDate');
             $table->string('timeSlot');
             $table->string('resourceID');
             $table->string('status');
+            $table->string('semester');
             $table->string('timeslotType');
-            $table->string('specialEvent')->nullable();
             $table->timestamps();
-
-
-            $table->foreign('batchNo')->references('id')->on('batch')->onDelete('cascade');
-            $table->foreign('subjectCode')->references('subCode')->on('subject')->onDelete('cascade');
-            $table->foreign('resourceID')->references('hallNo')->on('resource')->onDelete('cascade');
         });
     }
 
@@ -40,6 +35,6 @@ class CreateRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('requests');
+        Schema::drop('semester_requests');
     }
 }

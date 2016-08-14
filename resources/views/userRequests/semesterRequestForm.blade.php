@@ -3,7 +3,7 @@
 @section('section-header')
     <section class="content-header">
         <h1>
-            Request Form
+           Semester Request Form
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -18,11 +18,11 @@
             <div class="col col-sm-7">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Request Timeslot</h3>
+                        <h3 class="box-title">Request  Semester Timeslot</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form role="form" method="POST" action="/userRequest/requestForm/add" >
+                        <form role="form" method="POST" action="/userRequest/semesterRequestForm/add" id="SemesterRequestForm">
 
                         {!! csrf_field() !!}
 
@@ -68,7 +68,7 @@
 
                             <div class="form-group">
                                 <label>Semester</label>
-                                <input type="text" class="form-control" id="semesterselect">
+                                <input type="text" class="form-control" id="selectsemester" name="selectsemester">
                             </div>
 
 
@@ -121,9 +121,29 @@
                                  */
                                 $(document).ready(function()
                                 {
+                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
+
+                                            function(data) {
+
+                                                var availableHalls = $('#selectres');
+
+                                                availableHalls.empty();
+
+                                                $.each(data, function(key, value) {
+
+                                                    availableHalls
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value",key)
+
+                                                                    .text(key+value));
+                                                });
+
+                                            });
+
+
                                     $('#selectdate').change(function(){
-
-
 
                                         $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
 
@@ -203,6 +223,28 @@
                                  */
                                 $(document).ready(function()
                                 {
+                                    $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $('#selecttime').val(),option2:$('#selectdate').val() },
+
+                                            function(data) {
+
+                                                var availableHalls = $('#selectres');
+
+                                                availableHalls.empty();
+
+                                                $.each(data, function(key, value) {
+
+                                                    availableHalls
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value",key)
+
+                                                                    .text(key+value));
+                                                });
+
+                                            });
+
+
                                     $('#selecttime').change(function(){
 
                                         $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdate').val() },
@@ -306,7 +348,7 @@
                             <script>
                                 function Success()
                                 {
-                                    $notify("Your request has been successfully logged", "success",
+                                    $.notify("Your request has been successfully logged", "success",
                                             {position:"center"}
                                     );
                                 }
