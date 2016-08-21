@@ -115,62 +115,6 @@
                             </div>
 
 
-                            <script>
-                                /**
-                                 * Dynamically populate the select options for resources
-                                 */
-                                $(document).ready(function()
-                                {
-                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
-
-                                            function(data) {
-
-                                                var availableHalls = $('#selectres');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-                                                    availableHalls
-
-                                                            .append($("<option></option>")
-
-                                                                    .attr("value",key)
-
-                                                                    .text(key+value));
-                                                });
-
-                                            });
-
-
-                                    $('#selectdate').change(function(){
-
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
-
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectres');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    });
-
-                                                });
-
-                                    });
-
-                                });
-                            </script>
-
                             <!-- select Year  -->
                             <div class="form-group">
                                 <label>Year</label>
@@ -218,59 +162,6 @@
 
                                 });
 
-                                /**
-                                 * Dynamically populate the select options for resources
-                                 */
-                                $(document).ready(function()
-                                {
-                                    $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $('#selecttime').val(),option2:$('#selectdate').val() },
-
-                                            function(data) {
-
-                                                var availableHalls = $('#selectres');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-                                                    availableHalls
-
-                                                            .append($("<option></option>")
-
-                                                                    .attr("value",key)
-
-                                                                    .text(key+value));
-                                                });
-
-                                            });
-
-
-                                    $('#selecttime').change(function(){
-
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdate').val() },
-
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectres');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    });
-
-                                                });
-
-                                    });
-
-                                });
 
                             </script>
 
@@ -323,17 +214,6 @@
                                     <option value="">Please select</option>
                                 </select>
                             </div>
-
-
-                            <!-- select Hall -->
-                            <div class="form-group">
-                                <label>Lecture Hall/Lab</label>
-
-                                <select class="form-control" name="selectres" id="selectres">
-                                    <option value="">Please select</option>
-                                </select>
-                            </div>
-
 
 
                             @if (count($errors) > 0)

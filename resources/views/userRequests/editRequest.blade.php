@@ -204,41 +204,6 @@
                                            text : special
                                        }));
                                $('#selecttimeEdit').val(special);
-                               $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
-
-                                       function(data) {
-
-                                           var availableHalls = $('#selectresEdit');
-
-                                           availableHalls.empty();
-
-                                           $.each(data, function(key, value) {
-
-                                               if(key==$('#prevhall').val())
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option selected='selected'></option >")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-
-
-                                               }
-                                               else
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option></option>")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-                                               }
-                                           });
-
-                                       });
                            });
                        </script>
 
@@ -258,42 +223,6 @@
                                        }));
 
                                $('#selecttimeEdit').val(special);
-                               $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
-
-                                       function(data) {
-
-                                           var availableHalls = $('#selectresEdit');
-
-                                           availableHalls.empty();
-
-                                           $.each(data, function(key, value) {
-
-
-                                               if(key==$('#prevhall').val())
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option selected='selected'></option >")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-
-
-                                               }
-                                               else
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option></option>")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-                                               }
-                                           });
-
-                                       });
                            });
                        </script>
 
@@ -316,91 +245,6 @@
                            </select>
                        </div>
 
-                       <script>
-                           /**
-                            * Dynamically populate the select options for resources
-                            */
-                           $(document).ready(function()
-                           {
-
-                               $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
-
-                                       function(data) {
-
-                                           var availableHalls = $('#selectresEdit');
-
-                                           availableHalls.empty();
-
-                                           $.each(data, function(key, value) {
-
-                                               if(key==$('#prevhall').val())
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option selected='selected'></option >")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-
-
-                                               }
-                                               else
-                                               {
-                                                   availableHalls
-
-                                                           .append($("<option></option>")
-
-                                                                   .attr("value",key)
-
-                                                                   .text(key+value));
-                                               }
-                                           });
-
-                                       });
-                               $('#selectdateEdit').change(function(){
-
-                                   $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttimeEdit').val()},
-
-                                           function(data) {
-
-                                               var availableHalls = $('#selectresEdit');
-
-                                               availableHalls.empty();
-
-                                               $.each(data, function(key, value) {
-                                                   if(key==$('#prevhall').val())
-                                                   {
-                                                       availableHalls
-
-                                                               .append($("<option selected='selected'></option >")
-
-                                                                       .attr("value",key)
-
-                                                                       .text(key+value));
-
-
-                                                   }
-                                                   else
-                                                   {
-                                                       availableHalls
-
-                                                               .append($("<option></option>")
-
-                                                                       .attr("value",key)
-
-                                                                       .text(key+value));
-                                                   }
-
-                                               });
-
-                                           });
-
-                               });
-
-                           });
-
-                       </script>
 
                 <!-- select Year  -->
                 <div class="form-group">
@@ -499,54 +343,6 @@
                                                    }
 
 
-                                               });
-
-                                           });
-
-                               });
-
-                           });
-
-                           /**
-                            * Dynamically populate the select options for resources
-                            */
-                           $(document).ready(function()
-                           {
-                               $('#selecttimeEdit').change(function(){
-
-                                   $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdateEdit').val() },
-
-                                           function(data) {
-
-                                               var availableHalls = $('#selectresEdit');
-
-                                               availableHalls.empty();
-
-                                               $.each(data, function(key, value) {
-
-
-                                                   if(key==$('#prevhall').val())
-                                                   {
-                                                       availableHalls
-
-                                                               .append($("<option selected='selected'></option >")
-
-                                                                       .attr("value",key)
-
-                                                                       .text(key+value));
-
-
-                                                   }
-                                                   else
-                                                   {
-                                                       availableHalls
-
-                                                               .append($("<option></option>")
-
-                                                                       .attr("value",key)
-
-                                                                       .text(key+value));
-                                                   }
                                                });
 
                                            });
@@ -679,17 +475,6 @@
                            <select class="form-control" name="selectsubEdit" id="selectsubEdit">
                            </select>
                        </div>
-
-                       <!-- select Hall -->
-                       <div class="form-group">
-
-                           <label>Lecture Hall/Lab</label><br>
-                           <p>Previous Lecture Hall/Lab: {{$userRequest->resourceID}}</p>
-
-                           <select class="form-control" name="selectresEdit" id="selectresEdit">
-                           </select>
-                       </div>
-
 
 
                        @if (count($errors) > 0)

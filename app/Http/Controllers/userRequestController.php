@@ -48,7 +48,6 @@ class userRequestController extends Controller
         $this->validate($request, [
             'selectdate'=>'required',
             'selecttime'=>'required',
-            'selectres'=>'required',
         ]);
         
         $userRequest= new userRequest();
@@ -59,9 +58,9 @@ class userRequestController extends Controller
         $userRequest->batchNo=$request['selectbatch'];
         $userRequest->subjectCode=$request['selectsub'];
         $userRequest->requestDate=$request['selectdate'];
-        $userRequest->resourceID=$request['selectres'];
         $userRequest->timeSlot=$request['selecttime'];
         $userRequest->timeslotType=$request['SlotType'];
+        $userRequest->capacity=$request['capacity'];
         $userRequest->specialEvent=$request['specialEvent'];
         
         
@@ -79,7 +78,6 @@ class userRequestController extends Controller
             'selectyear'=>'required',
             'selectbatch'=>'required',
             'selecttime'=>'required',
-            'selectres'=>'required',
             'selectsemester'=>'required',
         ]);
 
@@ -91,7 +89,6 @@ class userRequestController extends Controller
         $userRequest->batchNo=$request['selectbatch'];
         $userRequest->subjectCode=$request['selectsub'];
         $userRequest->requestDate=$request['selectdate'];
-        $userRequest->resourceID=$request['selectres'];
         $userRequest->timeSlot=$request['selecttime'];
         $userRequest->semester=$request['selectsemester'];
         $userRequest->timeslotType=$request['SlotType'];
@@ -131,8 +128,14 @@ class userRequestController extends Controller
             ->where('requests.lecturerID', \Auth::user()->staff_id)
             ->where('requests.status','!=','Accepted')
             ->get();
+        $AccspecialRequests=\DB::table('requests')
+            ->select('requests.*')
+            ->whereNotNull('specialEvent')
+            ->where('requests.lecturerID', \Auth::user()->staff_id)
+            ->where('requests.status','=','Accepted')
+            ->get();
 
-        return view('userRequests.viewRequests',compact('requests','acceptedrequests','specialRequests'));
+        return view('userRequests.viewRequests',compact('requests','acceptedrequests','specialRequests','AccspecialRequests'));
     }
 
     public function SemesterRequestIndex()

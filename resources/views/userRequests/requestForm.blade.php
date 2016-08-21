@@ -74,7 +74,7 @@
                           </div>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="SlotType" id="SlotType" value="2"  onclick="setSelect('2')" >
+                                  <input type="radio" name="SlotType" id="SlotType" value="2"  onclick="setSelect('2')" checked>
                                   Two Hour Slot
                               </label>
                           </div>
@@ -127,6 +127,7 @@
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
+                                  document.getElementById("capacity").disabled = true;
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
@@ -135,6 +136,7 @@
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
+                                  document.getElementById("capacity").disabled = true;
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
@@ -144,6 +146,7 @@
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
                                   document.getElementById("specialEvent").disabled = false;
+                                  document.getElementById("capacity").disabled = false;
                                   document.getElementById("selectsub").disabled = true;
                                   document.getElementById("selectyear").disabled = true;
                                   document.getElementById("selectbatch").disabled = true;
@@ -175,26 +178,7 @@
                                                     text : special
                                                 }));
                                         $('#selecttime').val(special);
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
 
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectres');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    });
-
-                                                });
                                     });
 
 
@@ -216,26 +200,7 @@
                                       }));
 
                               $('#selecttime').val(special);
-                              $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
 
-                                      function(data) {
-
-                                          var availableHalls = $('#selectres');
-
-                                          availableHalls.empty();
-
-                                          $.each(data, function(key, value) {
-
-                                              availableHalls
-
-                                                      .append($("<option></option>")
-
-                                                              .attr("value",key)
-
-                                                              .text(key+value));
-                                          });
-
-                                      });
                           });
                       </script>
 
@@ -243,6 +208,13 @@
                       <div class="form-group">
                           <label>Special event details</label>
                           <input class="form-control" type="text" name="specialEvent" id="specialEvent">
+
+                      </div>
+
+                      <!-- special event capacity -->
+                      <div class="form-group">
+                          <label>Capacity required</label>
+                          <input class="form-control" type="text" name="capacity" id="capacity">
 
                       </div>
 
@@ -254,64 +226,6 @@
 
                           </select>
                       </div>
-
-
-                      <script>
-                          /**
-                           * Dynamically populate the select options for resources
-                           */
-                          $(document).ready(function()
-                          {
-                              $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
-
-                                      function(data) {
-
-                                          var availableHalls = $('#selectres');
-
-                                          availableHalls.empty();
-
-                                          $.each(data, function(key, value) {
-
-                                              availableHalls
-
-                                                      .append($("<option></option>")
-
-                                                              .attr("value",key)
-
-                                                              .text(key+value));
-                                          });
-
-                                      });
-
-                              $('#selectdate').change(function(){
-
-
-
-                                  $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
-
-                                          function(data) {
-
-                                              var availableHalls = $('#selectres');
-
-                                              availableHalls.empty();
-
-                                              $.each(data, function(key, value) {
-
-                                                  availableHalls
-
-                                                          .append($("<option></option>")
-
-                                                                  .attr("value",key)
-
-                                                                  .text(key+value));
-                                              });
-
-                                          });
-
-                              });
-
-                          });
-                      </script>
 
                 <!-- select Year  -->
                 <div class="form-group">
@@ -360,58 +274,6 @@
 
                           });
 
-                          /**
-                           * Dynamically populate the select options for resources
-                           */
-                          $(document).ready(function()
-                          {
-                              $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $('#selecttime').val(),option2:$('#selectdate').val() },
-
-                                      function(data) {
-
-                                          var availableHalls = $('#selectres');
-
-                                          availableHalls.empty();
-
-                                          $.each(data, function(key, value) {
-
-                                              availableHalls
-
-                                                      .append($("<option></option>")
-
-                                                              .attr("value",key)
-
-                                                              .text(key+value));
-                                          });
-
-                                      });
-
-                              $('#selecttime').change(function(){
-
-                                  $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdate').val() },
-
-                                          function(data) {
-
-                                              var availableHalls = $('#selectres');
-
-                                              availableHalls.empty();
-
-                                              $.each(data, function(key, value) {
-
-                                                  availableHalls
-
-                                                          .append($("<option></option>")
-
-                                                                  .attr("value",key)
-
-                                                                  .text(key+value));
-                                              });
-
-                                          });
-
-                              });
-
-                          });
 
                       </script>
 
@@ -464,16 +326,6 @@
                       <option value="">Please select</option>
                   </select>
                 </div>
-
-                   <!-- select Hall -->
-                <div class="form-group">
-                  <label>Lecture Hall/Lab</label>
-
-                  <select class="form-control" name="selectres" id="selectres">
-                      <option value="">Please select</option>
-                  </select>
-                </div>
-
 
 
                       @if (count($errors) > 0)

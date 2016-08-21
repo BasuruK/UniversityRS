@@ -97,7 +97,6 @@ function isEditSpecial(id)
                         <thead>
                             <tr role="row">
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
-                                <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall Number</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Batch</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Year</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
@@ -110,7 +109,6 @@ function isEditSpecial(id)
                             @foreach($requests as $request)
                             <tr role="row" class="odd">
                               <td class="sorting_1">{{$request->id}}</td>
-                              <td>{{$request->resourceID}}</td>
                               <td>{{$request->batchNo}}</td>
                               <td>{{$request->year}}</td>
                               <td>{{$request->subName}}</td>
@@ -144,7 +142,7 @@ function isEditSpecial(id)
 
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Accepted Requests</h3>
+                <h3 class="box-title">Accepted Academic Requests</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -242,7 +240,6 @@ function isEditSpecial(id)
                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Details</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time slot</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Hall Number</th>
                                     <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
 
                                 </tr>
@@ -254,7 +251,6 @@ function isEditSpecial(id)
                                         <td>{{ $specialRequest->specialEvent }}</td>
                                         <td>{{ $specialRequest->requestDate }}</td>
                                         <td>{{ $specialRequest->timeSlot }}</td>
-                                        <td>{{ $specialRequest->resourceID }}</td>
                                         <td>
                                             <a  onclick="return isEditSpecial({{$specialRequest->id}})" class="btn btn-info">Edit</a>
                                             <a class="btn btn-danger pull-right" onclick="return isDelete({{$specialRequest->id}})">Delete</a>
@@ -278,6 +274,66 @@ function isEditSpecial(id)
             <!-- /.box-body -->
         </div> <!--/.box-->
 
+    </div>
+        <!----fourth box-->
+        <div class="row">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Accepted Special Event Requests</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="dataTableRegUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <script>
+                                    /**
+                                     * Initialise DataTable for Accepted requests Users
+                                     */
+                                    $(document).ready(function() {
+                                        $('#dataTableAcceptedSpecialRequests').DataTable();
+                                    } );
+                                </script>
+                                <table id="dataTableAcceptedSpecialRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Details</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time slot</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($AccspecialRequests as $AccspecialRequest)
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">{{ $AccspecialRequest->id }}</td>
+                                            <td>{{ $AccspecialRequest->specialEvent }}</td>
+                                            <td>{{ $AccspecialRequest->requestDate }}</td>
+                                            <td>{{ $AccspecialRequest->timeSlot }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="dataTables_info" id="dataTableRegUsers_info" role="status" aria-live="polite"></div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div> <!--/.box-->
 
 
     </div>
