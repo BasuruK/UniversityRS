@@ -303,7 +303,7 @@ desired effect
             <li><a href="/timetable">Timetable Management</a></li>
           </ul>
         </li>
-        <li><a href="AdminOptions"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>
+        <li><a href="/AdminOptions"><i class="fa fa-users"></i> <span>Administrator Settings</span></a></li>
         @endif
       </ul>
       <!-- /.sidebar-menu -->
