@@ -22,10 +22,12 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <form role="form" method="POST" action="/userRequest/requestForm/add" >
+
+              <form role="form" method="POST" action="/userRequest/requestForm/add" name="requestForm" >
                   
                   {!! csrf_field() !!}
-                  
+
+
                 <!--Date-->
                 <div class="form-group">
                     <label>Date:</label>
@@ -66,19 +68,19 @@
                           <label>Time Slot Type</label>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="SlotType" id="SlotType1" value="1"  onclick="setSelect('1hr')" >
+                                  <input type="radio" name="SlotType" id="SlotType" value="1"  onclick="setSelect('1')" >
                                   One hour Slot
                               </label>
                           </div>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="SlotType" id="SlotType2" value="2"  onclick="setSelect('2hr')" checked>
+                                  <input type="radio" name="SlotType" id="SlotType" value="2"  onclick="setSelect('2')" checked>
                                   Two Hour Slot
                               </label>
                           </div>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="SlotType" id="SlotType3" value="3"  onclick="setSelect('other')" >
+                                  <input type="radio" name="SlotType" id="SlotType" value="3"  onclick="setSelect('3')" >
                                   Special events
                               </label>
                           </div>
@@ -90,8 +92,8 @@
                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
 
                           <script>
-                              $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
-                                  'maxTime': '4:30', });
+                              $('#selectTimeSpecialST').timepicker({'timeFormat': 'H:i', 'minTime': '8:00',
+                                  'maxTime': '18:30', });
 
 
 
@@ -101,8 +103,8 @@
                           <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
 
                           <script>
-                              $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
-                                  'maxTime': '5:30',});
+                              $('#selectTimeSpecialEN').timepicker({'timeFormat': 'H:i' , 'minTime': '8:30',
+                                  'maxTime': '18:30',});
 
                           </script>
                       </div>
@@ -111,8 +113,8 @@
                           /**
                            * Dynamically populate the select options for timeslots
                            */
-                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-1.30','1.30-2.30','2.30-3.30','3.30-4.30','4.30-5.30'];
-                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','1.30-3.30','3.30-5.30'];
+                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
+                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
 
 
                           function setSelect(v) {
@@ -121,21 +123,33 @@
                                   x.remove(x.length -1);
                               }
                               var a;
-                              if (v=='1hr'){
+                              if (v=='1'){
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("specialEvent").disabled = true;
+                                  document.getElementById("capacity").disabled = true;
                                   document.getElementById("selectsub").disabled = false;
+                                  document.getElementById("selectyear").disabled = false;
+                                  document.getElementById("selectbatch").disabled = false;
                                   a = OneHourSet;
-                              } else if (v=='2hr'){
+                              } else if (v=='2'){
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                  document.getElementById("specialEvent").disabled = true;
+                                  document.getElementById("capacity").disabled = true;
                                   document.getElementById("selectsub").disabled = false;
+                                  document.getElementById("selectyear").disabled = false;
+                                  document.getElementById("selectbatch").disabled = false;
                                   a = TwoHourSet
                               }
-                              else if (v=='other'){
+                              else if (v=='3'){
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
+                                  document.getElementById("specialEvent").disabled = false;
+                                  document.getElementById("capacity").disabled = false;
                                   document.getElementById("selectsub").disabled = true;
+                                  document.getElementById("selectyear").disabled = true;
+                                  document.getElementById("selectbatch").disabled = true;
                               }
                               for (i = 0; i < a.length; ++i) {
                                   var option = document.createElement("option");
@@ -144,13 +158,9 @@
                               }
                           }
                           function load() {
-                              setSelect('2hr');
+                              setSelect('2');
                           }
                           window.onload = load;
-
-
-
-
                       </script>
 
 
@@ -168,26 +178,7 @@
                                                     text : special
                                                 }));
                                         $('#selecttime').val(special);
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
 
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectres');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    });
-
-                                                });
                                     });
 
 
@@ -209,28 +200,25 @@
                                       }));
 
                               $('#selecttime').val(special);
-                              $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdate').val(),option2: $('#selecttime').val()},
 
-                                      function(data) {
-
-                                          var availableHalls = $('#selectres');
-
-                                          availableHalls.empty();
-
-                                          $.each(data, function(key, value) {
-
-                                              availableHalls
-
-                                                      .append($("<option></option>")
-
-                                                              .attr("value",key)
-
-                                                              .text(key+value));
-                                          });
-
-                                      });
                           });
                       </script>
+
+                      <!-- special event -->
+                      <div class="form-group">
+                          <label>Special event details</label>
+                          <input class="form-control" type="text" name="specialEvent" id="specialEvent">
+
+                      </div>
+
+                      <!-- special event capacity -->
+                      <div class="form-group">
+                          <label>Capacity required</label>
+                          <input class="form-control" type="text" name="capacity" id="capacity">
+
+                      </div>
+
+
                       <!-- select Time Slot  -->
                       <div class="form-group">
                           <label>Time Slot</label>
@@ -238,43 +226,6 @@
 
                           </select>
                       </div>
-
-
-                      <script>
-                          /**
-                           * Dynamically populate the select options for resources
-                           */
-                          $(document).ready(function()
-                          {
-                              $('#selectdate').change(function(){
-
-
-
-                                  $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttime').val()},
-
-                                          function(data) {
-
-                                              var availableHalls = $('#selectres');
-
-                                              availableHalls.empty();
-
-                                              $.each(data, function(key, value) {
-
-                                                  availableHalls
-
-                                                          .append($("<option></option>")
-
-                                                                  .attr("value",key)
-
-                                                                  .text(key+value));
-                                              });
-
-                                          });
-
-                              });
-
-                          });
-                      </script>
 
                 <!-- select Year  -->
                 <div class="form-group">
@@ -323,37 +274,6 @@
 
                           });
 
-                          /**
-                           * Dynamically populate the select options for resources
-                           */
-                          $(document).ready(function()
-                          {
-                              $('#selecttime').change(function(){
-
-                                  $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdate').val() },
-
-                                          function(data) {
-
-                                              var availableHalls = $('#selectres');
-
-                                              availableHalls.empty();
-
-                                              $.each(data, function(key, value) {
-
-                                                  availableHalls
-
-                                                          .append($("<option></option>")
-
-                                                                  .attr("value",key)
-
-                                                                  .text(key+value));
-                                              });
-
-                                          });
-
-                              });
-
-                          });
 
                       </script>
 
@@ -384,6 +304,7 @@
 
                                                   selectedSub
 
+
                                                           .append($("<option></option>")
 
                                                                   .attr("value",key)
@@ -397,30 +318,18 @@
 
                           });
                       </script>
+
                   <!-- select Subject -->
                 <div class="form-group">
                   <label>Subject</label>
                   <select class="form-control" name="selectsub" id="selectsub">
-                    @foreach($subjects as $subject)
-                    <option value="{{$subject->id}}"> {{$subject->subName}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-
-                   <!-- select Hall -->
-                <div class="form-group">
-                  <label>Lecture Hall/Lab</label>
-
-                  <select class="form-control" name="selectres" id="selectres">
                       <option value="">Please select</option>
                   </select>
                 </div>
 
 
-
                       @if (count($errors) > 0)
-                          <div class="alert alert-danger">
+                          <div class="alert alert-danger" id="errordisplay">
                               <ul>
                                   @foreach ($errors->all() as $error)
                                       <li>{{ $error }}</li>
@@ -428,9 +337,14 @@
                               </ul>
                           </div>
                       @endif
+<script>
+    function Success()
+    {
+        $.notify("Your request has been successfully logged", "success");
+    }
+</script>
 
-
-                      <button type="submit " class="btn btn-primary pull-right">Submit</button>
+                      <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return  ValidateForm()">Submit</button>
               </form>
             </div>
             <!-- /.box-body -->

@@ -43,14 +43,26 @@ Route::group(['middleware' => 'auth'], function() {
      * Request Management Routes
      */
     Route::get('/userRequest/requestForm/','userRequestController@AddRequestForm');
+    
+    Route::get('/userRequest/requestFormSemester/','userRequestController@AddRequestFormSemester');
 
     Route::get('/userRequest/Show/','userRequestController@Index');
 
+    Route::get('/userRequest/ShowSemesterRequest/','userRequestController@SemesterRequestIndex');
+    
     Route::get('/userRequest/Edit/{userRequest}','userRequestController@EdituserRequestForm');
+
+    Route::get('/userRequest/EditSpecial/{userRequest}','userRequestController@EdituserRequestSpecialForm');
+
+    Route::get('/userRequest/EditSemesterRequest/{userRequest}','userRequestController@EditSemesterRequestForm');
+
+    Route::patch('/userRequest/UpdateSemesterRequest/{userRequest}','userRequestController@UpdateSemesterRequest');
 
     Route::patch('/userRequest/updateUserRequest/{userRequest}','userRequestController@updateuserRequest');
 
     Route::post('/userRequest/requestForm/add','userRequestController@AddRequest');
+
+    Route::post('/userRequest/semesterRequestForm/add','userRequestController@AddSemesterRequest');
 
     Route::get('/userRequest/requestForm/loadBatches','userRequestController@loadBatches');
 
@@ -63,6 +75,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/userRequest/requestForm/loadHallsTime','userRequestController@loadAvailabeResourcesTime');
 
     Route::get('/userRequest/deleteUserRequest/{userRequest}','userRequestController@deleteUserRequest');
+
+    Route::get('/userRequest/deleteSemesterRequest/{userRequest}','userRequestController@deleteSemesterRequest');
 
     // Request Management Route End
 
@@ -180,7 +194,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
 
-    Route::get('/adminRequest/DateSort', 'AdminRequestController@SortByDate');
+    Route::get('/adminRequest/BatchSort', 'AdminRequestController@SortByBatchYear');
     
     Route::post('/adminRequest/add', 'AdminRequestController@add');
     
