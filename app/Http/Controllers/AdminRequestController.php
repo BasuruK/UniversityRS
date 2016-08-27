@@ -39,7 +39,7 @@ class AdminRequestController extends Controller
 
         return view("adminRequests.admin_request_main",compact('requests'));
     }
-    public function SortByDate()
+    public function SortByBatchYear()
     {
         $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
@@ -47,7 +47,8 @@ class AdminRequestController extends Controller
             ->join('users', 'requests.lecturerID','=', 'users.staff_id')
             ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
             ->select('requests.*','subject.subName','resource.hallNo','users.name','allowed_users.position')
-            ->orderby('requests.requestDate','asc')
+            ->orderby('requests.year','asc')
+            ->orderby('requests.batchNo','asc')
             ->get();
 
         /*$c_requests = \DB::table('requests')

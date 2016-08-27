@@ -22,7 +22,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}" >
+              <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}"  name="editrequesForm">
                    {{method_field('PATCH')}}
                   {!! csrf_field() !!}
                   
@@ -35,11 +35,12 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                     <input type="text" class="form-control pull-right" id="datepicker" name="selectdateEdit" value="{{$userRequest->requestDate}}">
+
                         <script type="text/javascript">
                             $(function() {
-                                $('input[name="selectdate"]').daterangepicker({
+                                $('input[name="selectdateEdit"]').daterangepicker({
                                     singleDatePicker: true,
-                                    minDate:new Date(),
+                                 //   minDate:new Date(),
                                     maxDate:'2016-12-31',
                                     locale: {
                                         format: 'YYYY-MM-DD-ddd'
@@ -57,35 +58,198 @@
                    <div class="form-group" hidden="">
                     <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
                 </div>
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevhall" id="prevhall" value="{{$userRequest->resourceID}}">
+                       </div>
+
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$userRequest->batchNo}}">
+                       </div>
+
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$userRequest->subjectCode}}">
+                       </div>
+                       <div class="form-group"  hidden="">
+                           <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
+                       </div>
+
+                       {{--Select time slot type--}}
+                       <div class="form-group">
+                           <label>Time Slot Type</label>
+                           <div class="radio">
+                               <label>
+                                   @if($userRequest->timeslotType=='1')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')" checked>
+                                       @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')">
+                                   @endif
+                                   One hour Slot
+                               </label>
+                           </div>
+
+                           <div class="radio">
+                               <label>
+                                   @if($userRequest->timeslotType=='2')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')" checked>
+                                   @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')">
+                                   @endif
+                                   Two Hour Slot
+                               </label>
+                           </div>
+
+                           <div class="radio">
+                               <label>
+                                   @if($userRequest->timeslotType=='3')
+                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" checked>
+                                   @else
+                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" >
+                                   @endif
+                                   Special events
+                               </label>
+                           </div>
+
+                       </div>
+
+                       <div  class="form-group">
+                           <label>Start Time</label>
+                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
+
+                           <script>
+                               $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
+                                   'maxTime': '4:30', });
+
+
+
+                           </script>
+
+                           <label>End Time</label>
+                           <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+
+                           <script>
+                               $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
+                                   'maxTime': '5:30',});
+
+                           </script>
+                       </div>
+
+                       <script>
+                           /**
+                            * Dynamically populate the select options for timeslots
+                            */
+                           var OneHourSet=['8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
+                           var TwoHourSet=['8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
+
+
+                           function setSelect(v) {
+                               var x = document.getElementById("selecttimeEdit");
+                               for (i = 0; i < x.length; ) {
+                                   x.remove(x.length -1);
+                               }
+                               var a;
+                               if (v=='1'){
+                                   document.getElementById("selectTimeSpecialST").disabled = true;
+                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                   document.getElementById("selectsubEdit").disabled = false;
+                                   a = OneHourSet;
+                               } else if (v=='2'){
+                                   document.getElementById("selectTimeSpecialST").disabled = true;
+                                   document.getElementById("selectTimeSpecialEN").disabled = true;
+                                   document.getElementById("selectsubEdit").disabled = false;
+                                   a = TwoHourSet
+                               }
+                               else if (v=='3'){
+                                   document.getElementById("selectTimeSpecialST").disabled = false;
+                                   document.getElementById("selectTimeSpecialEN").disabled = false;
+                                   document.getElementById("selectsubEdit").disabled = true;
+                               }
+                               for (i = 0; i < a.length; ++i) {
+
+                                   if(a[i]==document.getElementById("prevtimeslot").value)
+                                   {
+                                       var option = document.createElement("option");
+                                       option.text = a[i];
+                                       option.selected='selected';
+                                       x.add(option);
+                                   }
+                                   else
+                                   {
+                                       var option = document.createElement("option");
+                                       option.text = a[i];
+                                       x.add(option);
+                                   }
+
+                               }
+                           }
+                           function load() {
+                               var currentType=document.editrequesForm.SlotTypeEdit.value;
+
+                              setSelect(currentType);
+                           }
+                           window.onload = load;
+                       </script>
+
+
+                       <script>
+                           $('#selectTimeSpecialST').change(function ()
+                           {
+                               start_time=$('#selectTimeSpecialST').val();
+                               end_time=$('#selectTimeSpecialEN').val();
+                               var special=start_time+ "-" +end_time;
+
+
+                               $('#selecttimeEdit').empty().append($('<option>',
+                                       {
+                                           value: special,
+                                           text : special
+                                       }));
+                               $('#selecttimeEdit').val(special);
+                           });
+                       </script>
+
+                       <script>
+                           $('#selectTimeSpecialEN').change(function ()
+                           {
+
+                               start_time=$('#selectTimeSpecialST').val();
+                               end_time=$('#selectTimeSpecialEN').val();
+                               special=start_time+ "-" +end_time;
+
+
+                               $('#selecttimeEdit').empty().append($('<option>',
+                                       {
+                                           value: special,
+                                           text : special
+                                       }));
+
+                               $('#selecttimeEdit').val(special);
+                           });
+                       </script>
+
+
+                       <!-- special event -->
+                       <div class="form-group">
+                           <label>Special event details</label>
+                           <input class="form-control" type="text" name="specialEventEdit" id="specialEventEdit" value="{{$userRequest->specialEvent}}">
+
+                       </div>
+
+
 
                        <!-- select Time Slot  -->
                        <div class="form-group">
-                           <label>Time Slot</label>
-                           <select class="form-control" name="selecttimeEdit">
-                               @if ($userRequest->requestDate === "8.30-10.30")
-                                   <option value="8.30-10.30" selected="selected">8.30-10.30</option>
-                               @elseif ($userRequest->requestDate === "10.30-12.30")
-                                   <option value="10.30-12.30" selected="selected">10.30-12.30</option>
-                               @elseif ($userRequest->requestDate === "12.30-1.30")
-                                   <option value="12.30-1.30" selected="selected">12.30-1.30</option>
-                               @elseif ($userRequest->requestDate === "1.30-3.30")
-                                   <option value="1.30-3.30" selected="selected">1.30-3.30</option>
-                               @elseif ($userRequest->requestDate === "3.30-5.30")
-                                   <option value="3.30-5.30" selected="selected">3.30-5.30</option>
-                               @endif
-                                   <option value="8.30-10.30">8.30-10.30</option>
-                                   <option value="10.30-12.30">10.30-12.30</option>
-                                   <option value="12.30-1.30">12.30-1.30</option>
-                                   <option value="1.30-3.30">1.30-3.30</option>
-                                   <option value="3.30-5.30">3.30-5.30</option>
+
+                           <label>Time Slot</label><br>
+                           <p>Previous Time Slot: {{$userRequest->timeSlot}}</p>
+                           <select class="form-control" name="selecttimeEdit" id="selecttimeEdit">
                            </select>
                        </div>
-                  
-                  
+
+
                 <!-- select Year  -->
                 <div class="form-group">
                   <label>Year</label>
-                  <select class="form-control" name="selectyearEdit">
+                  <select class="form-control" name="selectyearEdit" id="selectyearEdit">
                     @if ($userRequest->year === "1")
                         <option value="1" selected="selected">1</option>
                      @elseif ($userRequest->year === "2")
@@ -101,42 +265,240 @@
                     <option value="4"> 4</option>
 
                   </select>
-                </div>
-                  
-                  <!-- select Batch -->
-                <div class="form-group">
-                  <label>Batch</label>
-                  <select class="form-control" name="selectbatchEdit" >
-                    @foreach($batches as $batch)
-                              <option  value="{{$batch->id}}"  @if(($userRequest->batchNo) == ($batch->id)) selected @endif> {{ $batch->batchNo }}</option>
-                    @endforeach
-
-                  </select>
 
                 </div>
-                  
-                  <!-- select Subject -->
-                <div class="form-group">
-                  <label>Subject</label>
-                  <select class="form-control" name="selectsubEdit">
-                    @foreach($subjects as $subject)
-                              <option  value="{{$subject->id}}"  @if(($userRequest->subjectCode) == ($subject->id)) selected @endif> {{ $subject->subName }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                  
-                   <!-- select Hall -->
-                <div class="form-group">
-                  <label>Lecture Hall/Lab</label>
-                  <select class="form-control" name="selectresEdit">
-                    @foreach($resources as $resource)
-                             <option  value="{{$resource->id}}"  @if ($userRequest->resourceID === $resource->id) selected @endif> {{$resource->hallNo }}</option>
-                    @endforeach
 
-                  </select>
+                       <script>
+                           /**
+                            * Dynamically populate the select options for batches
+                            */
+                           $(document).ready(function()
+                           {
+                               $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $('#selectyearEdit').val()},
+
+                                       function(data) {
+
+                                           var selectedbatch = $('#selectbatchEdit');
+
+                                           selectedbatch.empty();
+
+                                           $.each(data, function(key, value) {
+                                               if(key==$('#prevbatch').val())
+                                               {
+                                                   selectedbatch
+
+                                                           .append($("<option selected='selected'></option >")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(value));
+                                               }
+                                               else
+                                               {
+                                                   selectedbatch
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(value));
+                                               }
+
+
+
+                                           });
+
+                                       });
+                               $('#selectyearEdit').change(function(){
+
+                                   $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $(this).val()},
+
+                                           function(data) {
+
+                                               var selectedbatch = $('#selectbatchEdit');
+
+                                               selectedbatch.empty();
+
+                                               $.each(data, function(key, value) {
+
+                                                   if(key==$('#prevbatch').val())
+                                                   {
+                                                       selectedbatch
+
+                                                               .append($("<option selected='selected'></option >")
+
+                                                                       .attr("value",key)
+
+                                                                       .text(value));
+                                                   }
+                                                   else
+                                                   {
+                                                       selectedbatch
+
+                                                               .append($("<option></option>")
+
+                                                                       .attr("value",key)
+
+                                                                       .text(value));
+                                                   }
+
+
+                                               });
+
+                                           });
+
+                               });
+
+                           });
+
+                       </script>
+
+                       <!-- select Batch -->
+                       <div class="form-group">
+
+                           <label>Batch</label><br>
+                           <p>Pevious Batch: {{ $userRequest->batchNo}}</p>
+                           <select class="form-control" name="selectbatchEdit" id="selectbatchEdit">
+                           </select>
+                       </div>
+
+                       <script>
+                           /**
+                            * Dynamically populate the select options for subjects
+                            */
+                           $(document).ready(function()
+                           {
+                               $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $('#selectyearEdit').val()},
+
+                                       function(data) {
+
+                                           var selectedSub = $('#selectsubEdit');
+
+                                           selectedSub.empty();
+
+                                           $.each(data, function(key, value) {
+                                               if(key==$('#prevsub').val())
+                                               {
+                                                   selectedSub
+
+                                                           .append($("<option selected='selected'></option>")
+                                                                   .attr("value",key)
+                                                                   .text(value));
+                                               }
+                                               else
+                                               {
+                                                   selectedSub
+
+                                                           .append($("<option></option>")
+                                                                   .attr("value",key)
+                                                                   .text(value));
+                                               }
+                                           });
+
+                                       });
+
+
+                               $('#selectyearEdit').change(function(){
+
+                                   $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
+
+                                           function(data) {
+
+                                               var selectedSub = $('#selectsubEdit');
+
+                                               selectedSub.empty();
+
+                                               $.each(data, function(key, value) {
+                                                if(key==$('#prevsub').val())
+                                                {
+                                                    selectedSub
+
+                                                        .append($("<option selected='selected'></option>")
+                                                                .attr("value",key)
+                                                                .text(value));
+                                                }
+                                                   else
+                                                {
+                                                    selectedSub
+
+                                                            .append($("<option></option>")
+                                                                    .attr("value",key)
+                                                                    .text(value));
+                                                }
+                                               });
+
+                                           });
+
+                               });
+
+                           });
+
+                           /**
+                            * Dynamically populate the select options for batches
+                            */
+                           $(document).ready(function()
+                           {
+                               $('#selectyearEdit').change(function(){
+
+                                   $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $(this).val()},
+
+                                           function(data) {
+
+                                               var selectedbatch = $('#selectbatchEdit');
+
+                                               selectedbatch.empty();
+
+                                               $.each(data, function(key, value) {
+
+                                                   selectedbatch
+
+                                                           .append($("<option></option>")
+
+                                                                   .attr("value",key)
+
+                                                                   .text(value));
+                                               });
+
+                                           });
+
+                               });
+
+                           });
+
+                       </script>
+
+                       <!-- select Subject -->
+                       <div class="form-group">
+
+                           <label>Subject</label><br>
+                           <p>Previous Subject: {{$selectedSub->subName}}</p>
+                           <select class="form-control" name="selectsubEdit" id="selectsubEdit">
+                           </select>
+                       </div>
+
+
+                       @if (count($errors) > 0)
+                           <div class="alert alert-danger">
+                               <ul>
+                                   @foreach ($errors->all() as $error)
+                                       <li>{{ $error }}</li>
+                                   @endforeach
+                               </ul>
+                           </div>
+                       @endif
+                       <script>
+                           function Success()
+                           {
+                               $notify("Your request has been successfully Edited", "success",
+                                       {position:"center"}
+                               );
+                           }
+                       </script>
+
+                       <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
+
                 </div>
 
-                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
               </form>
             </div>
             <!-- /.box-body -->

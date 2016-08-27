@@ -15,13 +15,16 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('lecturerID');
-            $table->string('year');
-            $table->string('batchNo');
-            $table->string('subjectCode');
+            $table->string('year')->nullable();
+            $table->string('batchNo')->nullable();
+            $table->string('subjectCode')->nullable();
             $table->string('requestDate');
             $table->string('timeSlot');
             $table->string('resourceID');
             $table->string('status');
+            $table->string('timeslotType');
+            $table->string('capacity')->nullable();
+            $table->string('specialEvent')->nullable();
             $table->timestamps();
 
 
