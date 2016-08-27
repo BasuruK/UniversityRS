@@ -74,6 +74,13 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('/myTables/view','userTimetableController@viewTable');
 
+    /**
+     * Mailbox routes
+     */
+
+    Route::get('/Mailbox','MailboxController@index');
+
+    Route::post('/Mailbox/Send','MailboxController@send');
 
 });
 

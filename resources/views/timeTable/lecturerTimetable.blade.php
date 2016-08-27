@@ -86,27 +86,12 @@
                                     durationFrom         = parseFloat(durationFrom) + 1 + ("0");
                                     document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).innerHTML = LecturerTimeData[i].subjectCode + " <div class='pull-right'>Hall: " + LecturerTimeData[i].resourceName + "</div><br>" + " Year: " + LecturerTimeData[i].year + "<div class='pull-right'> Batch: " + LecturerTimeData[i].batchNo + "</div>";
 
-
                                     // Css styling
                                     document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-width"]= "2px";
 
                                     if(totalHoursNeed >= 1) {
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-top-color"] = "#000000";
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-left-color"] = "#000000";
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-right-color"] = "#000000";
                                         document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "transparent";
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["background-color"] = "lightyellow";
-
-
-                                    }
-                                    if(k >= 1)
-                                    {
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "#000000";
-
-                                    }
-                                    if(totalHoursNeed == 1)
-                                    {
-                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "#000000";
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["background-color"] = "lightgray";
                                     }
 
                                 }
