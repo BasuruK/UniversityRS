@@ -72,7 +72,7 @@
                         <div class="icon">
                             <i class="ion-ios-list-outline"></i>
                         </div>
-                        <a href="/myTables" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/userRequest/requestFormSemester/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
         @endif
