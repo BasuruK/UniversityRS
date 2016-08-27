@@ -22,19 +22,23 @@
   <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
   <!-- Date Range Picker -->
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="{{ asset('css/datepicker3.css') }}">
   <!-- Time Picker CSS -->
   <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
   <!-- iCheck CSS -->
   <link rel="stylesheet" href="{{ asset('css/iCheck/iCheck-all.css') }}">
+  <!-- Wysihtml5 -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap3-wysihtml5.min.css') }}">
+  <!-- JQuery UI -->
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
 
   <!-- REQUIRED JS SCRIPTS -->
 
   <!--Date Range Picker  -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <!-- jQuery 2.2.0 -->
-  <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+  <!-- jQuery 2.2.4 -->
+  <script src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <!-- AdminLTE App -->
@@ -48,8 +52,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <!-- Include Date Range Picker -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-  <!-- Date Picker -->
-  <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <!-- Include Time Picker -->
   <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
   <!-- iCheck -->
@@ -58,6 +60,12 @@
   <script src="{{ asset('js/notify.js') }}"></script>
   <!-- jsPDF.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+  <!-- Wysihtml5 -->
+  <script src="{{ asset('js/bootstrap3-wysihtml5.all.min.js') }}"></script>
+  <!-- JQuery UI -->
+  <script src="{{ asset('js/jquery-ui.js') }}"></script>
+  <!-- Date Picker -->
+  <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 
 
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -148,7 +156,7 @@ desired effect
                 </ul>
                 <!-- /.menu -->
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+              <li class="footer"><a href="/Mailbox">See All Messages</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->

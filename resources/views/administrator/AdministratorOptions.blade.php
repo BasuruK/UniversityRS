@@ -76,7 +76,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" name="datepicker" id="datepicker"  class="form-control" required>
+                                <input type="text" name="datepicker" id="datepicker"  class="form-control datepicker" required>
 
                             </div>
                             <!-- /.input group -->
@@ -157,9 +157,9 @@
         <script>
 
         //Date picker initializer
-        $('#datepicker').datepicker({
+        $('.datepicker').datepicker({
             autoclose: true,
-            startDate: '-0d'
+            startDate: '-0d',
         });
 
         //Check box for Semester vice form
@@ -186,7 +186,6 @@
                 <div class="box-body">
                     <input type="checkbox" id="semesterRegForm"> <i id="enableOrDisableSemRegForm" style="padding-left: 3%;"> Enable semester registration form </i>
                     <br><br>
-                    <input type="checkbox" id="SMSNotification"> <i id="enableOrDisableSMSNotifications" style="padding-left: 3%;"> Enable SMS notifications for users </i>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -262,69 +261,6 @@
 
         });
 
-
-        //SMS Option
-
-        var cancelEventForSMS = 0;
-        if(adminOptionsFromServer.SMSNotificationsForUsers == 1)
-        {
-            $('#SMSNotification').iCheck('check');
-            document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Disable SMS notifications for users";
-        }
-
-        //Ajax call for checkbox check SMS Notification checkbox
-        $('#SMSNotification').on('ifChecked', function(event){
-
-            cancelEventForSMS = 1;
-            $.confirm({
-                theme: 'black',
-                title: 'Are Your Sure ?',
-                icon: 'fa fa-warning',
-                content: 'Are you sure you want to enable SMS notifications ?',
-                confirmButton: 'Yes',
-                confirmButtonClass: 'btn-success',
-                confirm: function(){
-
-                    $.ajax({
-                        type    : 'GET',
-                        url     : "/AdminOptions/SMSNotificationChecked",
-                        success : function () {
-
-                            $.notify("SMS Notifications enabled",{
-
-                                position : 'bottom right',
-                                className: 'success'
-                            });
-                            document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Disable SMS notifications for users";
-                            cancelEventForSMS = 0;
-                        }
-                    });
-                },
-                cancel: function () {
-                    $('#SMSNotification').iCheck('uncheck');
-                    cancelEventForSMS = 1;
-                }
-            });
-
-
-        });
-
-        //Ajax call for checkbox un-check SMS Notification checkbox
-        $('#SMSNotification').on('ifUnchecked', function(event){
-
-            if(cancelEventForSMS != 1) {
-                $.ajax({
-                    type: 'GET',
-                    url: "/AdminOptions/SMSNotificationUnchecked",
-                    success: function () {
-
-                        $.notify("SMS Notifications disabled", {position: 'bottom right'});
-                        document.getElementById("enableOrDisableSMSNotifications").innerHTML = "Enable SMS notifications for users";
-                    }
-                });
-            }
-
-        });
 
     </script>
 
