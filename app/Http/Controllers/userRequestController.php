@@ -78,7 +78,7 @@ class userRequestController extends Controller
             'selectyear'=>'required',
             'selectbatch'=>'required',
             'selecttime'=>'required',
-            'selectsemester'=>'required',
+            'selectsemester'=>'required|Integer|Min:1|Max:1',
         ]);
 
         $userRequest= new SemesterRequests();
