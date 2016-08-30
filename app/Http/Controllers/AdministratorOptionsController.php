@@ -122,7 +122,7 @@ class AdministratorOptionsController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
         }
-        Notifications::sendNotification('Semester Form now Available',0 , 'semesterRequestFormNotification','/semesterRequests');
+        Notifications::sendNotification('Semester Form now Available',0 , 'semesterRequestFormNotification','/userRequest/requestFormSemester/');
     }
 
     /**
@@ -139,63 +139,6 @@ class AdministratorOptionsController extends Controller
 
         //Delete the notification regarding the semester request table
         Notifications::where('type','semesterRequestFormNotification')->delete();
-    }
-
-    /**
-     * If SMS Notifications checkbox is checked update or insert the variable to the database
-     */
-    public function SMSNotificationChecked()
-    {
-        $alreadyFilledStatus = DB::table('administrator_options')->count();
-        if($alreadyFilledStatus == 0)
-        {
-            DB::table('administrator_options')->insert([
-                'SMSNotificationsForUsers' => '1',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
-        else
-        {
-            DB::table('administrator_options')
-                ->where('id','1')
-                ->update([
-                    'SMSNotificationsForUsers' => '1',
-                    'updated_at' => Carbon::now(),
-                ]);
-        }
-    }
-
-    /**
-     * If SemesterRequest checkbox is unchecked update the variable to 0 on the database
-     */
-    public function SMSNotificationUnchecked()
-    {
-        DB::table('administrator_options')
-            ->where('id','1')
-            ->update([
-                'SMSNotificationsForUsers' => '0',
-                'updated_at' => Carbon::now(),
-            ]);
-    }
-
-    /**
-     * Sends an SMS to the number specified
-     *
-     * @return mixed
-     *
-     */
-    public function sendSMS()
-    {
-        $smsGateway = new SmsGateway('www.basururoxyouall@gmail.com','rrk10ict');
-
-        $deviceID   = 26223;
-        $number     = '+94773259133';
-        $message    = 'Your request for SC400 on Wed 8.30 - 10.30 has been accepted';
-
-        $result = $smsGateway->sendMessageToNumber($number,$message,$deviceID);
-
-        return $result;
     }
 
 }

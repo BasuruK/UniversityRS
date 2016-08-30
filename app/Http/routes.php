@@ -242,17 +242,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/AdminOptions/SemesterDeadlineUnchecked','AdministratorOptionsController@semesterRequestUnchecked');
 
-    Route::get('/AdminOptions/SMSNotificationChecked','AdministratorOptionsController@SMSNotificationChecked');
-
-    Route::get('/AdminOptions/SMSNotificationUnchecked','AdministratorOptionsController@SMSNotificationUnchecked');
-
-
-   
-    Route::get('/AdminOptions/sendSMS','AdministratorOptionsController@sendSMS');
-    
-    
-
-
     // Administrator Options Routes End
 });
 

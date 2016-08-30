@@ -9,6 +9,7 @@ use DB;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
+use phpDocumentor\Reflection\Types\Null_;
 
 class UserManagementController extends Controller
 {
@@ -171,6 +172,16 @@ class UserManagementController extends Controller
             'inputPosition' => 'required'
         ]);
 
+        $adminStatus = 1;
+
+        /**
+         * if an Administrator revoke admin privileges then change the admin status to 0 in users table
+         */
+        if($request['inputPosition'] != 1)
+        {
+            $adminStatus = 0;
+        }
+
         /**
          * Update allowed_users table
          */
@@ -179,6 +190,15 @@ class UserManagementController extends Controller
             'position' => $request['inputPosition']
         ]);
 
+        /**
+         * update the users table if the user is an already registered user
+         */
+        $User = DB::table('users')->where('staff_id','=',$request['staff_id'])->first();
+        if(!is_null($User)) {
+            DB::table('users')
+                ->where('staff_id', '=', $request['staff_id'])
+                ->update(['admin' => $adminStatus]);
+        }
         return redirect()->action('UserManagementController@UserManagement');
     }
 
