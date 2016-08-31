@@ -127,4 +127,5 @@ $(document).ready(function() {
     </div>
     <!--/.Data Table-->
     </div>
+    </div>
 @endsection

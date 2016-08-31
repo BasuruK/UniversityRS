@@ -38,11 +38,11 @@ class subjectController extends Controller
         $rules = array(
             'subjectCode' => 'required',
             'subjectName' => 'required',
-            'semester' => 'required|numeric',
-            'year' => 'required|numeric'
+            'selectsemester' => 'required|numeric',
+            'selectyear' => 'required|numeric'
         );
 
-        $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'semester', 'year'), $rules);
+        $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
         if($validator->fails())
         {
@@ -56,8 +56,8 @@ class subjectController extends Controller
 
             $subject->subCode = $request['subjectCode'];
             $subject->subName = $request['subjectName'];
-            $subject->semester = $request['semester'];
-            $subject->year = $request['year'];
+            $subject->semester = $request['selectsemester'];
+            $subject->year = $request['selectyear'];
 
             $subject->save();
 
@@ -83,15 +83,33 @@ class subjectController extends Controller
      */
     public function editSubjects(Request $request, Subject $subject)
     {
-        //$subject->update($request->all());
-        $subject->subCode = $request['subjectCode'];
-        $subject->subName = $request['subjectName'];
-        $subject->semester = $request['semester'];
-        $subject->year = $request['year'];
+        $rules = array(
+            'subjectCode' => 'required',
+            'subjectName' => 'required',
+            'selectsemester' => 'required|numeric',
+            'selectyear' => 'required|numeric'
+        );
 
-        $subject->save();
-        
-        return Redirect::route('Subjectmain'); 
+        $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
+
+        if($validator->fails())
+        {
+            $request->session()->flash('alert-danger', 'Cannot have empty fields!!');
+            return back()->withErrors($validator);
+        }
+        else
+        {
+            //$subject->update($request->all());
+            $subject->subCode = $request['subjectCode'];
+            $subject->subName = $request['subjectName'];
+            $subject->semester = $request['selectsemester'];
+            $subject->year = $request['selectyear'];
+
+            $subject->save();
+
+            $request->session()->flash('alert-success', 'Subject was successful updated!');
+            return Redirect::route('Subjectmain');
+        }
     }
 
     /**
