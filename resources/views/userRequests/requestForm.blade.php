@@ -23,7 +23,7 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-              <form role="form" method="POST" action="/userRequest/requestForm/add" name="requestForm">
+              <form role="form" method="POST" action="/userRequest/requestForm/add" name="requestForm" id="requestForm">
                   
                   {!! csrf_field() !!}
 
@@ -105,7 +105,7 @@
                           </script>
 
                           <label>End Time</label>
-                          <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+                          <input type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
 
                           <script>
                               $(document).ready(function(){
@@ -165,7 +165,8 @@
                                   document.getElementById("selectbatch").disabled = true;
                                   //document.getElementById("selecttime").value ="";
                               }
-                              for (i = 0; i < a.length; ++i) {
+
+                              for (var i = 0; i < a.length; ++i) {
                                   var option = document.createElement("option");
                                   option.text = a[i];
                                   x.add(option);
@@ -379,19 +380,19 @@
                   </select>
                 </div>
 
-
+                      <div class="alert alert-danger" id="errordisplay" style="display:none">
                       @if (count($errors) > 0)
-                          <div class="alert alert-danger" id="errordisplay">
+
                               <ul>
                                   @foreach ($errors->all() as $error)
                                       <li>{{ $error }}</li>
                                   @endforeach
                               </ul>
-                          </div>
+
                       @endif
+                      </div>
 
-
-                      <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return  ValidateCapacity()" >Submit</button>
+                      <button id="submitbtn" type="button" class="btn btn-primary pull-right" onclick="return ValidateCapacity()" >Submit</button>
 
 
 
@@ -411,27 +412,31 @@
 
         function ValidateCapacity()
         {
+
             var radioBtn = $("input[name=SlotType]:checked").attr("value");
             //console.log(radioBtn);
             if(radioBtn==3)
             {
-                var capacity=$("input[name=capacity]").attr("value");
-                var details=$("input[name=specialEvent]").attr("value");
+                var capacity=$('#capacity').val();
+                var details=$('#specialEvent').val();
+
                 //var capacity=$("input[name=capacity]").attr("value");
-                if(capacity==null||capacity==" ")
+                if(details == "")
                 {
-                    //alert("LOL");
-                    document.querySelector("#errordisplay").innerHTML = "LOL";
+                    //set the display value to empty on the style so that the div will be displayed
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Special Event Details cannot be empty");
                     return false;
                 }
-//                if(details==null||details==" ")
-//                {
-//                    document.querySelector("#errordisplay").innerHTML = "LOL";
-//                    return false;
-//                }
+                if(capacity === "")
+                {
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Capacity cannot be empty");
+                    return false;
+                }
             }
-
-
+            //submit the form is there are no errors
+            $('#requestForm').submit();
         }
         // ValidateCapacity();
     </script>
