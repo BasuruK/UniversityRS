@@ -27,22 +27,41 @@
                   <div class="form-group">
                       <label for="year">Year</label>
                       <select class="form-control" name="selectyear" id="selectyear">
-                          <option value="{{ $subject->id }}">{{ $subject->year }}</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
+                          @if($subject->year == 1)
+                              <option value="1" selected="selected">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                          @elseif($subject->year == 2)
+                              <option value="1">1</option>
+                              <option value="2" selected="selected">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                          @elseif($subject->year == 3)
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3" selected="selected">3</option>
+                              <option value="4">4</option>
+                          @elseif($subject->year == 4)
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4" selected="selected">4</option>
+                          @endif
                       </select>
-                  <!-- <input type="text" class="form-control" id="year" name="year" value="{{ $subject->year }}"/>-->
 
                   </div>
                   
                   <div class="form-group">
                   <label for="semester">Semester</label>
                       <select class="form-control" name="selectsemester" id="selectsemester">
-                          <option value="{{ $subject->id }}">{{ $subject->semester }}</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
+                          @if($subject->semester == 1)
+                              <option value="1" selected="selected">1</option>
+                              <option value="2">2</option>
+                          @elseif($subject->semester == 2)
+                              <option value="1">1</option>
+                              <option value="2" selected="selected">2</option>
+                          @endif
                       </select>
                   <!--<input type="text" class="form-control" id="semester" name="semester" value="{{ $subject->semester }}"/>-->
                     </div>
