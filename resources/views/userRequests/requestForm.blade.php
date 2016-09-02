@@ -95,7 +95,21 @@
                               $(document).ready(function(){
 
                                   $('input[name="selectTimeSpecialST"]').timepicker({
-                                      timeFormat: 'H:i',
+                                      change: function () {
+
+                                          start_time = $('#selectTimeSpecialST').val();
+                                          end_time = $('#selectTimeSpecialEN').val();
+                                          var special = start_time + " - " + end_time;
+
+
+                                          $('#selecttime').empty().append($('<option>',
+                                                  {
+                                                      value: special,
+                                                      text: special
+                                                  }));
+                                          $('#selecttime').val(special);
+                                      },
+                                      timeFormat: 'H:mm',
                                       interval:'30',
                                       minTime: '8:00',
                                       maxTime: '18:30',
@@ -112,7 +126,21 @@
                           <script>
                               $(document).ready(function(){
                               $('input[name="selectTimeSpecialEN"]').timepicker({
-                                  timeFormat: 'H:i' ,
+                                  change: function (){
+
+                                      start_time = $('#selectTimeSpecialST').val();
+                                      end_time = $('#selectTimeSpecialEN').val();
+                                      var special = start_time + " - " + end_time;
+
+
+                                      $('#selecttime').empty().append($('<option>',
+                                              {
+                                                  value: special,
+                                                  text: special
+                                              }));
+                                      $('#selecttime').val(special);
+                                  },
+                                  timeFormat: 'H:mm' ,
                                   interval:'30',
                                   minTime: '8:30',
                                   maxTime: '18:30',
@@ -186,50 +214,6 @@
                               setSelect('2');
                           }
                           window.onload = load;
-                      </script>
-
-
-                        <script>
-                                    $('#selectTimeSpecialST').change(function ()
-                                    {
-
-                                        start_time=$('#selectTimeSpecialST').val();
-                                        end_time=$('#selectTimeSpecialEN').val();
-                                        var special=start_time+ " - " +end_time;
-
-
-                                        $('#selecttime').empty().append($('<option>',
-                                                {
-                                                    value: special,
-                                                    text : special
-                                                }));
-                                        $('#selecttime').val(special);
-
-                                    });
-
-
-                        </script>
-
-                      <script>
-
-                          $('#selectTimeSpecialEN').change(function ()
-                          {
-
-                              start_time=$('#selectTimeSpecialST').val();
-                              end_time=$('#selectTimeSpecialEN').val();
-                              special=start_time+ " - " +end_time;
-
-
-                              $('#selecttime').empty().append($('<option>',
-                                      {
-                                          value: special,
-                                          text : special
-                                      }));
-
-                              $('#selecttime').val(special);
-
-                          });
-
                       </script>
 
                       <!-- special event -->
