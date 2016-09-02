@@ -193,7 +193,6 @@
 
                                 function ValidateCapacity()
                                 {
-                                    //console.log(radioBtn);
 
                                         var capacity=$('#capacityEdit').val();
                                         var details=$('#specialEventEdit').val();
@@ -216,6 +215,7 @@
                                     //submit the form is there are no errors
                                     $('#editrequesFormSpecial').submit();
                                     Success();
+
                                     }
 
 

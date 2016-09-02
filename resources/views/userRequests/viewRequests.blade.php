@@ -67,7 +67,7 @@ function isEdit(id)
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
         confirm: function(){
-            location.href="/userRequest//"+ID;
+            location.href="/userRequest/Edit/"+ID;
         }
         
     });
