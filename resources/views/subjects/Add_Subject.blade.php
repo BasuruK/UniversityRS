@@ -36,7 +36,6 @@
         <div class="form-group">
           <label for="semester">Semester</label>
           <div class="form-group">
-            <label for="year">Year</label>
             <select class="form-control" name="selectsemester" id="selectsemester">
               <option value="1">1</option>
               <option value="2">2</option>
