@@ -73,14 +73,6 @@ class userRequestController extends Controller
     public function AddSemesterRequest(Request $request)
     {
 
-        $this->validate($request, [
-            'selectdate'=>'required',
-            'selectyear'=>'required',
-            'selectbatch'=>'required',
-            'selecttime'=>'required',
-            'selectsemester'=>'required',
-        ]);
-
         $userRequest= new SemesterRequests();
 
 
@@ -213,12 +205,6 @@ class userRequestController extends Controller
      */
      public function updateuserRequest(Request $request,userRequest $userRequest)
     {
-
-        $this->validate($request, [
-            'selectdateEdit'=>'required',
-            'selecttimeEdit'=>'required',
-            'selectresEdit'=>'required',
-        ]);
          $userRequest->year=$request['selectyearEdit'];
          $userRequest->batchNo=$request['selectbatchEdit'];
          $userRequest->subjectCode=$request['selectsubEdit'];
@@ -227,6 +213,7 @@ class userRequestController extends Controller
          $userRequest->resourceID=$request['selectresEdit'];
         $userRequest->timeslotType=$request['SlotTypeEdit'];
         $userRequest->specialEvent=$request['specialEventEdit'];
+        $userRequest->capacity=$request['capacityEdit'];
          $userRequest->save();
          
          return redirect::to('/userRequest/Show/');
@@ -234,14 +221,14 @@ class userRequestController extends Controller
 
     public function UpdateSemesterRequest(Request $request,SemesterRequests $userRequest)
     {
-        $this->validate($request, [
-            'selectdateEdit'=>'required',
-            'selectyearEdit'=>'required',
-            'selectbatchEdit'=>'required',
-            'selecttimeEdit'=>'required',
-            'selectresEdit'=>'required',
-            'semesterselectEdit'=>'required',
-        ]);
+//        $this->validate($request, [
+//            'selectdateEdit'=>'required',
+//            'selectyearEdit'=>'required',
+//            'selectbatchEdit'=>'required',
+//            'selecttimeEdit'=>'required',
+//            'selectresEdit'=>'required',
+//            'semesterselectEdit'=>'required',
+//        ]);
         $userRequest->year=$request['selectyearEdit'];
         $userRequest->batchNo=$request['selectbatchEdit'];
         $userRequest->subjectCode=$request['selectsubEdit'];

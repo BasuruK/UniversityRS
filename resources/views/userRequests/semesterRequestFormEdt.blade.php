@@ -356,15 +356,17 @@
                             </div>
 
 
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
+                            <div class="alert alert-danger" id="errordisplay" style="display:none">
+                                @if (count($errors) > 0)
+
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
-                                </div>
-                            @endif
+
+                                @endif
+                            </div>
                             <script>
                                 function Success()
                                 {
@@ -372,9 +374,35 @@
                                             {position:"center"}
                                     );
                                 }
+                                function ValidateSemester()
+                                {
+                                    //console.log(radioBtn);
+
+                                    var semester=$('#semesterselectEdit').val();
+
+
+
+                                    if(semester == "")
+                                    {
+                                        //set the display value to empty on the style so that the div will be displayed
+                                        $("#errordisplay").css('display','');
+                                        $('#errordisplay').text("Semester cannot be empty");
+                                        return false;
+                                    }
+                                    else if(semester>2)
+                                    {
+                                        $("#errordisplay").css('display','');
+                                        $('#errordisplay').text("Semester value must be either 1 or 2");
+                                        return false;
+                                    }
+
+                                    //submit the form is there are no errors
+                                    $('#semesterReqEdit').submit();
+                                    Success();
+                                }
                             </script>
 
-                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
+                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return ValidateSemester()">Submit</button>
                         </form>
                     </div>
                     <!-- /.box-body -->
