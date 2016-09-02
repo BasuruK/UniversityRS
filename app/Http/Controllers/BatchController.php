@@ -40,11 +40,11 @@ class BatchController extends Controller
      */
     public function addBatch(Request $request)
     {
-        
+
         $this->validate($request,[
-            'batchNo'  => 'required',
-            'year'  => 'required',
-            'noStudents'  => 'required'
+            'batchNo'  => 'bail|numeric|required',
+            'year'  => 'bail|numeric|required',
+            'noStudents'  => 'numeric|required'
         ]);
         
         $batch = new Batch();
@@ -83,6 +83,12 @@ class BatchController extends Controller
     public function update(Request $request, Batch $batch)
     {
         //$batch->update($request->all());
+        $this->validate($request,[
+            'batchNo'  => 'bail|numeric|required',
+            'year'  => 'bail|numeric|required',
+            'noStudents'  => 'numeric|required'
+        ]);
+
         $batch->batchNo = $request['batchNo'];
         $batch->year = $request['year'];
         $batch->noOfStudents = $request['noStudents'];
