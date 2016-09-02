@@ -433,6 +433,12 @@
                     $('#errordisplay').text("Capacity cannot be empty");
                     return false;
                 }
+                else if(($.isNumeric(capacity))===false)
+                {
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Capacity should be a number");
+                    return false;
+                }
             }
             //submit the form if there are no errors
             $('#requestForm').submit();
