@@ -149,6 +149,7 @@
                                   disableTextInput: 'true'
 
                                     });
+
                               });
 
                           </script>
@@ -198,6 +199,7 @@
                                   }
                               }
                               else if (v=='3'){
+                                  $('#selecttime').attr('disabled',true);
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
                                   document.getElementById("specialEvent").disabled = false;
@@ -205,6 +207,7 @@
                                   document.getElementById("selectsub").disabled = true;
                                   document.getElementById("selectyear").disabled = true;
                                   document.getElementById("selectbatch").disabled = true;
+
                                   //document.getElementById("selecttime").value ="";
                               }
 

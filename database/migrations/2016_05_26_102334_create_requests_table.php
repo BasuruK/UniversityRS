@@ -15,7 +15,7 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('lecturerID');
-            $table->string('year');
+            $table->string('year')->nullable();
             $table->string('batchNo')->index();
             $table->string('subjectCode');
             $table->string('requestDate');
