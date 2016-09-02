@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="{{ asset('css/datepicker3.css') }}">
   <!-- Time Picker CSS -->
   <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.min.css') }}">
 
   <!-- REQUIRED JS SCRIPTS -->
 
@@ -50,6 +51,7 @@
   <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <!-- Include Time Picker -->
   <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.timepicker.js') }}"></script>
   <script src="{{ asset('js/notify.min.js') }}"></script>
   <script src="{{ asset('js/notify.js') }}"></script>
 

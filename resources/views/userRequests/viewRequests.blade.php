@@ -171,6 +171,8 @@ function isEditSpecial(id)
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Lecture Hall/Lab</th>
+
 
                                 </tr>
                                 </thead>
@@ -184,6 +186,7 @@ function isEditSpecial(id)
                                         <td>{{ $acceptedrequest->subName }}</td>
                                         <td>{{$acceptedrequest->requestDate}}</td>
                                         <td>{{ $acceptedrequest->timeSlot }}</td>
+                                        <td>{{ $acceptedrequest->resourceID }}</td>
 
                                     </tr>
                                 @endforeach
@@ -240,6 +243,7 @@ function isEditSpecial(id)
                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Details</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time slot</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Capacity</th>
                                     <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
 
                                 </tr>
@@ -251,6 +255,7 @@ function isEditSpecial(id)
                                         <td>{{ $specialRequest->specialEvent }}</td>
                                         <td>{{ $specialRequest->requestDate }}</td>
                                         <td>{{ $specialRequest->timeSlot }}</td>
+                                        <td>{{ $specialRequest->capacity }}</td>
                                         <td>
                                             <a  onclick="return isEditSpecial({{$specialRequest->id}})" class="btn btn-info">Edit</a>
                                             <a class="btn btn-danger pull-right" onclick="return isDelete({{$specialRequest->id}})">Delete</a>
@@ -306,6 +311,8 @@ function isEditSpecial(id)
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Details</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;"> Capacity</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Lecture Hall</th>
 
                                     </tr>
                                     </thead>
@@ -316,6 +323,8 @@ function isEditSpecial(id)
                                             <td>{{ $AccspecialRequest->specialEvent }}</td>
                                             <td>{{ $AccspecialRequest->requestDate }}</td>
                                             <td>{{ $AccspecialRequest->timeSlot }}</td>
+                                            <td>{{ $AccspecialRequest->capacity }}</td>
+                                            <td>{{ $AccspecialRequest->resourceID }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

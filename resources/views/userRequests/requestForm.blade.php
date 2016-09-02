@@ -94,27 +94,31 @@
                           <script>
                               $(document).ready(function(){
 
-                                  $('#selectTimeSpecialST').timepicker({
+                                  $('input[name="selectTimeSpecialST"]').timepicker({
                                       timeFormat: 'H:i',
                                       interval:'30',
                                       minTime: '8:00',
                                       maxTime: '18:30',
-                                      defaultTime:'8:00'
+                                      defaultTime:'8:00',
+                                      scrollbar:'true',
+                                      disableTextInput: 'true'
                                   });
                               });
                           </script>
 
                           <label>End Time</label>
-                          <input type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+                          <input type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN" >
 
                           <script>
                               $(document).ready(function(){
-                              $('#selectTimeSpecialEN').timepicker({
+                              $('input[name="selectTimeSpecialEN"]').timepicker({
                                   timeFormat: 'H:i' ,
                                   interval:'30',
                                   minTime: '8:30',
                                   maxTime: '18:30',
-                                  defaultTime:'8:30'
+                                  defaultTime:'8:30',
+                                  scrollbar:'true',
+                                  disableTextInput: 'true'
 
                                     });
                               });
@@ -145,6 +149,11 @@
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
                                   a = OneHourSet;
+                                  for (var i = 0; i < a.length; ++i) {
+                                      var option = document.createElement("option");
+                                      option.text = a[i];
+                                      x.add(option);
+                                  }
                               } else if (v=='2'){
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
@@ -154,6 +163,11 @@
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
                                   a = TwoHourSet
+                                  for (var i = 0; i < a.length; ++i) {
+                                      var option = document.createElement("option");
+                                      option.text = a[i];
+                                      x.add(option);
+                                  }
                               }
                               else if (v=='3'){
                                   document.getElementById("selectTimeSpecialST").disabled = false;
@@ -166,11 +180,7 @@
                                   //document.getElementById("selecttime").value ="";
                               }
 
-                              for (var i = 0; i < a.length; ++i) {
-                                  var option = document.createElement("option");
-                                  option.text = a[i];
-                                  x.add(option);
-                              }
+
                           }
                           function load() {
                               setSelect('2');
@@ -182,6 +192,7 @@
                         <script>
                                     $('#selectTimeSpecialST').change(function ()
                                     {
+
                                         start_time=$('#selectTimeSpecialST').val();
                                         end_time=$('#selectTimeSpecialEN').val();
                                         var special=start_time+ " - " +end_time;
@@ -200,6 +211,7 @@
                         </script>
 
                       <script>
+
                           $('#selectTimeSpecialEN').change(function ()
                           {
 
@@ -217,6 +229,7 @@
                               $('#selecttime').val(special);
 
                           });
+
                       </script>
 
                       <!-- special event -->
@@ -407,7 +420,9 @@
     <script>
         function Success()
         {
-            $.notify("Your request has been successfully logged", "success");
+            $.notify("Your request has been successfully logged", "success",
+                    {position:"center"}
+            );
         }
 
         function ValidateCapacity()
@@ -435,8 +450,10 @@
                     return false;
                 }
             }
-            //submit the form is there are no errors
+            //submit the form if there are no errors
             $('#requestForm').submit();
+            Success();
+
         }
         // ValidateCapacity();
     </script>

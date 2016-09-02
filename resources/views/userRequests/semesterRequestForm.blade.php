@@ -76,8 +76,8 @@
                                 /**
                                  * Dynamically populate the select options for timeslots
                                  */
-                                var OneHourSet=['Please Select','8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
-                                var TwoHourSet=['Please Select','8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
+                                var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
+                                var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
 
 
                                 function setSelect(v) {
@@ -110,7 +110,6 @@
                             <div class="form-group">
                                 <label>Time Slot</label>
                                 <select class="form-control" name="selecttime" id="selecttime">
-
                                 </select>
                             </div>
 
@@ -120,7 +119,6 @@
                                 <label>Year</label>
 
                                 <select class="form-control" name="selectyear" id="selectyear">
-                                    <option value="">Please select</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -135,6 +133,26 @@
                                  */
                                 $(document).ready(function()
                                 {
+                                    $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $('#selectyear').val()},
+
+                                            function(data) {
+
+                                                var selectedbatch = $('#selectbatch');
+
+                                                selectedbatch.empty();
+
+                                                $.each(data, function(key, value) {
+
+                                                    selectedbatch
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value",key)
+
+                                                                    .text(value));
+                                                });
+
+                                            });
                                     $('#selectyear').change(function(){
 
                                         $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $(this).val()},
@@ -169,7 +187,6 @@
                             <div class="form-group">
                                 <label>Batch</label>
                                 <select class="form-control" name="selectbatch" id="selectbatch">
-                                    <option value="">Please select</option>
                                 </select>
                             </div>
                             <script>
@@ -178,6 +195,27 @@
                                  */
                                 $(document).ready(function()
                                 {
+                                    $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $('#selectyear').val()},
+
+                                            function(data) {
+
+                                                var selectedSub = $('#selectsub');
+
+                                                selectedSub.empty();
+
+                                                $.each(data, function(key, value) {
+
+                                                    selectedSub
+
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value",key)
+
+                                                                    .text(value));
+                                                });
+
+                                            });
                                     $('#selectyear').change(function(){
 
                                         $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
@@ -211,20 +249,22 @@
                             <div class="form-group">
                                 <label>Subject</label>
                                 <select class="form-control" name="selectsub" id="selectsub">
-                                    <option value="">Please select</option>
                                 </select>
                             </div>
 
 
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
+
+                            <div class="alert alert-danger" id="errordisplay" style="display:none">
+                                @if (count($errors) > 0)
+
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
-                                </div>
-                            @endif
+
+                                @endif
+                            </div>
                             <script>
                                 function Success()
                                 {
@@ -232,9 +272,36 @@
                                             {position:"center"}
                                     );
                                 }
+
+                                function ValidateSemester()
+                                {
+                                    //console.log(radioBtn);
+
+                                    var semester=$('#selectsemester').val();
+
+
+
+                                    if(semester == "")
+                                    {
+                                        //set the display value to empty on the style so that the div will be displayed
+                                        $("#errordisplay").css('display','');
+                                        $('#errordisplay').text("Seemester cannot be empty");
+                                        return false;
+                                    }
+                                    else if(semester>2)
+                                    {
+                                        $("#errordisplay").css('display','');
+                                        $('#errordisplay').text("Semester value must be either 1 or 2");
+                                        return false;
+                                    }
+
+                                    //submit the form is there are no errors
+                                    $('#SemesterRequestForm').submit();
+                                    Success();
+                                }
                             </script>
 
-                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
+                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return ValidateSemester()">Submit</button>
                         </form>
                     </div>
                     <!-- /.box-body -->

@@ -22,7 +22,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}"  name="editrequesForm">
+                        <form role="form" method="POST" action="/userRequest/updateUserRequest/{{$userRequest->id}}"  name="editrequesFormSpecial">
                         {{method_field('PATCH')}}
                         {!! csrf_field() !!}
 
@@ -58,9 +58,6 @@
                             <div class="form-group" hidden="">
                                 <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
                             </div>
-                            <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="prevhall" id="prevhall" value="{{$userRequest->resourceID}}">
-                            </div>
 
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
@@ -88,71 +85,57 @@
                                 <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
 
                                 <script>
-                                    $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
-                                        'maxTime': '4:30', });
+                                    $(document).ready(function(){
 
-
-
+                                        $('input[name="selectTimeSpecialST"]').timepicker({
+                                            timeFormat: 'H:i',
+                                            interval:'30',
+                                            minTime: '8:00',
+                                            maxTime: '18:30',
+                                            defaultTime:'8:00',
+                                            scrollbar:'true',
+                                            disableTextInput: 'true'
+                                        });
+                                    });
                                 </script>
 
                                 <label>End Time</label>
                                 <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
 
-                                <script>
-                                    $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
-                                        'maxTime': '5:30',});
+                                    <script>
+                                    $(document).ready(function(){
+                                        $('input[name="selectTimeSpecialEN"]').timepicker({
+                                            timeFormat: 'H:i' ,
+                                            interval:'30',
+                                            minTime: '8:30',
+                                            maxTime: '18:30',
+                                            defaultTime:'8:30',
+                                            scrollbar:'true',
+                                            disableTextInput: 'true'
+
+                                        });
+                                    });
 
                                 </script>
                             </div>
-
                             <script>
-
                                 $('#selectTimeSpecialST').change(function ()
                                 {
                                     start_time=$('#selectTimeSpecialST').val();
                                     end_time=$('#selectTimeSpecialEN').val();
-                                    var special=start_time+ "-" +end_time;
+                                    var special=start_time+ " - " +end_time;
 
 
-                                    $('#selecttimeEdit').empty();
+                                    $('#selecttimeEdit').empty().append($('<option>',
+                                            {
+                                                value: special,
+                                                text : special
+                                            }));
                                     $('#selecttimeEdit').val(special);
 
-                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
-
-                                            function(data) {
-
-                                                var availableHalls = $('#selectresEdit');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-                                                    if(key==$('#prevhall').val())
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option selected='selected'></option >")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    }
-                                                });
-
-                                            });
                                 });
+
+
                             </script>
 
                             <script>
@@ -161,50 +144,19 @@
 
                                     start_time=$('#selectTimeSpecialST').val();
                                     end_time=$('#selectTimeSpecialEN').val();
-                                    var special=start_time+ "-" +end_time;
-                                    $('#selecttimeEdit').empty();
+                                    special=start_time+ " - " +end_time;
+
+
+                                    $('#selecttimeEdit').empty().append($('<option>',
+                                            {
+                                                value: special,
+                                                text : special
+                                            }));
+
                                     $('#selecttimeEdit').val(special);
 
-
-                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
-
-                                            function(data) {
-
-                                                var availableHalls = $('#selectresEdit');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-
-                                                    if(key==$('#prevhall').val())
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option selected='selected'></option >")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    }
-                                                });
-
-                                            });
                                 });
                             </script>
-
 
                             <!-- special event -->
                             <div class="form-group">
@@ -213,6 +165,12 @@
 
                             </div>
 
+                            <!-- special event capacity -->
+                            <div class="form-group">
+                                <label>Capacity required</label>
+                                <input class="form-control" type="text" name="capacityEdit" id="capacityEdit" value="{{$userRequest->capacity}}">
+
+                            </div>
 
 
                             <!-- select Time Slot  -->
@@ -220,182 +178,62 @@
 
                                 <label>Time Slot</label><br>
                                 <p>Previous Time Slot: {{$userRequest->timeSlot}}</p>
-                                <input type="text" class="form-control" name="selecttimeEdit" id="selecttimeEdit" value=" {{$userRequest->timeSlot}}" readonly="readonly">
+                                <input type="text" class="form-control" name="selecttimeEdit" id="selecttimeEdit" value="{{$userRequest->timeSlot}}" readonly="readonly">
                                 </input>
                             </div>
 
-                            <script>
-                                /**
-                                 * Dynamically populate the select options for resources
-                                 */
-                                $(document).ready(function()
-                                {
 
-                                    $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selecttimeEdit').val()},
+                            <div class="alert alert-danger" id="errordisplay" style="display:none">
+                                @if (count($errors) > 0)
 
-                                            function(data) {
-
-                                                var availableHalls = $('#selectresEdit');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-                                                    if(key==$('#prevhall').val())
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option selected='selected'></option >")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        availableHalls
-
-                                                                .append($("<option></option>")
-
-                                                                        .attr("value",key)
-
-                                                                        .text(key+value));
-                                                    }
-                                                });
-
-                                            });
-                                    $('#selectdateEdit').change(function(){
-
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsDate')}}", {option: $(this).val(),option2: $('#selecttimeEdit').val()},
-
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectresEdit');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-                                                        if(key==$('#prevhall').val())
-                                                        {
-                                                            availableHalls
-
-                                                                    .append($("<option selected='selected'></option >")
-
-                                                                            .attr("value",key)
-
-                                                                            .text(key+value));
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            availableHalls
-
-                                                                    .append($("<option></option>")
-
-                                                                            .attr("value",key)
-
-                                                                            .text(key+value));
-                                                        }
-
-                                                    });
-
-                                                });
-
-                                    });
-
-                                });
-
-                            </script>
-
-                            <script>
-
-                                /**
-                                 * Dynamically populate the select options for resources
-                                 */
-                                $(document).ready(function()
-                                {
-                                    $('#selecttimeEdit').change(function(){
-
-                                        $.get("{{ url('/userRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2:$('#selectdateEdit').val() },
-
-                                                function(data) {
-
-                                                    var availableHalls = $('#selectresEdit');
-
-                                                    availableHalls.empty();
-
-                                                    $.each(data, function(key, value) {
-
-
-                                                        if(key==$('#prevhall').val())
-                                                        {
-                                                            availableHalls
-
-                                                                    .append($("<option selected='selected'></option >")
-
-                                                                            .attr("value",key)
-
-                                                                            .text(key+value));
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            availableHalls
-
-                                                                    .append($("<option></option>")
-
-                                                                            .attr("value",key)
-
-                                                                            .text(key+value));
-                                                        }
-                                                    });
-
-                                                });
-
-                                    });
-
-                                });
-
-                            </script>
-
-
-                            <!-- select Hall -->
-                            <div class="form-group">
-
-                                <label>Lecture Hall/Lab</label><br>
-                                <p>Previous Lecture Hall/Lab: {{$userRequest->resourceID}}</p>
-
-                                <select class="form-control" name="selectresEdit" id="selectresEdit">
-                                </select>
-                            </div>
-
-
-
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
-                                </div>
-                            @endif
+
+                                @endif
+                            </div>
                             <script>
                                 function Success()
                                 {
-                                    $notify("Your request has been successfully Edited", "success",
+                                    $.notify("Your request has been successfully Edited", "success",
                                             {position:"center"}
                                     );
                                 }
+
+                                function ValidateCapacity()
+                                {
+                                    //console.log(radioBtn);
+
+                                        var capacity=$('#capacityEdit').val();
+                                        var details=$('#specialEventEdit').val();
+
+                                        //var capacity=$("input[name=capacity]").attr("value");
+                                        if(details == "")
+                                        {
+                                            //set the display value to empty on the style so that the div will be displayed
+                                            $("#errordisplay").css('display','');
+                                            $('#errordisplay').text("Special Event Details cannot be empty");
+                                            return false;
+                                        }
+                                        if(capacity === "")
+                                        {
+                                            $("#errordisplay").css('display','');
+                                            $('#errordisplay').text("Capacity cannot be empty");
+                                            return false;
+                                        }
+
+                                    //submit the form is there are no errors
+                                    $('#editrequesFormSpecial').submit();
+                                    Success();
+                                    }
+
+
                             </script>
 
-                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
+                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return ValidateCapacity()">Submit</button>
 
-                    </div>
 
                     </form>
                 </div>
