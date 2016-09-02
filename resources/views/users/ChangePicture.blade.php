@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                             <!--<input type="hidden" name="_token" value="{{ csrf_token() }}" />-->
-                                <input type="file" name="image" id="image" />
+                                <input type="file" name="picture" id="picture" />
                                 <br>
                                 <button class="btn btn-primary pull-right"> Upload Picture </button>
                                 <a href="/profile" class="btn btn-primary">Cancel</a>

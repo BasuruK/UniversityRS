@@ -23,18 +23,32 @@
         </div>
 
         <div class="form-group">
-          <label for="semester">Semester</label>
-          <input type="text" class="form-control" id="semester" name="semester" placeholder="Enter Semester..."/>
+          <label for="year">Year</label>
+          <select class="form-control" name="selectyear" id="selectyear">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+
         </div>
 
         <div class="form-group">
-          <label for="year">Year</label>
-          <input type="text" class="form-control" id="year" name="year" placeholder="Enter Year..."/>
+          <label for="semester">Semester</label>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <select class="form-control" name="selectsemester" id="selectsemester">
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
 
+          </div>
         </div>
+
         <div class="form-group">
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Add</button>
+            <a href="/subject" class="btn btn-primary">Cancel</a>
           </div>
         </div>
       </div>

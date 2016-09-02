@@ -134,24 +134,21 @@ class UserLevelController extends Controller
      * @param User $user
      * @return mixed
      */
-    public function pictureUpload(Request $request, User $user)
+    public function pictureUpload(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required'
+            'picture' => 'required'
         ]);
-        if($request->hasFile('image'))
+        if($request->hasFile('picture'))
         {
-            $file = Input::file('image');
+            $file = Input::file('picture');
 
-            $destination = '/public/Pictures/';
+            $filename = time().'.'.$file->getClientOriginalExtension();
 
-// ex: photo-5396e3816cc3d.jpg
-            $filename = Str::lower(
-                pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)
-                .'.'
-                .$file->getClientOriginalExtension()
-            );
-            $file->move($destination, $filename);
+            $path = public_path('dist/img/'.$filename);
+            Image::make($file->getRealPath())->save($path);
+
+            $user = Auth::user();
             $user->picture = $filename;
             $user->save();
 
