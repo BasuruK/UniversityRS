@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use Illuminate\Mail\Mailer;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,9 +27,9 @@ class SendDeadlineEmail extends Job implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @param Mailer $mailer
      */
-    public function handle()
+    public function handle(Mailer $mailer)
     {
         $userData   = User::all();
         $dateData = Deadline::all()->last();
@@ -41,7 +42,7 @@ class SendDeadlineEmail extends Job implements ShouldQueue
             $name   = $UserDetails->name;
             $email  = $UserDetails->email;
 
-            Mail::send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) {
+            $mailer->send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) {
                 $message->from('notify.urscheduler@gmail.com','Admin');
                 $message->to($email,$name);
                 $message->subject('Deadline Notification');
