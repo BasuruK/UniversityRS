@@ -23,7 +23,7 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-              <form role="form" method="POST" action="/userRequest/requestForm/add" name="requestForm" >
+              <form role="form" method="POST" action="/userRequest/requestForm/add" name="requestForm" id="requestForm">
                   
                   {!! csrf_field() !!}
 
@@ -87,24 +87,71 @@
 
                       </div>
 
+
                       <div  class="form-group">
                           <label>Start Time</label>
                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
 
                           <script>
-                              $('#selectTimeSpecialST').timepicker({'timeFormat': 'H:i', 'minTime': '8:00',
-                                  'maxTime': '18:30', });
+                              $(document).ready(function(){
+
+                                  $('input[name="selectTimeSpecialST"]').timepicker({
+                                      change: function () {
+
+                                          start_time = $('#selectTimeSpecialST').val();
+                                          end_time = $('#selectTimeSpecialEN').val();
+                                          var special = start_time + " - " + end_time;
 
 
-
+//                                          $('#selecttime').empty().append($('<option>',
+//                                                  {
+//                                                      value: special,
+//                                                      text: special
+//                                                  }));
+                                          $('#selecttimeforSp').val(special);
+                                      },
+                                      timeFormat: 'H:mm',
+                                      interval:'30',
+                                      minTime: '8:00',
+                                      maxTime: '18:30',
+                                      defaultTime:'8:00',
+                                      scrollbar:'true',
+                                      disableTextInput: 'true'
+                                  });
+                              });
                           </script>
 
                           <label>End Time</label>
-                          <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
+                          <input type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN" >
 
                           <script>
-                              $('#selectTimeSpecialEN').timepicker({'timeFormat': 'H:i' , 'minTime': '8:30',
-                                  'maxTime': '18:30',});
+                              $(document).ready(function(){
+                              $('input[name="selectTimeSpecialEN"]').timepicker({
+                                  change: function (){
+
+                                      start_time = $('#selectTimeSpecialST').val();
+                                      end_time = $('#selectTimeSpecialEN').val();
+                                      var special = start_time + " - " + end_time;
+
+
+//                                      $('#selecttime').empty().append($('<option>',
+//                                              {
+//                                                  value: special,
+//                                                  text: special
+//                                              }));
+                                      $('#selecttimeforSp').val(special);
+                                  },
+                                  timeFormat: 'H:mm' ,
+                                  interval:'30',
+                                  minTime: '8:30',
+                                  maxTime: '18:30',
+                                  defaultTime:'8:30',
+                                  scrollbar:'true',
+                                  disableTextInput: 'true'
+
+                                    });
+
+                              });
 
                           </script>
                       </div>
@@ -113,8 +160,8 @@
                           /**
                            * Dynamically populate the select options for timeslots
                            */
-                          var OneHourSet=['Please Select','8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
-                          var TwoHourSet=['Please Select','8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
+                          var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
+                          var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
 
 
                           function setSelect(v) {
@@ -124,6 +171,8 @@
                               }
                               var a;
                               if (v=='1'){
+                                  $("#selecttimeforSp").css('display','none');
+                                  $("#selecttimeforSp").prop('disabled', true);
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
@@ -131,8 +180,16 @@
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
+                                  document.getElementById("selecttime").disabled = false;
                                   a = OneHourSet;
+                                  for (var i = 0; i < a.length; ++i) {
+                                      var option = document.createElement("option");
+                                      option.text = a[i];
+                                      x.add(option);
+                                  }
                               } else if (v=='2'){
+                                  $("#selecttimeforSp").css('display','none');
+                                  $("#selecttimeforSp").prop('disabled', true);
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
@@ -140,9 +197,17 @@
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
+                                  document.getElementById("selecttime").disabled = false;
                                   a = TwoHourSet
+                                  for (var i = 0; i < a.length; ++i) {
+                                      var option = document.createElement("option");
+                                      option.text = a[i];
+                                      x.add(option);
+                                  }
                               }
                               else if (v=='3'){
+
+                                  $("#selecttimeforSp").css('display','');
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
                                   document.getElementById("specialEvent").disabled = false;
@@ -150,58 +215,15 @@
                                   document.getElementById("selectsub").disabled = true;
                                   document.getElementById("selectyear").disabled = true;
                                   document.getElementById("selectbatch").disabled = true;
+                                  document.getElementById("selecttime").disabled = true;
                               }
-                              for (i = 0; i < a.length; ++i) {
-                                  var option = document.createElement("option");
-                                  option.text = a[i];
-                                  x.add(option);
-                              }
+
+
                           }
                           function load() {
                               setSelect('2');
                           }
                           window.onload = load;
-                      </script>
-
-
-                        <script>
-                                    $('#selectTimeSpecialST').change(function ()
-                                    {
-                                        start_time=$('#selectTimeSpecialST').val();
-                                        end_time=$('#selectTimeSpecialEN').val();
-                                        var special=start_time+ "-" +end_time;
-
-
-                                        $('#selecttime').empty().append($('<option>',
-                                                {
-                                                    value: special,
-                                                    text : special
-                                                }));
-                                        $('#selecttime').val(special);
-
-                                    });
-
-
-                        </script>
-
-                      <script>
-                          $('#selectTimeSpecialEN').change(function ()
-                          {
-
-                              start_time=$('#selectTimeSpecialST').val();
-                              end_time=$('#selectTimeSpecialEN').val();
-                              special=start_time+ "-" +end_time;
-
-
-                              $('#selecttime').empty().append($('<option>',
-                                      {
-                                          value: special,
-                                          text : special
-                                      }));
-
-                              $('#selecttime').val(special);
-
-                          });
                       </script>
 
                       <!-- special event -->
@@ -218,6 +240,13 @@
 
                       </div>
 
+                      {{--<!-- select Time Slot  -->--}}
+                      {{--<div class="form-group">--}}
+                          {{--<label>Time Slot</label>--}}
+                         {{----}}
+
+                          {{--</input>--}}
+                      {{--</div>--}}
 
                       <!-- select Time Slot  -->
                       <div class="form-group">
@@ -225,14 +254,16 @@
                           <select class="form-control" name="selecttime" id="selecttime">
 
                           </select>
+                          <input type="text" class="form-control" name="selecttime" id="selecttimeforSp" style="display:none" readonly>
                       </div>
+
+
 
                 <!-- select Year  -->
                 <div class="form-group">
                   <label>Year</label>
 
                   <select class="form-control" name="selectyear" id="selectyear">
-                      <option value="">Please select</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -247,6 +278,26 @@
                            */
                           $(document).ready(function()
                           {
+                              $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $('#selectyear').val()},
+
+                                      function(data) {
+
+                                          var selectedbatch = $('#selectbatch');
+
+                                          selectedbatch.empty();
+
+                                          $.each(data, function(key, value) {
+
+                                              selectedbatch
+
+                                                      .append($("<option></option>")
+
+                                                              .attr("value",key)
+
+                                                              .text(value));
+                                          });
+
+                                      });
                               $('#selectyear').change(function(){
 
                                   $.get("{{ url('/userRequest/requestForm/loadBatches')}}", {option: $(this).val()},
@@ -281,7 +332,6 @@
                 <div class="form-group">
                   <label>Batch</label>
                   <select class="form-control" name="selectbatch" id="selectbatch">
-                      <option value="">Please select</option>
                   </select>
                 </div>
                       <script>
@@ -290,6 +340,27 @@
                            */
                           $(document).ready(function()
                           {
+                              $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $('#selectyear').val()},
+
+                                      function(data) {
+
+                                          var selectedSub = $('#selectsub');
+
+                                          selectedSub.empty();
+
+                                          $.each(data, function(key, value) {
+
+                                              selectedSub
+
+
+                                                      .append($("<option></option>")
+
+                                                              .attr("value",key)
+
+                                                              .text(value));
+                                          });
+
+                                      });
                               $('#selectyear').change(function(){
 
                                   $.get("{{ url('/userRequest/requestForm/loadSubjects')}}", {option: $(this).val()},
@@ -323,28 +394,25 @@
                 <div class="form-group">
                   <label>Subject</label>
                   <select class="form-control" name="selectsub" id="selectsub">
-                      <option value="">Please select</option>
                   </select>
                 </div>
 
-
+                      <div class="alert alert-danger" id="errordisplay" style="display:none">
                       @if (count($errors) > 0)
-                          <div class="alert alert-danger" id="errordisplay">
+
                               <ul>
                                   @foreach ($errors->all() as $error)
                                       <li>{{ $error }}</li>
                                   @endforeach
                               </ul>
-                          </div>
-                      @endif
-<script>
-    function Success()
-    {
-        $.notify("Your request has been successfully logged", "success");
-    }
-</script>
 
-                      <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return  ValidateForm()">Submit</button>
+                      @endif
+                      </div>
+
+                      <button id="submitbtn" type="button" class="btn btn-primary pull-right" onclick="return ValidateCapacity()" >Submit</button>
+
+
+
               </form>
             </div>
             <!-- /.box-body -->
@@ -353,5 +421,52 @@
           </div>
         </div>
     </div>
+    <script>
+        function Success()
+        {
+            $.notify("Your request has been successfully logged", "success",
+                    {position:"center"}
+            );
+        }
+
+        function ValidateCapacity()
+        {
+
+            var radioBtn = $("input[name=SlotType]:checked").attr("value");
+            //console.log(radioBtn);
+            if(radioBtn==3)
+            {
+                var capacity=$('#capacity').val();
+                var details=$('#specialEvent').val();
+
+                //var capacity=$("input[name=capacity]").attr("value");
+                if(details == "")
+                {
+                    //set the display value to empty on the style so that the div will be displayed
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Special Event Details cannot be empty");
+                    return false;
+                }
+                if(capacity === "")
+                {
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Capacity cannot be empty");
+                    return false;
+                }
+                else if(($.isNumeric(capacity))===false)
+                {
+                    $("#errordisplay").css('display','');
+                    $('#errordisplay').text("Capacity should be a number");
+                    return false;
+                }
+            }
+            //submit the form if there are no errors
+            $('#requestForm').submit();
+            Success();
+
+        }
+        // ValidateCapacity();
+    </script>
+
 </div>
 @endsection

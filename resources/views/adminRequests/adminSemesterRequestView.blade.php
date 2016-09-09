@@ -3,11 +3,11 @@
 @section('section-header')
     <section class="content-header">
         <h1>
-            My Requests
+            Semester Request Management
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Home</li>
+            <li class="active">Overview</li>
         </ol>
     </section>
 @endsection
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">My Requests</h3>
+                    <h3 class="box-title">Semester Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -50,7 +50,7 @@
                                             confirmButton: 'Yes',
                                             confirmButtonClass: 'btn-danger',
                                             confirm: function(){
-                                                location.href="/userRequest/deleteSemesterRequest/"+ID;
+                                                location.href="/adminRequest/semesterRequestDelete/"+ID;
                                             }
 
                                         });
@@ -67,7 +67,7 @@
                                             confirmButton: 'Yes',
                                             confirmButtonClass: 'btn-danger',
                                             confirm: function(){
-                                                location.href="/userRequest/EditSemesterRequest/"+ID;
+                                                location.href="/adminRequest/semesterRequestEdit/"+ID;
                                             }
 
                                         });
@@ -84,9 +84,9 @@
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Year</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Semester</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
@@ -94,18 +94,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($requests as $request)
+                                    @foreach($semesterRequests as $semesterRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{$request->id}}</td>
-                                            <td>{{$request->batchNo}}</td>
-                                            <td>{{$request->year}}</td>
-                                            <td>{{$request->semester}}</td>
-                                            <td>{{$request->subName}}</td>
-                                            <td>{{$request->requestDate}}</td>
-                                            <td>{{$request->timeSlot}}</td>
+                                            <td class="sorting_1">{{$semesterRequest->id}}</td>
+                                            <td>{{$semesterRequest->name}}</td>
+                                            <td>{{$semesterRequest->batchNo}}</td>
+                                            <td>{{$semesterRequest->year}}</td>
+                                            <td>{{$semesterRequest->subName}}</td>
+                                            <td>{{$semesterRequest->requestDate}}</td>
+                                            <td>{{$semesterRequest->timeSlot}}</td>
                                             <td>
-                                                <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
-                                                <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
+                                                <a  onclick="return isEdit({{$semesterRequest->id}})" class="btn btn-info">Edit</a>
+                                                <a class="btn btn-danger pull-right" onclick="return isDelete({{$semesterRequest->id}})">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -131,7 +131,7 @@
 
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Accepted Requests</h3>
+                    <h3 class="box-title">Accepted Semester Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -147,16 +147,16 @@
                                      * Initialise DataTable for Accepted requests Users
                                      */
                                     $(document).ready(function() {
-                                        $('#dataTableAcceptedRequests').DataTable();
+                                        $('#dataTableAcceptedSemesterRequests').DataTable();
                                     } );
                                 </script>
-                                <table id="dataTableAcceptedRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
+                                <table id="dataTableAcceptedSemesterRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Year</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Semester</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
@@ -164,15 +164,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($acceptedrequests as $acceptedrequest)
+                                    @foreach($acceptedSemesterRequests as $acceptedSemesterRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{ $acceptedrequest->id }}</td>
-                                            <td>{{ $acceptedrequest->batchNo }}</td>
-                                            <td>{{ $acceptedrequest->year }}</td>
-                                            <td>{{$request->semester}}</td>
-                                            <td>{{ $acceptedrequest->subName }}</td>
-                                            <td>{{$acceptedrequest->requestDate}}</td>
-                                            <td>{{ $acceptedrequest->timeSlot }}</td>
+                                            <td class="sorting_1">{{ $acceptedSemesterRequest->id }}</td>
+                                            <td>{{ $acceptedSemesterRequest->name }}</td>
+                                            <td>{{ $acceptedSemesterRequest->batchNo }}</td>
+                                            <td>{{ $acceptedSemesterRequest->year }}</td>
+                                            <td>{{ $acceptedSemesterRequest->subName }}</td>
+                                            <td>{{$acceptedSemesterRequest->requestDate}}</td>
+                                            <td>{{ $acceptedSemesterRequest->timeSlot }}</td>
 
                                         </tr>
                                     @endforeach

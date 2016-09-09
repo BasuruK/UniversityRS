@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Admin_Request;
+use App\AdminSemesterRequest;
+use App\TimeTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Redirect;
 use App\Http\Requests;
+use Response;
+use Illuminate\Support\Facades\Input;
+use DB;
 
 class AdminRequestController extends Controller
 {
@@ -202,5 +207,148 @@ class AdminRequestController extends Controller
 
 
         return redirect::route('adminRequestShow');
+    }
+
+    //Semester Requests Functions
+
+    public function showSemesterRequests()
+    {
+        $semesterRequests = \DB::table('semester_requests')
+            ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
+            ->join('batch', 'semester_requests.batchNo', '=', 'batch.id')
+            ->join('users','semester_requests.lecturerID','=', 'users.staff_id')
+            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name')
+            ->where('semester_requests.status','!=','Accepted')
+            ->get();
+        $acceptedSemesterRequests=\DB::table('semester_requests')
+            ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
+            ->join('users','semester_requests.lecturerID','=', 'users.staff_id')
+            ->join('batch', 'semester_requests.batchNo', '=', 'batch.id')
+            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name')
+            ->where('semester_requests.status','=','Accepted')
+            ->get();
+
+
+        return view('adminRequests.adminSemesterRequestView',compact('semesterRequests','acceptedSemesterRequests'));
+    }
+
+    public function deleteSemesterRequest(AdminSemesterRequest $adminSemesterRequest)
+    {
+        AdminSemesterRequest::destroy($adminSemesterRequest['id']);
+        return redirect::to('/adminRequest/semesterRequest');
+    }
+
+    public function editSemesterRequest(AdminSemesterRequest $adminSemesterRequest)
+    {
+        $batch=\DB::table('batch')
+            ->select('batch.batchNo')
+            ->where('id',$adminSemesterRequest->batchNo)
+            ->first();
+
+        $resources=\DB::table('resource')->get();
+
+        $selectedSub=DB::table('subject')
+            ->select('subject.subCode','subject.subName')
+            ->where('id',$adminSemesterRequest->subjectCode)
+            ->first();
+
+        $requestedUser=DB::table('users')
+            ->select('users.id','users.name')
+            ->where('staff_id',$adminSemesterRequest->lecturerID)
+            ->first();
+
+        return view('adminRequests.adminSemesterRequestEdit',compact('adminSemesterRequest','requestedUser','batch','selectedSub'));
+    }
+
+    public function updateSemesterRequest(Request $request,AdminSemesterRequest $adminSemesterRequest)
+    {
+        $adminSemesterRequest->requestDate=$request['selectdateEdit'];
+        $adminSemesterRequest->timeSlot=$request['selectTimeEdit'];
+        $adminSemesterRequest->resourceID=$request['selectResources'];
+        $adminSemesterRequest->status='Accepted';
+
+        $adminSemesterRequest->save();
+
+        $timetable= new TimeTable();
+
+
+        $timetable->year=$adminSemesterRequest['year'];
+        $timetable->batchNo=$adminSemesterRequest['batchNo'];
+        $timetable->subjectCode=$request['subName'];
+        $timetable->timeSlot=$adminSemesterRequest['timeSlot'];
+        $timetable->day=$request['selectdateEdit'];
+        $timetable->resourceName=$request['selectResources'];
+        $timetable->lecturerName=$request['reqLect'];
+
+        $timetable->save();
+
+
+
+        return redirect::route('adminSemesterRequest');
+    }
+
+
+    public function loadBatches()
+    {
+        $year= Input::get('option');
+        $selectedbatch=\DB::table('batch')
+            ->where('year',$year)
+            ->orderBy('id', 'desc')
+            ->lists('batchNo','id');
+
+        return Response::json($selectedbatch);
+    }
+
+    public function loadSubjects()
+    {
+        $year= Input::get('option');
+        $selectedSubject=\DB::table('subject')
+            ->where('year',$year)
+            ->orderBy('id', 'desc')
+            ->lists('subName','id');
+
+        return Response::json($selectedSubject);
+    }
+
+
+    public function loadAvailableResourcesDate()
+    {
+        $time= Input::get('option2');
+        $date= Input::get('option');
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','=',$time)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+        return Response::json($availableHalls);
+    }
+
+    public function loadAvailableResourcesTime()
+    {
+        $time = Input::get('option');
+        $date = Input::get('option2');
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','=',$time)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+
+        return Response::json($availableHalls);
     }
 }

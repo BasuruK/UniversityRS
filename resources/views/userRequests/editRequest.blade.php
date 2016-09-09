@@ -69,7 +69,7 @@
                        <div class="form-group"  hidden="">
                            <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$userRequest->subjectCode}}">
                        </div>
-                       <div class="form-group"  hidden="">
+                       <div class="form-group"  hidden=""> >
                            <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
                        </div>
 
@@ -98,47 +98,16 @@
                                </label>
                            </div>
 
-                           <div class="radio">
-                               <label>
-                                   @if($userRequest->timeslotType=='3')
-                                   <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" checked>
-                                   @else
-                                       <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="3"  onclick="setSelect('3')" >
-                                   @endif
-                                   Special events
-                               </label>
-                           </div>
 
                        </div>
 
-                       <div  class="form-group">
-                           <label>Start Time</label>
-                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
-
-                           <script>
-                               $('#selectTimeSpecialST').timepicker({'timeFormat': 'h:i', 'minTime': '8:00',
-                                   'maxTime': '4:30', });
-
-
-
-                           </script>
-
-                           <label>End Time</label>
-                           <input  type="text" class="form-control"  id="selectTimeSpecialEN" name="selectTimeSpecialEN">
-
-                           <script>
-                               $('#selectTimeSpecialEN').timepicker({'timeFormat': 'h:i' , 'minTime': '8:30',
-                                   'maxTime': '5:30',});
-
-                           </script>
-                       </div>
 
                        <script>
                            /**
                             * Dynamically populate the select options for timeslots
                             */
-                           var OneHourSet=['8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
-                           var TwoHourSet=['8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
+                           var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
+                           var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
 
 
                            function setSelect(v) {
@@ -148,38 +117,46 @@
                                }
                                var a;
                                if (v=='1'){
-                                   document.getElementById("selectTimeSpecialST").disabled = true;
-                                   document.getElementById("selectTimeSpecialEN").disabled = true;
-                                   document.getElementById("selectsubEdit").disabled = false;
                                    a = OneHourSet;
-                               } else if (v=='2'){
-                                   document.getElementById("selectTimeSpecialST").disabled = true;
-                                   document.getElementById("selectTimeSpecialEN").disabled = true;
-                                   document.getElementById("selectsubEdit").disabled = false;
-                                   a = TwoHourSet
-                               }
-                               else if (v=='3'){
-                                   document.getElementById("selectTimeSpecialST").disabled = false;
-                                   document.getElementById("selectTimeSpecialEN").disabled = false;
-                                   document.getElementById("selectsubEdit").disabled = true;
-                               }
-                               for (i = 0; i < a.length; ++i) {
+                                   for (i = 0; i < a.length; ++i) {
 
-                                   if(a[i]==document.getElementById("prevtimeslot").value)
-                                   {
-                                       var option = document.createElement("option");
-                                       option.text = a[i];
-                                       option.selected='selected';
-                                       x.add(option);
-                                   }
-                                   else
-                                   {
-                                       var option = document.createElement("option");
-                                       option.text = a[i];
-                                       x.add(option);
-                                   }
+                                       if(a[i]==document.getElementById("prevtimeslot").value)
+                                       {
+                                           var option = document.createElement("option");
+                                           option.text = a[i];
+                                           option.selected='selected';
+                                           x.add(option);
+                                       }
+                                       else
+                                       {
+                                           var option = document.createElement("option");
+                                           option.text = a[i];
+                                           x.add(option);
+                                       }
 
+                                   }
                                }
+                               else if (v=='2'){
+                                   a = TwoHourSet;
+                                   for (i = 0; i < a.length; ++i) {
+
+                                       if(a[i]==document.getElementById("prevtimeslot").value)
+                                       {
+                                           var option = document.createElement("option");
+                                           option.text = a[i];
+                                           option.selected='selected';
+                                           x.add(option);
+                                       }
+                                       else
+                                       {
+                                           var option = document.createElement("option");
+                                           option.text = a[i];
+                                           x.add(option);
+                                       }
+
+                                   }
+                               }
+
                            }
                            function load() {
                                var currentType=document.editrequesForm.SlotTypeEdit.value;
@@ -188,53 +165,6 @@
                            }
                            window.onload = load;
                        </script>
-
-
-                       <script>
-                           $('#selectTimeSpecialST').change(function ()
-                           {
-                               start_time=$('#selectTimeSpecialST').val();
-                               end_time=$('#selectTimeSpecialEN').val();
-                               var special=start_time+ "-" +end_time;
-
-
-                               $('#selecttimeEdit').empty().append($('<option>',
-                                       {
-                                           value: special,
-                                           text : special
-                                       }));
-                               $('#selecttimeEdit').val(special);
-                           });
-                       </script>
-
-                       <script>
-                           $('#selectTimeSpecialEN').change(function ()
-                           {
-
-                               start_time=$('#selectTimeSpecialST').val();
-                               end_time=$('#selectTimeSpecialEN').val();
-                               special=start_time+ "-" +end_time;
-
-
-                               $('#selecttimeEdit').empty().append($('<option>',
-                                       {
-                                           value: special,
-                                           text : special
-                                       }));
-
-                               $('#selecttimeEdit').val(special);
-                           });
-                       </script>
-
-
-                       <!-- special event -->
-                       <div class="form-group">
-                           <label>Special event details</label>
-                           <input class="form-control" type="text" name="specialEventEdit" id="specialEventEdit" value="{{$userRequest->specialEvent}}">
-
-                       </div>
-
-
 
                        <!-- select Time Slot  -->
                        <div class="form-group">
@@ -357,7 +287,6 @@
                        <div class="form-group">
 
                            <label>Batch</label><br>
-                           <p>Pevious Batch: {{ $userRequest->batchNo}}</p>
                            <select class="form-control" name="selectbatchEdit" id="selectbatchEdit">
                            </select>
                        </div>
@@ -489,7 +418,7 @@
                        <script>
                            function Success()
                            {
-                               $notify("Your request has been successfully Edited", "success",
+                               $.notify("Your request has been successfully Edited", "success",
                                        {position:"center"}
                                );
                            }
@@ -497,7 +426,6 @@
 
                        <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return Success()">Submit</button>
 
-                </div>
 
               </form>
             </div>

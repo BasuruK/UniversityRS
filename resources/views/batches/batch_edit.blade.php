@@ -20,6 +20,17 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Edit Batch</h3>
                 </div>
+
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="box-body">
                     <!-- form start -->
                     <form role="form" method="POST" action="/batch/update/{{ $batch->id }}">

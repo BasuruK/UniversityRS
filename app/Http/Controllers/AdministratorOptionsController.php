@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests;
-use App\SmsGateway;
 use App\Notifications;
+use App\Jobs\SendDeadlineEmail;
 
 class AdministratorOptionsController extends Controller
 {
@@ -37,23 +37,7 @@ class AdministratorOptionsController extends Controller
      */
     public function sendMail()
     {
-        $userData   = User::all();
-        $dateData = Deadline::all()->last();
-        $semester = $dateData->semester;
-        $date     = $dateData->deadline;
-        $year     = $dateData->year;
-        
-        foreach ($userData as $UserDetails)
-        {
-            $name   = $UserDetails->name;
-            $email  = $UserDetails->email;
-
-            Mail::send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) {
-                $message->from('notify.urscheduler@gmail.com','Admin');
-                $message->to($email,$name);
-                $message->subject('Deadline Notification');
-            });
-        }
+        $this->dispatch(new SendDeadlineEmail());
     }
 
     /**

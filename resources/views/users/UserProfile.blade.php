@@ -35,7 +35,7 @@
                         </p>
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Subjects Tought</b> <a class="pull-right">5</a>
+                                <b>Subjects Taught</b> <a class="pull-right">5</a>
                             </li>
                         </ul>
                     </div><!-- /.box-body -->

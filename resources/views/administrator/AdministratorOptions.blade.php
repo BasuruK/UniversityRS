@@ -82,9 +82,10 @@
                             <!-- /.input group -->
                         </div>
 
-                    <div class="box-footer">
-                        <input type="submit" class="btn btn-primary pull-right form-control" value="Save and notify users">
+                    <div class="box-footer pull-right">
+                        <input type="submit" class="btn btn-primary form-control" value="Save and notify users" onclick="//return submitForm()">
                     </div>
+                        <br><br><br>
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
@@ -262,6 +263,29 @@
         });
 
 
+        //Ajax call to save and notify users
+        function submitForm() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name=_token]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: '/AdminOptions/DeadlineSave',
+                data: $('form').serialize(),
+                dataType: 'JSON',
+                type: 'POST',
+                async: true,
+                success: function (data) {
+                },
+                error: function (data) {
+                    console.log(data.responseJSON);
+                }
+            });
+
+            //location.reload();
+        }
     </script>
 
 @endsection

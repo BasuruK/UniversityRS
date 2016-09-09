@@ -192,19 +192,21 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/subject/delete/{subject}', 'subjectController@delete');
     
     //Subject Management End
-    
+
     /**
      * Request Management
      */
+
+    //Formal Request Routes
 
     Route::get('/adminRequest', 'AdminRequestController@show')->name('adminRequestShow');
 
     Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
 
     Route::get('/adminRequest/BatchSort', 'AdminRequestController@SortByBatchYear');
-    
+
     Route::post('/adminRequest/add', 'AdminRequestController@add');
-    
+
     Route::get('/adminRequest/delete/{admin_request}','AdminRequestController@delete');
 
     Route::get('/adminRequest/edit/{admin_request}','AdminRequestController@edit');
@@ -212,6 +214,26 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/adminRequest/update/{admin_request}','AdminRequestController@update');
 
     Route::get('/adminRequest/notify/{admin_request}','AdminRequestController@notify');
+
+    //Semester Request Management
+
+    Route::get('/adminRequest/semesterRequest','AdminRequestController@showSemesterRequests')->name('adminSemesterRequest');
+
+    Route::get('/adminRequest/semesterRequestEdit/{adminSemesterRequest}','AdminRequestController@editSemesterRequest');
+
+    Route::patch('/adminRequest/semesterRequestUpdate/{adminSemesterRequest}','AdminRequestController@updateSemesterRequest');
+
+    Route::get('/adminRequest/semesterRequestDelete/{adminSemesterRequest}','AdminRequestController@deleteSemesterRequest');
+
+    Route::get('/adminRequest/requestForm/loadBatches','AdminRequestController@loadBatches');
+
+    Route::get('/adminRequest/requestForm/loadSubjects','AdminRequestController@loadSubjects');
+
+    Route::get('/adminRequest/requestForm/loadHalls','AdminRequestController@loadAvailableResources');
+
+    Route::get('/adminRequest/requestForm/loadHallsDate','AdminRequestController@loadAvailableResourcesDate');
+
+    Route::get('/adminRequest/requestForm/loadHallsTime','AdminRequestController@loadAvailableResourcesTime');
 
     //Request Management End
 

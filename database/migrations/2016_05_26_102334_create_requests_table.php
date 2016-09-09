@@ -13,11 +13,11 @@ class CreateRequestsTable extends Migration
     public function up()
     {
         Schema::create('requests', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('lecturerID');
             $table->string('year')->nullable();
-            $table->string('batchNo')->nullable();
-            $table->string('subjectCode')->nullable();
+            $table->string('batchNo')->index();
+            $table->string('subjectCode');
             $table->string('requestDate');
             $table->string('timeSlot');
             $table->string('resourceID');
@@ -27,10 +27,14 @@ class CreateRequestsTable extends Migration
             $table->string('specialEvent')->nullable();
             $table->timestamps();
 
+        });
+
+        Schema::table('requests', function($table) {
 
             $table->foreign('batchNo')->references('batchNo')->on('batch')->onDelete('cascade');
             $table->foreign('subjectCode')->references('subCode')->on('subject')->onDelete('cascade');
             $table->foreign('resourceID')->references('hallNo')->on('resource')->onDelete('cascade');
+
         });
     }
 

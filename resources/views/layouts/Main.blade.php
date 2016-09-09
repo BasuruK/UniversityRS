@@ -33,6 +33,7 @@
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
 
+
   <!-- REQUIRED JS SCRIPTS -->
 
   <!--Date Range Picker  -->
@@ -53,7 +54,7 @@
   <!-- Include Date Range Picker -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
   <!-- Include Time Picker -->
-  <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.timepicker.js') }}"></script>
   <!-- iCheck -->
   <script src="{{ asset('js/icheck.min.js') }}"></script>
   <!-- Notify.js -->
