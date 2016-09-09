@@ -206,6 +206,7 @@
                               }
                               else if (v=='3'){
                                   $("#selecttimeforSp").css('display','');
+                                  $("#selecttimeforSp").prop('disabled', false);
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
                                   document.getElementById("specialEvent").disabled = false;
