@@ -24,6 +24,7 @@ class CreateSemesterRequestsTable extends Migration
             $table->string('status');
             $table->string('semester');
             $table->string('timeslotType');
+            $table->string('ResourceType');
             $table->timestamps();
         });
     }

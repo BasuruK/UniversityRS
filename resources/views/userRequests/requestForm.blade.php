@@ -86,7 +86,21 @@
                           </div>
 
                       </div>
-
+                      <!--Resource Type-->
+                      <div class="form-group">
+                          <label>Resource Type</label>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                  Lecture Hall
+                              </label>
+                          </div>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="ResourceType" id="ResourceType" value="Lab" >
+                                  Lab
+                              </label>
+                          </div>
 
                       <div  class="form-group">
                           <label>Start Time</label>
@@ -257,6 +271,7 @@
                           </select>
                           <input type="text" class="form-control" name="selecttime" id="selecttimeforSp" style="display:none" readonly>
                       </div>
+
 
 
 

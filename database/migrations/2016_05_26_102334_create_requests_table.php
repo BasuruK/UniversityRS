@@ -25,6 +25,7 @@ class CreateRequestsTable extends Migration
             $table->string('timeslotType');
             $table->string('capacity')->nullable();
             $table->string('specialEvent')->nullable();
+            $table->string('ResourceType');
             $table->timestamps();
 
         });

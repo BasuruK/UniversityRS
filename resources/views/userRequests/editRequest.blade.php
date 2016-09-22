@@ -72,6 +72,9 @@
                        <div class="form-group"  hidden=""> >
                            <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
                        </div>
+                       <div class="form-group"  hidden=""> >
+                           <input type="text"  class="form-control"  name="prevRtype" id="prevRtype" value="{{$userRequest->ResourceType}}">
+                       </div>
 
                        {{--Select time slot type--}}
                        <div class="form-group">
@@ -97,8 +100,32 @@
                                    Two Hour Slot
                                </label>
                            </div>
+                       </div>
 
 
+                       <!--Resource Type-->
+                       <div class="form-group">
+                           <label>Resource Type</label>
+                           <div class="radio">
+                               <label>
+                                   @if($userRequest->ResourceType=='Lecture Hall')
+                                   <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall" checked >
+                                   @else
+                                       <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall"  >
+                                   @endif
+                                   Lecture Hall
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                                   @if($userRequest->ResourceType=='Lab')
+                                   <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lab" checked >
+                                   @else
+                                       <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lab"  >
+                                   @endif
+                                   Lab
+                               </label>
+                           </div>
                        </div>
 
 
