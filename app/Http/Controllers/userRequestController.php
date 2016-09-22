@@ -62,6 +62,7 @@ class userRequestController extends Controller
         $userRequest->timeslotType=$request['SlotType'];
         $userRequest->capacity=$request['capacity'];
         $userRequest->specialEvent=$request['specialEvent'];
+        $userRequest->ResourceType=$request['ResourceType'];
         
         
         $userRequest->save();
@@ -84,7 +85,7 @@ class userRequestController extends Controller
         $userRequest->timeSlot=$request['selecttime'];
         $userRequest->semester=$request['selectsemester'];
         $userRequest->timeslotType=$request['SlotType'];
-
+        $userRequest->ResourceType=$request['ResourceType'];
 
 
         $userRequest->save();
@@ -214,6 +215,7 @@ class userRequestController extends Controller
         $userRequest->timeslotType=$request['SlotTypeEdit'];
         $userRequest->specialEvent=$request['specialEventEdit'];
         $userRequest->capacity=$request['capacityEdit'];
+        $userRequest->ResourceType=$request['ResourceTypeEdit'];
          $userRequest->save();
          
          return redirect::to('/userRequest/Show/');
@@ -237,6 +239,7 @@ class userRequestController extends Controller
         $userRequest->resourceID=$request['selectresEdit'];
         $userRequest->semester=$request['semesterselectEdit'];
         $userRequest->timeslotType=$request['SlotTypeEdit'];
+        $userRequest->ResourceType=$request['ResourceTypeEdit'];
         $userRequest->save();
 
        return redirect::to('/userRequest/ShowSemesterRequest/');

@@ -61,7 +61,7 @@
                                         var ID =id;
                                         $.confirm({
                                             theme: 'black',
-                                            title: 'Confirm Deletion',
+                                            title: 'Confirm Edit',
                                             icon: 'fa fa-warning',
                                             content: 'Are you sure want to Edit this Semester Request?',
                                             confirmButton: 'Yes',
@@ -90,6 +90,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
                                         <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                                     </tr>
                                     </thead>
@@ -103,6 +104,7 @@
                                             <td>{{$request->subName}}</td>
                                             <td>{{$request->requestDate}}</td>
                                             <td>{{$request->timeSlot}}</td>
+                                            <td>{{$request->ResourceType}}</td>
                                             <td>
                                                 <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
                                                 <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
@@ -160,6 +162,8 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Lecture Hall/Lab</th>
 
                                     </tr>
                                     </thead>
@@ -173,6 +177,8 @@
                                             <td>{{ $acceptedrequest->subName }}</td>
                                             <td>{{$acceptedrequest->requestDate}}</td>
                                             <td>{{ $acceptedrequest->timeSlot }}</td>
+                                            <td>{{$acceptedrequest->ResourceType}}</td>
+                                            <td>{{$acceptedrequest->resourceID}}</td>
 
                                         </tr>
                                     @endforeach

@@ -66,6 +66,23 @@
                                 </div>
                             </div >
 
+                            <!--Resource Type-->
+                            <div class="form-group">
+                                <label>Resource Type</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                        Lecture Hall
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ResourceType" id="ResourceType" value="Lab" >
+                                        Lab
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Semester</label>
                                 <input type="text" class="form-control" id="selectsemester" name="selectsemester">
