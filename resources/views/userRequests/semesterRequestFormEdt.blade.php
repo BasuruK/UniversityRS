@@ -160,7 +160,7 @@
                                         a = TwoHourSet
                                     }
 
-                                    
+
 
                                     for (i = 0; i < a.length; ++i) {
                                         if(a[i]==document.getElementById("prevtimeslot").value)
