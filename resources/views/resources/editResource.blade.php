@@ -24,20 +24,20 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <!--      Form  -->
-                    <form role="form" method="post" action="/resource/UpdateResource/{{$resource->id}}">
+                    <form role="form" method="post" action="/resource/UpdateResource/{{$resource->id}}" name="resourceEdit">
                     {{method_field('PATCH')}}
-
+                    {!! csrf_field() !!}
                     <!-- Hall Number input -->
                         <div class="form-group" >
                             <label>Hall Number</label>
-                            <input type="text" name="hallNoEdit" class="form-control" placeholder="Enter Hall Number ..." value="{{$resource->hallNo}}">
+                            <input type="text" name="hallNoEdit" id="hallNoEdit" class="form-control"  value="{{$resource->hallNo}}">
                         </div>
 
 
                         <!--Capacity input-->
                         <div class="form-group">
                             <label>Capacity</label>
-                            <input type="text" name="capacityEdit" class="form-control" placeholder="Enter Capacity ..." value="{{$resource->capacity}}">
+                            <input type="text" name="capacityEdit" id="capacityEdit" class="form-control"  value="{{$resource->capacity}}">
                         </div>
 
                         <!--type input-->
@@ -54,9 +54,68 @@
                             </select>
                         </div>
 
-                        <button type="submit " class="btn btn-primary pull-right">Edit</button>
+                        <button type="submit " onclick="return ValidateForm() " class="btn btn-primary pull-right">Edit</button>
                         <a href="/resource/show" class="btn btn-primary">Cancel</a>
-                        {!! csrf_field() !!}
+
+
+
+                            <div class="alert alert-danger" id="errordisplay" style="display:none">
+                                @if (count($errors) > 0)
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                @endif
+                            </div>
+
+
+                        <script>
+                            function Success()
+                            {
+                                $.notify("Your Resource has been successfully Edited", "success",
+                                        {position:"center"}
+                                );
+                            }
+                            function ValidateForm()
+                            {
+
+                                var hallnumber=$('#hallNoEdit').val();
+                                var capacity=$('#capacityEdit').val();
+
+
+
+                                if(hallnumber == "")
+                                {
+                                    //set the display value to empty on the style so that the div will be displayed
+                                    $("#errordisplay").css('display','');
+                                    $('#errordisplay').text("Hall Number cannot be empty");
+                                    return false;
+                                }
+
+
+                                if(capacity == "")
+                                {
+                                    //set the display value to empty on the style so that the div will be displayed
+                                    $("#errordisplay").css('display','');
+                                    $('#errordisplay').text("Capacity cannot be empty");
+                                    return false;
+                                }
+                                if($.isNumeric(capacity)==false)
+                                {
+                                    //set the display value to empty on the style so that the div will be displayed
+                                    $("#errordisplay").css('display','');
+                                    $('#errordisplay').text("Capacity Should be a number");
+                                    return false;
+                                }
+
+
+                                //submit the form is there are no errors
+                                $('#resourceEdit').submit();
+                                Success();
+                            }
+                        </script>
+
                     </form> <!-- /.form-->
                 </div>
                 <!-- /.box-body -->
