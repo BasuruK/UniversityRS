@@ -93,9 +93,8 @@ function isDelete(id)
     });
     return false;
 }
-function isEdit(id)
-{
-    var ID =id;
+function isEdit(id) {
+    var ID = id;
     $.confirm({
         theme: 'black',
         title: 'Confirm Deletion',
@@ -103,10 +102,10 @@ function isEdit(id)
         content: 'Are you sure want to Edit this resource?',
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
-        confirm: function(){
-            location.href="/resource/Edit/"+ID;
+        confirm: function () {
+            location.href = "/resource/Edit/" + ID;
         }
-        
+
     });
     return false;
 }
