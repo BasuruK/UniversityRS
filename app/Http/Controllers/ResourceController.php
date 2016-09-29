@@ -63,19 +63,18 @@ class ResourceController extends Controller
      * @return mixed
      * Updates the details of the resource as provided by the user
      */
-     public function updateResource(Request $request,Resource $resource)
+     public function updateResource(Request $request, Resource $resource)
     {
-
+//return $resource;
         $this->validate($request,[
             'hallNo'  => 'required|alpha_num',
-            'capacity'  => 'required|numeric',
+            'capacity'  => 'required|numeric'
         ]);
-
 
         $resource->hallNo=$request['hallNoEdit'];
         $resource->capacity=$request['capacityEdit'];
         $resource->type=$request['selectTypeEdit'];
-         
+
         $resource->save();
          
          return redirect::to('resource/show');

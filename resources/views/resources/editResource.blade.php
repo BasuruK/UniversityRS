@@ -26,6 +26,7 @@
                     <!--      Form  -->
                     <form role="form" method="post" action="/resource/UpdateResource/{{$resource->id}}">
                     {{method_field('PATCH')}}
+                    {!! csrf_field() !!}
 
                     <!-- Hall Number input -->
                         <div class="form-group" >
@@ -56,7 +57,7 @@
 
                         <button type="submit " class="btn btn-primary pull-right">Edit</button>
                         <a href="/resource/show" class="btn btn-primary">Cancel</a>
-                        {!! csrf_field() !!}
+
                     </form> <!-- /.form-->
                 </div>
                 <!-- /.box-body -->
