@@ -113,8 +113,6 @@
                                 Success();
                             }
                         </script>
-
->>>>>>> origin/Sandamini
                     </form> <!-- /.form-->
                 </div>
                 <!-- /.box-body -->

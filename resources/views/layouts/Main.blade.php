@@ -295,6 +295,7 @@ desired effect
           <ul class="treeview-menu" style="display: none;">
             <li><a href="/userRequest/requestForm"></i> Place Request</a></li>
             <li class=""><a href="/userRequest/Show"></i>Current Requests</a></li>
+            <li class=""><a href="/userRequest/ShowSemesterRequest"></i>Current Semester Requests</a></li>
           </ul>
         </li>
         <li><a href="/myTables"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>
