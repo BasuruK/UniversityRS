@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Allowed_User;
 use App\User;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -20,7 +20,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\View\View
      *
      * Returns the view user management compacted with user object
      */
@@ -29,7 +29,7 @@ class UserManagementController extends Controller
         $RegisteredUser = User::with('allowedUser.priority')->get();
         $PriorityCategories = DB::table('priority')->get();
         $AuthorizedUser = Allowed_User::with('priority')->get();
-
+        
         return view('administrator.userManagement')->with('RegisteredUser',$RegisteredUser)->with('PriorityCat',$PriorityCategories)->with('AuthorizedUser',$AuthorizedUser);
     }
 

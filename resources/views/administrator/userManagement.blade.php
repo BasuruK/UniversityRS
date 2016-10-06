@@ -202,7 +202,6 @@
                                     @foreach($RegisteredUser as $RegUser)
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">{{ $RegUser->staff_id }}</td>
-                                            </td>
                                             <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
                                             <td>{{ $RegUser->name }}</td>
                                             <td>{{ $RegUser->email }}</td>
