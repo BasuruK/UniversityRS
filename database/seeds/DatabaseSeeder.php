@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
 
         $AllowedUser = new Allowed_User();
         $AllowedUser->staff_id = "IT14034978";
-        $AllowedUser->position = 10;
+        $AllowedUser->position = 2;
         $AllowedUser->save();
 
         $AllowedUser = new Allowed_User();

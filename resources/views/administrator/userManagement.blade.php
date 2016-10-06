@@ -49,7 +49,6 @@
                             <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
                             <div class="col-sm-10">
                                 <select name="inputPosition" id="inputPosition" class="js-example-responsive form-control" style="width: 100%" required>
-                                    <option value="">Please Select</option>
                                     @foreach($PriorityCat as $cat)
                                         <option value="{{ $cat->id }}">{{ $cat->priorityName }}</option>
                                     @endforeach
