@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Batch;
 use App\Http\Requests;
 use Redirect;
+use DB;
+use Session;
 
 class BatchController extends Controller
 {
@@ -46,16 +48,24 @@ class BatchController extends Controller
             'year'  => 'bail|numeric|required',
             'noStudents'  => 'numeric|required'
         ]);
-        
-        $batch = new Batch();
-        
-        $batch->batchNo = $request['batchNo'];
-        $batch->year = $request['year'];
-        $batch->noOfStudents = $request['noStudents'];
-        
-        $batch->save();
-        
-        return Redirect::route('batchShow');
+
+        if (DB::table('batch')->where('year', $request['year'])->where('batchNo',$request['batchNo'])->first())
+        {
+            $request->session()->flash('alert-warning', 'Batch already exists!');
+            return Redirect::back();
+        }
+        else
+        {
+            $batch = new Batch();
+
+            $batch->batchNo = $request['batchNo'];
+            $batch->year = $request['year'];
+            $batch->noOfStudents = $request['noStudents'];
+
+            $batch->save();
+
+            return Redirect::route('batchShow');
+        }
     }
 
     /**
