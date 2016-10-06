@@ -142,7 +142,8 @@ function isEdit(id) {
                               <td>{{ $resource1->type }}</td>
                               <td>
                                   <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
-                                  <a class="btn btn-danger pull-right" onclick="return isDelete({{$resource1->id}})">Delete</a>
+                                  <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
+                                  <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}" class="btn btn-info pull-right">Generate Timetable</a>
                               </td>
                             </tr>
                             @endforeach

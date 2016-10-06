@@ -246,7 +246,11 @@ Route::group(['middleware' => ['auth','admin']], function() {
     
     //Timetable Management End
 
-
+    /**
+     * Resource Timetable Management Routes
+     */
+    Route::get('/resource/GenerateTimetable/{hallNo}','resourceTimetableController@Index');
+    //Timetable Management End
 
     /**
      * Administrator Options Routes
