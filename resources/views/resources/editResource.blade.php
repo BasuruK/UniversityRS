@@ -55,16 +55,15 @@
                             </select>
                         </div>
 
-                        <button type="submit " onclick="return ValidateForm() " class="btn btn-primary pull-right">Edit</button>
+                        <button type="submit " onclick="return ValidateForm()" class="btn btn-primary pull-right">Edit</button>
                         <a href="/resource/show" class="btn btn-primary">Cancel</a>
-                            <div class="alert alert-danger" id="errordisplay" style="display:none">
-                                @if (count($errors) > 0)
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                @endif
+                            <div class="flash-message" id="errordisplay">
+                                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                    @if(Session::has('alert-' . $msg))
+
+                                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                                    @endif
+                                @endforeach
                             </div>
 
 
@@ -110,7 +109,7 @@
 
                                 //submit the form is there are no errors
                                 $('#resourceEdit').submit();
-                                Success();
+
                             }
                         </script>
                     </form> <!-- /.form-->
