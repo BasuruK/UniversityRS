@@ -65,6 +65,11 @@ class ResourceController extends Controller
      */
      public function updateResource(Request $request, Resource $resource)
     {
+//        $this->validate($request,[
+//            'hallNo'  => 'required|alpha_num|unique:resource',
+//            'capacity'  => 'required|numeric',
+//        ]);
+
         $resource->hallNo=$request['hallNoEdit'];
         $resource->capacity=$request['capacityEdit'];
         $resource->type=$request['selectTypeEdit'];
