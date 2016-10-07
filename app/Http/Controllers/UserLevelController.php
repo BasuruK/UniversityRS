@@ -121,7 +121,7 @@ class UserLevelController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function UploadPictureForm()
     {

@@ -64,7 +64,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right">Add User</button>
+                        <button type="submit" class="btn btn-primary pull-right">Add User</button>
                     </div>
                     <!-- /.box-footer -->
                     {{ csrf_field() }}
@@ -152,7 +152,7 @@
                 return false;
             }
 
-            function authorizEdit(id)
+            function authorizeEdit(id)
             {
                 var ID = id;
                 $.confirm({
@@ -205,7 +205,7 @@
                                             <td>{{ $RegUser->name }}</td>
                                             <td>{{ $RegUser->email }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
+                                                <a href="#" class="btn btn-primary" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
                                                 <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
                                         </tr>
                                     @endforeach
@@ -265,7 +265,7 @@
                                                 {{ $AuthAllowedUser->priority->priorityName }}
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-info" onclick ="authorizEdit({{ $AuthAllowedUser->id }})">Edit</a>
+                                                <a href="#" class="btn btn-primary" onclick ="authorizeEdit({{ $AuthAllowedUser->id }})">Edit</a>
                                                 <a href="#" class="btn btn-danger pull-right" onclick=authorizeDelete({{ $AuthAllowedUser->id }})>Delete</a>
                                             </td>
                                         </tr>
