@@ -143,8 +143,7 @@ function isEdit(id) {
                               <td>
                                   <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
                                   <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
-                                  <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}" class="">
-                                      <i class="icon ion-ios-grid-view"></i>
+                                  <a alt="Generate Timetable" href="/resource/GenerateTimetable/{{$resource1->hallNo}}" class="ion-ios-grid-view" >
                                   </a>
                               </td>
                             </tr>

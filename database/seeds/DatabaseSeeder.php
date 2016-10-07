@@ -158,6 +158,12 @@ class DatabaseSeeder extends Seeder
         $Resource->capacity = "46";
         $Resource->save();
 
+        $Resource= new Resource();
+        $Resource->hallNo = "D201";
+        $Resource->type = "Lecture Hall";
+        $Resource->capacity = "46";
+        $Resource->save();
+
         //end of resource seeds
 
 
