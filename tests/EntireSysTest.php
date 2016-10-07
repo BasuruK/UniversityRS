@@ -76,6 +76,5 @@ class EntireSysTest extends TestCase
             ->type('40','noStudents')
             ->press('Add Batch')
             ->seePageIs('/batch');
-
     }
 }
