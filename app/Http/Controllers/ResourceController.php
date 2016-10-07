@@ -7,6 +7,7 @@ use DB;
 use App\Resource;
 use App\Http\Requests;
 use Redirect;
+use Illuminate\Support\Facades\Input;
 
 class ResourceController extends Controller
 {
@@ -18,7 +19,7 @@ class ResourceController extends Controller
     public function Index()
     {
         $resources = DB::table('resource')->get();
-        return view("resources.addResourceForm",compact('resources'));
+        return view("resources.addResourceForm", compact('resources'));
     }
 
     /**
@@ -28,18 +29,18 @@ class ResourceController extends Controller
      */
     public function AddResource(Request $request)
     {
-        $this->validate($request,[
-            'hallNo'  => 'required|alpha_num|unique:resource',
-            'capacity'  => 'required|numeric',
+        $this->validate($request, [
+            'hallNo' => 'required|alpha_num|unique:resource',
+            'capacity' => 'required|numeric',
         ]);
-        
+
         $resource = new Resource();
-        
+
         $resource->hallNo = $request['hallNo'];
         $resource->type = $request['selectType'];
         $resource->capacity = $request['capacity'];
-       
-        
+
+
         $resource->save();
 
         return redirect::to('resource/show');
@@ -52,9 +53,9 @@ class ResourceController extends Controller
      */
     public function EditResourceForm(Resource $resource)
     {
-       
-        return view('resources.editResource',compact('resource'));  
-        
+
+        return view('resources.editResource', compact('resource'));
+
     }
 
     /**
@@ -63,17 +64,29 @@ class ResourceController extends Controller
      * @return mixed
      * Updates the details of the resource as provided by the user
      */
-     public function updateResource(Request $request, Resource $resource)
+    public function updateResource(Request $request, Resource $resource)
     {
-        
-        $resource->hallNo=$request['hallNoEdit'];
-        $resource->capacity=$request['capacityEdit'];
-        $resource->type=$request['selectTypeEdit'];
-         
-        $resource->save();
-         
-         return redirect::to('resource/show');
-    }
+        if (resource::where('hallNo', '=', $request['hallNoEdit'])->where('hallNo', '!=',$resource->hallNo) ->first())
+        {
+            //return resource::where('hallNo','=' ,$request['hallNoEdit'])->first();
+            $request->session()->flash('alert-warning', 'Resource already exists!');
+            return Redirect::back();
+
+        }
+        else
+        {
+            $resource->hallNo = $request['hallNoEdit'];
+            $resource->capacity = $request['capacityEdit'];
+            $resource->type = $request['selectTypeEdit'];
+
+            $resource->save();
+            $request->session()->flash('alert-warning', 'Resource was successfully edited!');
+            return redirect::route('Resources');
+        }
+
+
+
+}
 
     /**
      * @param Resource $resource

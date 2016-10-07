@@ -145,7 +145,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
      * Resource Management Routes
      */
 
-    Route::get('/resource/show', 'ResourceController@Index');
+    Route::get('/resource/show', 'ResourceController@Index')->Name('Resources');;
 
     Route::post('/resource/Add', 'ResourceController@AddResource');
 
