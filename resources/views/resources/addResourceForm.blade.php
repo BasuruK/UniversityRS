@@ -24,7 +24,7 @@
             <!-- /.box-header -->
             <div class="box-body">
              <form role="form" method="post" action="/resource/Add">
-                 
+
                 <!-- Hall Number input -->
                 <div class="form-group" >
                   <label>Hall Number</label>
@@ -58,6 +58,7 @@
                      </div>
                  @endif
 
+
                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
                  
                    {!! csrf_field() !!}
@@ -75,9 +76,9 @@
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
-                
 function isDelete(id)
 {
+
     var ID =id;
     $.confirm({
         theme: 'black',
@@ -87,7 +88,9 @@ function isDelete(id)
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
         confirm: function(){
-            location.href="/resource/DeleteResource/"+ID;
+
+                location.href="/resource/DeleteResource/"+ID;
+
         }
         
     });
@@ -112,7 +115,7 @@ function isEdit(id) {
 </script>
              <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Resources</h3>
+          <h3 class="box-title">Resources </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -158,6 +161,14 @@ function isEdit(id) {
                   <div class="col-sm-7">
                       <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
                   </div>
+              </div>
+              <div class="flash-message" id="errordisplay">
+                  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                      @if(Session::has('alert-' . $msg))
+
+                          <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                      @endif
+                  @endforeach
               </div>
             </div>
         </div>
