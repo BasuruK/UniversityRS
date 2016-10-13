@@ -261,6 +261,11 @@ class DatabaseSeeder extends Seeder
             'time24Format' => '18.30 - 19.30',
         ]);
 
+        DB::table('timeFormatTable')->insert([
+            'time' => '7.30 - 8.30',
+            'time24Format' => '19.30 - 20.30',
+        ]);
+
         //Timetable Seeds
 
         DB::table('timetable')->insert([
