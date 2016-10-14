@@ -155,6 +155,10 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/resource/DeleteResource/{resource}','ResourceController@deleteResource');
 
+    Route::get('/resource/isResourceInUse/{resource}','ResourceController@isInUseResource');
+
+    
+
     // Resource Management Routes End
     
     /**

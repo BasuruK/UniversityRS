@@ -8,6 +8,7 @@ use App\Resource;
 use App\Http\Requests;
 use Redirect;
 use Illuminate\Support\Facades\Input;
+use Response;
 
 class ResourceController extends Controller
 {
@@ -18,6 +19,7 @@ class ResourceController extends Controller
      */
     public function Index()
     {
+
         $resources = DB::table('resource')->get();
         return view("resources.addResourceForm", compact('resources'));
     }
@@ -69,7 +71,7 @@ class ResourceController extends Controller
         if (resource::where('hallNo', '=', $request['hallNoEdit'])->where('hallNo', '!=',$resource->hallNo) ->first())
         {
             //return resource::where('hallNo','=' ,$request['hallNoEdit'])->first();
-            $request->session()->flash('alert-warning', 'Resource already exists!');
+            $request->session()->flash('alert-danger', 'Resource already exists!');
             return Redirect::back();
 
         }
@@ -80,21 +82,34 @@ class ResourceController extends Controller
             $resource->type = $request['selectTypeEdit'];
 
             $resource->save();
-            $request->session()->flash('alert-warning', 'Resource was successfully edited!');
+            $request->session()->flash('alert-success', 'Resource was successfully edited!');
             return redirect::route('Resources');
         }
         
 }
+
 
     /**
      * @param Resource $resource
      * @return mixed
      * deletes a resource from the system
      */
-    public function deleteResource(Resource $resource)
+    public function deleteResource(Request $request,Resource $resource)
     {
-        Resource::destroy($resource['id']);
-        return redirect::to('resource/show');
+        if(\DB::table('requests')->where('resourceID','=',$resource['hallNo'])->where('status','=','Accepted')->first()||\DB::table('semester_requests')->where('resourceID','=',$resource['hallNo'])->where('status','=','Accepted')->first())
+        {
+            $request->session()->flash('alert-danger', 'Resource is already being used!');
+            return Redirect::back();
+        }
+        else
+        {
+            Resource::destroy($resource['id']);
+            return redirect::to('resource/show');
+        }
+
+     
+
+
         
     }
 
