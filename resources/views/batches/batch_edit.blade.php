@@ -51,6 +51,25 @@
                             <input type="text" class="form-control" id="noStudents" name="noStudents" value="{{ $batch->noOfStudents }}"/>
                         </div>
 
+                        <div class="form-group">
+                            <label for="noStudents">No. of Students</label>
+                            <input type="text" class="form-control" id="noStudents" name="noStudents" value="{{ $batch->noOfStudents }}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="selectType">Type</label>
+                            <select class="form-control" name="selectType" id="selectType">
+                                @if($batch->type=="weekday")
+                                    <option value="weekday" selected="selected">Weekday</option>
+                                    <option value="weekend">Weekend</option>
+                                @elseif ($batch->type=="weekend")
+                                    <option value="weekday">Weekday</option>
+                                    <option value="weekend" selected="selected">Weekend</option>
+                                @endif
+                            </select>
+
+                        </div>
+
                         <div class="box-footer">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary pull-right">Update</button>

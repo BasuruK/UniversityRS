@@ -93,6 +93,8 @@ $(document).ready(function() {
                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Year</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Batch No.</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">No. of Students</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Type</th>
+
                                     <!-- <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Email</th> -->
                                     <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                                 </tr>
@@ -103,6 +105,7 @@ $(document).ready(function() {
                                         <td class="sorting_1">{{ $batch->year }}</td>
                                         <td>{{ $batch->batchNo }}</td>
                                         <td>{{ $batch->noOfStudents }}</td>
+                                        <td>{{ $batch->type }}</td>
 
                                         <td>
                                             <a onclick="return isEdit({{$batch->id}})" class="btn btn-info">Edit</a>
