@@ -17,6 +17,7 @@ class CreateBatchTable extends Migration
             $table->string('year')->index();
             $table->string('noOfStudents');
             $table->string('batchNo')->index();
+            $table->string('type');
             $table->timestamps();
         });
     }

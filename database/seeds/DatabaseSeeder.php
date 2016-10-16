@@ -99,36 +99,42 @@ class DatabaseSeeder extends Seeder
         $batch->batchNo = '1';
         $batch->year = '1';
         $batch->noOfStudents = '120';
+        $batch->type = 'weekday';
         $batch->save();
 
         $batch = new Batch();
         $batch->batchNo = '2';
         $batch->year = '1';
         $batch->noOfStudents = '135';
+        $batch->type = 'weekday';
         $batch->save();
 
         $batch = new Batch();
         $batch->batchNo = '3';
         $batch->year = '1';
         $batch->noOfStudents = '90';
+        $batch->type = 'weekend';
         $batch->save();
 
         $batch = new Batch();
         $batch->batchNo = '1';
         $batch->year = '2';
         $batch->noOfStudents = '70';
+        $batch->type = 'weekday';
         $batch->save();
 
         $batch = new Batch();
         $batch->batchNo = '2';
         $batch->year = '2';
         $batch->noOfStudents = '65';
+        $batch->type = 'weekend';
         $batch->save();
 
         $batch = new Batch();
         $batch->batchNo = '1';
         $batch->year = '3';
         $batch->noOfStudents = '20';
+        $batch->type = 'weekday';
         $batch->save();
 
         //end of Batch seeds

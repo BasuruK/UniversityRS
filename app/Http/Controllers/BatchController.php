@@ -44,12 +44,12 @@ class BatchController extends Controller
     {
 
         $this->validate($request,[
-            'batchNo'  => 'bail|numeric|required',
-            'year'  => 'bail|numeric|required',
-            'noStudents'  => 'numeric|required'
+            'batchNo'       => 'bail|numeric|required',
+            'year'          => 'bail|numeric|required',
+            'noStudents'    => 'numeric|required'
         ]);
 
-        if (DB::table('batch')->where('year', $request['year'])->where('batchNo',$request['batchNo'])->first())
+        if (DB::table('batch')->where('year', $request['year'])->where('batchNo',$request['batchNo'])->where('type',$request['selectType'])->first())
         {
             $request->session()->flash('alert-warning', 'Batch already exists!');
             return Redirect::back();
@@ -58,9 +58,10 @@ class BatchController extends Controller
         {
             $batch = new Batch();
 
-            $batch->batchNo = $request['batchNo'];
-            $batch->year = $request['year'];
-            $batch->noOfStudents = $request['noStudents'];
+            $batch->batchNo         = $request['batchNo'];
+            $batch->year            = $request['year'];
+            $batch->noOfStudents    = $request['noStudents'];
+            $batch->type            =$request['selectType'];
 
             $batch->save();
 
@@ -94,14 +95,15 @@ class BatchController extends Controller
     {
         //$batch->update($request->all());
         $this->validate($request,[
-            'batchNo'  => 'bail|numeric|required',
-            'year'  => 'bail|numeric|required',
-            'noStudents'  => 'numeric|required'
+            'batchNo'       => 'bail|numeric|required',
+            'year'          => 'bail|numeric|required',
+            'noStudents'    => 'numeric|required'
         ]);
 
-        $batch->batchNo = $request['batchNo'];
-        $batch->year = $request['year'];
-        $batch->noOfStudents = $request['noStudents'];
+        $batch->batchNo         = $request['batchNo'];
+        $batch->year            = $request['year'];
+        $batch->noOfStudents    = $request['noStudents'];
+        $batch->type            = $request['selectType'];
 
         $batch->save();
         

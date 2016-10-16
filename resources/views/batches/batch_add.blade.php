@@ -46,6 +46,15 @@
                   <label for="noStudents">No. of Students</label>
                   <input type="text" class="form-control" id="noStudents" name="noStudents" placeholder="Enter Number of Students..."/>
                     </div>
+
+                  <div class="form-group">
+                      <label for="selectType">Type</label>
+                      <select class="form-control" name="selectType" id="selectType">
+                          <option value="weekday">Weekday</option>
+                          <option value="weekend">Weekend</option>
+                      </select>
+
+                  </div>
                   
                   <div class="form-group">
                   <div class="box-footer">
