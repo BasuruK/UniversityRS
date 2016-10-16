@@ -34,15 +34,22 @@ class TimeTableController extends Controller
     public function show(Request $request)
     {
 
-        $year= $request['selectyear'];
-        $batch= $request['selectbatch'];
+        $year = $request['selectyear'];
+        $batch = $request['selectbatch'];
+        $typeFromDB = \DB::table('batch')
+            ->select('type')
+            -> where ([
+                ['year',$year],
+                ['batchNo',$batch]
+            ])->first();
+        $type = $typeFromDB->type;
         $batchTimetableDetails = TimeTable::where([
             ['year', '=', $year],
             ['batchNo', '=', $batch]
         ])->get()->toArray();
         $fullTable = TimeFormatTable::all();
 
-        return view('timeTable.batchTimetable')->with('fullTimeTable', $fullTable)->with('BatchTimeDetails', $batchTimetableDetails)->with('batch',$batch);
+        return view('timeTable.batchTimetable')->with('fullTimeTable', $fullTable)->with('BatchTimeDetails', $batchTimetableDetails)->with('batch',$batch)->with('type',$type);
 
     }
     

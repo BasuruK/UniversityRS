@@ -7,6 +7,7 @@ use App\Subject;
 use App\Http\Requests;
 use Redirect;
 use Validator;
+use DB;
 use Illuminate\Support\Facades\Input;
 
 class subjectController extends Controller
@@ -44,7 +45,12 @@ class subjectController extends Controller
 
         $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
-        if($validator->fails())
+        if (DB::table('subject')->where('subCode', $request['subjectCode'])->orwhere('subName',$request['subjectName'])->first())
+        {
+            $request->session()->flash('alert-warning', 'Subject already exists!');
+            return Redirect::back();
+        }
+        else if($validator->fails())
         {
             $request->session()->flash('alert-danger', 'Cannot have empty fields!!');
             return back()->withErrors($validator);
