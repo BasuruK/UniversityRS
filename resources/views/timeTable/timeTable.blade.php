@@ -90,7 +90,7 @@
 
         <div class="form-group">
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Generate Timetable</button>
+                <button type="submit" class="btn btn-primary">View Timetable</button>
             </div>
         </div>
         </div>

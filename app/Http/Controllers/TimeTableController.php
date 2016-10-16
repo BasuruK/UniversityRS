@@ -6,7 +6,8 @@ use DB;
 use Excel;
 use Response;
 use Illuminate\Support\Facades\Input;
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\TimeFormatTable;
 use App\TimeTable;
 
@@ -30,23 +31,19 @@ class TimeTableController extends Controller
 
     }
 
-    public function show()
+    public function show(Request $request)
     {
 
-        $year= Input::get('selectyear');
-        $batch= Input::get('selectbatch');
-        $batchDetails = TimeTable::where([
+        $year= $request['selectyear'];
+        $batch= $request['selectbatch'];
+        $batchTimetableDetails = TimeTable::where([
             ['year', '=', $year],
             ['batchNo', '=', $batch]
         ])->get()->toArray();
         $fullTable = TimeFormatTable::all();
 
-        return view('timeTable.lecturerTimetable')->with('fullTimeTable', $fullTable)->with('BatchTimeDetails', $batchDetails);
+        return view('timeTable.batchTimetable')->with('fullTimeTable', $fullTable)->with('BatchTimeDetails', $batchTimetableDetails)->with('batch',$batch);
 
     }
-
-    public function viewTable(Request $request)
-    {
-        return json_encode("LOLOLOLO");
-    }
+    
 }
