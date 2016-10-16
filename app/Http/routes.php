@@ -244,9 +244,11 @@ Route::group(['middleware' => ['auth','admin']], function() {
     /**
      * Timetable Management Routes
      */
-    Route::get('/timetable', 'TimeTableController@ImportExport');
+    Route::get('/timetable', 'TimeTableController@showGenerateTimetable');
+
+    Route::get('/timetable/batchTimetableForm/loadBatches', 'TimeTableController@loadBatches');
     
-    Route::post('importExcel', 'TimeTableController@importExcel');
+    Route::post('/timetable/batchTimetableForm/batch_Timetable', 'TimeTableController@show');
     
     //Timetable Management End
 
