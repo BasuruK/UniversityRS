@@ -160,6 +160,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Resouce ID</th>
 
                                     </tr>
                                     </thead>
@@ -173,6 +174,7 @@
                                             <td>{{ $acceptedSemesterRequest->subName }}</td>
                                             <td>{{$acceptedSemesterRequest->requestDate}}</td>
                                             <td>{{ $acceptedSemesterRequest->timeSlot }}</td>
+                                            <td>{{ $acceptedSemesterRequest->resourceID }}</td>
 
                                         </tr>
                                     @endforeach
