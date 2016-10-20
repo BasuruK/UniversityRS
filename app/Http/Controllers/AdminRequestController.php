@@ -295,6 +295,13 @@ class AdminRequestController extends Controller
         list($firsttime, $dash, $lasttime) = explode(" ",$time);
 
         $date= Input::get('option');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
@@ -306,6 +313,9 @@ class AdminRequestController extends Controller
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 
@@ -318,7 +328,13 @@ class AdminRequestController extends Controller
 
         list($firsttime, $dash, $lasttime) = explode(" ",$time);
         $date = Input::get('option2');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
 
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
@@ -330,6 +346,9 @@ class AdminRequestController extends Controller
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 
