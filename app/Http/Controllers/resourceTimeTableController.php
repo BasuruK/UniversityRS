@@ -15,11 +15,12 @@ class resourceTimeTableController extends Controller
     {
 
         $hallNo=$request->hallNo;
+        $hallType=$request->hallType;
         $ResourceTime  = TimeTable::where('resourceName','=',$hallNo)->get()->toArray();
         $fullTable      = TimeFormatTable::all();
 
-      
+  
 
-        return view('timeTable.resourceTimetable')->with('fullTimeTable',$fullTable)->with('ResourceTimeDetails',$ResourceTime)->with('hallNo',$hallNo);
+        return view('timeTable.resourceTimetable')->with('fullTimeTable',$fullTable)->with('ResourceTimeDetails',$ResourceTime)->with('hallNo',$hallNo)->with('hallType',$hallType);
     }
 }

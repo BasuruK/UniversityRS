@@ -15,13 +15,12 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Timetable  *Timetable for resource {{$hallNo}}</h3>
+                    <h3 class="box-title">Timetable for {{$hallNo}} {{$hallType}}</h3>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-gear"></i></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" id="exportXLS" onclick="exportXLS()">Export excel</a></li>
-                            <li><a href="#" id="exportPDF" onclick="exportPDF()">Export PDF</a></li>
                         </ul>
                     </div>
 
