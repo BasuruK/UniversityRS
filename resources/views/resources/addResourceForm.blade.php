@@ -144,12 +144,9 @@ function isEdit(id) {
                               <td>{{ $resource1->capacity }}</td>
                               <td>{{ $resource1->type }}</td>
                               <td>
-                                  <div class="pull-right">
-                                      <a class = "btn btn-warning" href="/resource/GenerateTimetable/{{$resource1->hallNo}}"> View Timetable</a>
-                                      <a onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
-                                      <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
-
-                                  </div>
+                                  <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
+                                  <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
+                                  <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}/{{$resource1->type}}" class="btn btn-info pull-right">Generate Timetable</a>
                               </td>
 
                             </tr>
