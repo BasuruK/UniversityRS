@@ -133,7 +133,7 @@ function isEdit(id) {
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall Number</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Capacity</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 90px;">Type</th>
-                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;"> View/ Edit/ Delete</th>
+                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 90px;"> View/ Edit/ Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,11 +143,14 @@ function isEdit(id) {
                               <td>{{ $resource1->hallNo}}</td>
                               <td>{{ $resource1->capacity }}</td>
                               <td>{{ $resource1->type }}</td>
-                              <td>
-                                  <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
-                                  <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
-                                  <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}/{{$resource1->type}}" class="btn btn-info pull-right">Generate Timetable</a>
-                              </td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
+
+                                        <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}/{{$resource1->type}}" class="btn btn-warning">View Timetable</a>
+                                    </div>
+                                </td>
 
                             </tr>
                             @endforeach
