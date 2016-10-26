@@ -90,6 +90,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
                                         <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                                     </tr>
                                     </thead>
@@ -103,6 +104,7 @@
                                             <td>{{$semesterRequest->subName}}</td>
                                             <td>{{$semesterRequest->requestDate}}</td>
                                             <td>{{$semesterRequest->timeSlot}}</td>
+                                            <td>{{$semesterRequest->ResourceType}}</td>
                                             <td>
                                                 <a  onclick="return isEdit({{$semesterRequest->id}})" class="btn btn-info">Edit</a>
                                                 <a class="btn btn-danger pull-right" onclick="return isDelete({{$semesterRequest->id}})">Delete</a>
@@ -160,6 +162,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Resouce ID</th>
 
                                     </tr>
                                     </thead>
@@ -173,6 +176,7 @@
                                             <td>{{ $acceptedSemesterRequest->subName }}</td>
                                             <td>{{$acceptedSemesterRequest->requestDate}}</td>
                                             <td>{{ $acceptedSemesterRequest->timeSlot }}</td>
+                                            <td>{{ $acceptedSemesterRequest->resourceID }}</td>
 
                                         </tr>
                                     @endforeach
