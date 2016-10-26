@@ -133,7 +133,7 @@ function isEdit(id) {
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall Number</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Capacity</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 90px;">Type</th>
-                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;"> View/ Edit/ Delete</th>
+                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 90px;"> View/ Edit/ Delete</th>
                             </tr>
                         </thead>
                         <tbody>
