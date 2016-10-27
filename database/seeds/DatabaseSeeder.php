@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
 
         $AllowedUser = new Allowed_User();
         $AllowedUser->staff_id = "IT14034978";
-        $AllowedUser->position = 1;
+        $AllowedUser->position = 2;
         $AllowedUser->save();
 
         $AllowedUser = new Allowed_User();
@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
         $User->name = "Sandamini Bandara";
         $User->email = "sheydenb31@gmail.com";
         $User->password = bcrypt("SandyB12");
-        $User->admin = 1;
+        $User->admin = 0;
         $User->save();
 
         $User = new User();
@@ -161,6 +161,12 @@ class DatabaseSeeder extends Seeder
         $Resource= new Resource();
         $Resource->hallNo = "B403";
         $Resource->type = "Lab";
+        $Resource->capacity = "46";
+        $Resource->save();
+
+        $Resource= new Resource();
+        $Resource->hallNo = "D201";
+        $Resource->type = "Lecture Hall";
         $Resource->capacity = "46";
         $Resource->save();
 
@@ -249,6 +255,21 @@ class DatabaseSeeder extends Seeder
         DB::table('timeFormatTable')->insert([
             'time' => '4.30 - 5.30',
             'time24Format' => '16.30 - 17.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '5.30 - 6.30',
+            'time24Format' => '17.30 - 18.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '6.30 - 7.30',
+            'time24Format' => '18.30 - 19.30',
+        ]);
+
+        DB::table('timeFormatTable')->insert([
+            'time' => '7.30 - 8.30',
+            'time24Format' => '19.30 - 20.30',
         ]);
 
         //Timetable Seeds

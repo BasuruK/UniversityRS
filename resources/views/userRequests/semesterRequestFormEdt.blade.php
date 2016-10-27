@@ -77,6 +77,9 @@
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$userRequest->timeSlot}}">
                             </div>
+                            <div class="form-group"  hidden=""> >
+                                <input type="text"  class="form-control"  name="prevRtype" id="prevRtype" value="{{$userRequest->ResourceType}}">
+                            </div>
 
                             {{--Select time slot type--}}
                             <div class="form-group">
@@ -104,6 +107,31 @@
                                 </div>
                             </div >
 
+                            <!--Resource Type-->
+                            <div class="form-group">
+                                <label>Resource Type</label>
+                                <div class="radio">
+                                    <label>
+                                        @if($userRequest->ResourceType=='Lecture Hall')
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall" checked >
+                                        @else
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall"  >
+                                        @endif
+                                        Lecture Hall
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        @if($userRequest->ResourceType=='Lab')
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lab" checked >
+                                        @else
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lab"  >
+                                        @endif
+                                        Lab
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Semester</label><br>
                                 <input type="text" class="form-control" id="semesterselectEdit" name="semesterselectEdit" value="{{$userRequest->semester}}">
@@ -114,8 +142,8 @@
                                 /**
                                  * Dynamically populate the select options for timeslots
                                  */
-                                var OneHourSet=['8.30-9.30','9.30-10.30','10.30-11.30','11.30-12.30','12.30-14.30','14.30-15.30','15.30-16.30','16.30-17.30','17.30-18.30'];
-                                var TwoHourSet=['8.30-10.30','10.30-12.30','14.30-16.30','16.30-18.30'];
+                                var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30','18.30 - 19.30','19.30 - 20.30'];
+                                var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30','18.30 - 20.30'];
 
 
                                 function setSelect(v) {
@@ -131,6 +159,8 @@
 
                                         a = TwoHourSet
                                     }
+
+
 
                                     for (i = 0; i < a.length; ++i) {
                                         if(a[i]==document.getElementById("prevtimeslot").value)

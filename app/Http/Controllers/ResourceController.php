@@ -7,6 +7,8 @@ use DB;
 use App\Resource;
 use App\Http\Requests;
 use Redirect;
+use Illuminate\Support\Facades\Input;
+use Response;
 
 class ResourceController extends Controller
 {
@@ -17,8 +19,9 @@ class ResourceController extends Controller
      */
     public function Index()
     {
+
         $resources = DB::table('resource')->get();
-        return view("resources.addResourceForm",compact('resources'));
+        return view("resources.addResourceForm", compact('resources'));
     }
 
     /**
@@ -28,18 +31,18 @@ class ResourceController extends Controller
      */
     public function AddResource(Request $request)
     {
-        $this->validate($request,[
-            'hallNo'  => 'required',
-            'capacity'  => 'required|numeric',
+        $this->validate($request, [
+            'hallNo' => 'required|alpha_num|unique:resource',
+            'capacity' => 'required|numeric',
         ]);
-        
+
         $resource = new Resource();
-        
+
         $resource->hallNo = $request['hallNo'];
         $resource->type = $request['selectType'];
         $resource->capacity = $request['capacity'];
-       
-        
+
+
         $resource->save();
 
         return redirect::to('resource/show');
@@ -52,9 +55,9 @@ class ResourceController extends Controller
      */
     public function EditResourceForm(Resource $resource)
     {
-       
-        return view('resources.editResource',compact('resource'));  
-        
+
+        return view('resources.editResource', compact('resource'));
+
     }
 
     /**
@@ -63,34 +66,51 @@ class ResourceController extends Controller
      * @return mixed
      * Updates the details of the resource as provided by the user
      */
-     public function updateResource(Request $request,Resource $resource)
+    public function updateResource(Request $request, Resource $resource)
     {
+        if (resource::where('hallNo', '=', $request['hallNoEdit'])->where('hallNo', '!=',$resource->hallNo) ->first())
+        {
+            //return resource::where('hallNo','=' ,$request['hallNoEdit'])->first();
+            $request->session()->flash('alert-danger', 'Resource already exists!');
+            return Redirect::back();
 
-        $this->validate($request,[
-            'hallNo'  => 'required|alpha_num',
-            'capacity'  => 'required|numeric',
-        ]);
+        }
+        else
+        {
+            $resource->hallNo = $request['hallNoEdit'];
+            $resource->capacity = $request['capacityEdit'];
+            $resource->type = $request['selectTypeEdit'];
 
+            $resource->save();
+            $request->session()->flash('alert-success', 'Resource was successfully edited!');
+            return redirect::route('Resources');
+        }
+        
+}
 
-        $resource->hallNo=$request['hallNoEdit'];
-        $resource->capacity=$request['capacityEdit'];
-        $resource->type=$request['selectTypeEdit'];
-         
-        $resource->save();
-         
-         return redirect::to('resource/show');
-    }
 
     /**
      * @param Resource $resource
      * @return mixed
      * deletes a resource from the system
      */
-    public function deleteResource(Resource $resource)
+    public function deleteResource(Request $request,Resource $resource)
     {
-        Resource::destroy($resource['id']);
-        return redirect::to('resource/show');
+        if(\DB::table('requests')->where('resourceID','=',$resource['hallNo'])->where('status','=','Accepted')->first()||\DB::table('semester_requests')->where('resourceID','=',$resource['hallNo'])->where('status','=','Accepted')->first())
+        {
+            $request->session()->flash('alert-danger', 'Resource is already being used!');
+            return Redirect::back();
+        }
+        else
+        {
+            Resource::destroy($resource['id']);
+            return redirect::to('resource/show');
+        }
+
+     
+
+
         
     }
-    
+
 }

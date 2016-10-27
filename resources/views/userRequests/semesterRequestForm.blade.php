@@ -66,6 +66,23 @@
                                 </div>
                             </div >
 
+                            <!--Resource Type-->
+                            <div class="form-group">
+                                <label>Resource Type</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                        Lecture Hall
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ResourceType" id="ResourceType" value="Lab" >
+                                        Lab
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Semester</label>
                                 <input type="text" class="form-control" id="selectsemester" name="selectsemester">
@@ -76,8 +93,8 @@
                                 /**
                                  * Dynamically populate the select options for timeslots
                                  */
-                                var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
-                                var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
+                                var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30','18.30 - 19.30','19.30 - 20.30'];
+                                var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30','18.30 - 20.30'];
 
 
                                 function setSelect(v) {

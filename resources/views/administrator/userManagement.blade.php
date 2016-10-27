@@ -49,7 +49,6 @@
                             <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
                             <div class="col-sm-10">
                                 <select name="inputPosition" id="inputPosition" class="js-example-responsive form-control" style="width: 100%" required>
-                                    <option value="">Please Select</option>
                                     @foreach($PriorityCat as $cat)
                                         <option value="{{ $cat->id }}">{{ $cat->priorityName }}</option>
                                     @endforeach
@@ -65,7 +64,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right">Add User</button>
+                        <button type="submit" class="btn btn-primary pull-right">Add User</button>
                     </div>
                     <!-- /.box-footer -->
                     {{ csrf_field() }}
@@ -153,7 +152,7 @@
                 return false;
             }
 
-            function authorizEdit(id)
+            function authorizeEdit(id)
             {
                 var ID = id;
                 $.confirm({
@@ -174,7 +173,7 @@
 
 
         <!--Data Table-->
-        <div class="col-md-8">
+        <div class="col-xs-8">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Registered Users</h3>
@@ -187,7 +186,7 @@
                             <div class="col-sm-6"></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
@@ -202,13 +201,14 @@
                                     @foreach($RegisteredUser as $RegUser)
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">{{ $RegUser->staff_id }}</td>
-                                            </td>
                                             <td>{{ $RegUser->allowedUser->priority->priorityName }}</td>
                                             <td>{{ $RegUser->name }}</td>
                                             <td>{{ $RegUser->email }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-info" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
-                                                <a href="#" class="btn btn-danger pull-right" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
+                                                <div class="pull-right">
+                                                    <a href="#" class="btn btn-primary" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
+                                                    <a href="#" class="btn btn-danger" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
+                                                </div>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -248,13 +248,13 @@
                             <div class="col-sm-6"></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <table id="dataTableAllowedUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableAllowedUsers_info" >
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableAllowedUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Staff ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableAllowedUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Priority</th>
-                                        <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableAllowedUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 100px;">Priority</th>
+                                        <th tabindex="0"  rowspan="1" colspan="0" aria-label="Edit/ Delete" style="width: 10px;">Edit/ Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -267,8 +267,10 @@
                                                 {{ $AuthAllowedUser->priority->priorityName }}
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-info" onclick ="authorizEdit({{ $AuthAllowedUser->id }})">Edit</a>
-                                                <a href="#" class="btn btn-danger pull-right" onclick=authorizeDelete({{ $AuthAllowedUser->id }})>Delete</a>
+                                                <div class="pull-right">
+                                                    <a href="#" class="btn btn-primary" onclick ="authorizeEdit({{ $AuthAllowedUser->id }})">Edit</a>
+                                                    <a href="#" class="btn btn-danger" onclick=authorizeDelete({{ $AuthAllowedUser->id }})>Delete</a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

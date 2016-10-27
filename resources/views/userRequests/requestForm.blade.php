@@ -86,6 +86,21 @@
                           </div>
 
                       </div>
+                      <!--Resource Type-->
+                      <div class="form-group">
+                          <label>Resource Type</label>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                  Lecture Hall
+                              </label>
+                          </div>
+                          <div class="radio">
+                              <label>
+                                  <input type="radio" name="ResourceType" id="ResourceType" value="Lab" >
+                                  Lab
+                              </label>
+                          </div>
 
                       <div  class="form-group">
                           <label>Start Time</label>
@@ -102,12 +117,12 @@
                                           var special = start_time + " - " + end_time;
 
 
-                                          $('#selecttime').empty().append($('<option>',
-                                                  {
-                                                      value: special,
-                                                      text: special
-                                                  }));
-                                          $('#selecttime').val(special);
+//                                          $('#selecttime').empty().append($('<option>',
+//                                                  {
+//                                                      value: special,
+//                                                      text: special
+//                                                  }));
+                                          $('#selecttimeforSp').val(special);
                                       },
                                       timeFormat: 'H:mm',
                                       interval:'30',
@@ -133,12 +148,12 @@
                                       var special = start_time + " - " + end_time;
 
 
-                                      $('#selecttime').empty().append($('<option>',
-                                              {
-                                                  value: special,
-                                                  text: special
-                                              }));
-                                      $('#selecttime').val(special);
+//                                      $('#selecttime').empty().append($('<option>',
+//                                              {
+//                                                  value: special,
+//                                                  text: special
+//                                              }));
+                                      $('#selecttimeforSp').val(special);
                                   },
                                   timeFormat: 'H:mm' ,
                                   interval:'30',
@@ -159,8 +174,8 @@
                           /**
                            * Dynamically populate the select options for timeslots
                            */
-                          var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
-                          var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
+                          var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30','18.30 - 19.30','19.30 - 20.30'];
+                          var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30','18.30 - 20.30'];
 
 
                           function setSelect(v) {
@@ -170,6 +185,8 @@
                               }
                               var a;
                               if (v=='1'){
+                                  $("#selecttimeforSp").css('display','none');
+                                  $("#selecttimeforSp").prop('disabled', true);
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
@@ -177,6 +194,7 @@
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
+                                  document.getElementById("selecttime").disabled = false;
                                   a = OneHourSet;
                                   for (var i = 0; i < a.length; ++i) {
                                       var option = document.createElement("option");
@@ -184,6 +202,8 @@
                                       x.add(option);
                                   }
                               } else if (v=='2'){
+                                  $("#selecttimeforSp").css('display','none');
+                                  $("#selecttimeforSp").prop('disabled', true);
                                   document.getElementById("selectTimeSpecialST").disabled = true;
                                   document.getElementById("selectTimeSpecialEN").disabled = true;
                                   document.getElementById("specialEvent").disabled = true;
@@ -191,6 +211,7 @@
                                   document.getElementById("selectsub").disabled = false;
                                   document.getElementById("selectyear").disabled = false;
                                   document.getElementById("selectbatch").disabled = false;
+                                  document.getElementById("selecttime").disabled = false;
                                   a = TwoHourSet
                                   for (var i = 0; i < a.length; ++i) {
                                       var option = document.createElement("option");
@@ -199,7 +220,9 @@
                                   }
                               }
                               else if (v=='3'){
-                                  $('#selecttime').attr('disabled',true);
+
+                                  $("#selecttimeforSp").css('display','');
+                                  $("#selecttimeforSp").prop('disabled', false);
                                   document.getElementById("selectTimeSpecialST").disabled = false;
                                   document.getElementById("selectTimeSpecialEN").disabled = false;
                                   document.getElementById("specialEvent").disabled = false;
@@ -207,8 +230,7 @@
                                   document.getElementById("selectsub").disabled = true;
                                   document.getElementById("selectyear").disabled = true;
                                   document.getElementById("selectbatch").disabled = true;
-
-                                  //document.getElementById("selecttime").value ="";
+                                  document.getElementById("selecttime").disabled = true;
                               }
 
 
@@ -233,6 +255,13 @@
 
                       </div>
 
+                      {{--<!-- select Time Slot  -->--}}
+                      {{--<div class="form-group">--}}
+                          {{--<label>Time Slot</label>--}}
+                         {{----}}
+
+                          {{--</input>--}}
+                      {{--</div>--}}
 
                       <!-- select Time Slot  -->
                       <div class="form-group">
@@ -240,7 +269,11 @@
                           <select class="form-control" name="selecttime" id="selecttime">
 
                           </select>
+                          <input type="text" class="form-control" name="selecttime" id="selecttimeforSp" style="display:none" readonly>
                       </div>
+
+
+
 
                 <!-- select Year  -->
                 <div class="form-group">

@@ -145,7 +145,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
      * Resource Management Routes
      */
 
-    Route::get('/resource/show', 'ResourceController@Index');
+    Route::get('/resource/show', 'ResourceController@Index')->Name('Resources');;
 
     Route::post('/resource/Add', 'ResourceController@AddResource');
 
@@ -154,6 +154,10 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/resource/UpdateResource/{resource}','ResourceController@updateResource');
 
     Route::get('/resource/DeleteResource/{resource}','ResourceController@deleteResource');
+
+    Route::get('/resource/isResourceInUse/{resource}','ResourceController@isInUseResource');
+
+    
 
     // Resource Management Routes End
     
@@ -240,13 +244,19 @@ Route::group(['middleware' => ['auth','admin']], function() {
     /**
      * Timetable Management Routes
      */
-    Route::get('/timetable', 'TimeTableController@ImportExport');
+    Route::get('/timetable', 'TimeTableController@showGenerateTimetable');
+
+    Route::get('/timetable/batchTimetableForm/loadBatches', 'TimeTableController@loadBatches');
     
-    Route::post('importExcel', 'TimeTableController@importExcel');
+    Route::post('/timetable/batchTimetableForm/batch_Timetable', 'TimeTableController@show');
     
     //Timetable Management End
 
-
+    /**
+     * Resource Timetable Management Routes
+     */
+    Route::get('/resource/GenerateTimetable/{hallNo}/{hallType}','resourceTimetableController@Index');
+    //Timetable Management End
 
     /**
      * Administrator Options Routes

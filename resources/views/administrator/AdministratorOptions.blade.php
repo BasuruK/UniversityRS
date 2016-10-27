@@ -83,8 +83,9 @@
                         </div>
 
                     <div class="box-footer pull-right">
-                        <button type="button" class="btn btn-primary form-control" value="Save and notify users" onclick="return submitForm()">Save and notify users</button>
+                        <input type="submit" class="btn btn-primary form-control" value="Save and notify users" onclick="//return submitForm()">
                     </div>
+                        <br><br><br>
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>

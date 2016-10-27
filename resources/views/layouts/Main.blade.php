@@ -270,6 +270,7 @@ desired effect
       </div>
 
       <!-- search form (Optional) -->
+        <!--
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -279,7 +280,9 @@ desired effect
               </span>
         </div>
       </form>
+      -->
       <!-- /.search form -->
+
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
@@ -295,6 +298,7 @@ desired effect
           <ul class="treeview-menu" style="display: none;">
             <li><a href="/userRequest/requestForm"></i> Place Request</a></li>
             <li class=""><a href="/userRequest/Show"></i>Current Requests</a></li>
+            <li class=""><a href="/userRequest/ShowSemesterRequest"></i>Current Semester Requests</a></li>
           </ul>
         </li>
         <li><a href="/myTables"><i class="fa fa-calendar"></i> <span>My Timetables</span></a></li>

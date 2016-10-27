@@ -24,7 +24,7 @@
             <!-- /.box-header -->
             <div class="box-body">
              <form role="form" method="post" action="/resource/Add">
-                 
+
                 <!-- Hall Number input -->
                 <div class="form-group" >
                   <label>Hall Number</label>
@@ -58,6 +58,7 @@
                      </div>
                  @endif
 
+
                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
                  
                    {!! csrf_field() !!}
@@ -75,9 +76,9 @@
 $(document).ready(function() {
     $('#dataTableRegUsers').DataTable();
 } );
-                
 function isDelete(id)
 {
+
     var ID =id;
     $.confirm({
         theme: 'black',
@@ -87,15 +88,16 @@ function isDelete(id)
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
         confirm: function(){
-            location.href="/resource/DeleteResource/"+ID;
+
+                location.href="/resource/DeleteResource/"+ID;
+
         }
         
     });
     return false;
 }
-function isEdit(id)
-{
-    var ID =id;
+function isEdit(id) {
+    var ID = id;
     $.confirm({
         theme: 'black',
         title: 'Confirm Deletion',
@@ -103,17 +105,17 @@ function isEdit(id)
         content: 'Are you sure want to Edit this resource?',
         confirmButton: 'Yes',
         confirmButtonClass: 'btn-danger',
-        confirm: function(){
-            location.href="/resource/Edit/"+ID;
+        confirm: function () {
+            location.href = "/resource/Edit/" + ID;
         }
-        
+
     });
     return false;
 }
 </script>
              <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Resources</h3>
+          <h3 class="box-title">Resources </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -130,8 +132,8 @@ function isEdit(id)
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall ID</th>
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Hall Number</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Capacity</th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Type</th>
-                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 90px;">Type</th>
+                                <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 90px;"> View/ Edit/ Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,10 +143,15 @@ function isEdit(id)
                               <td>{{ $resource1->hallNo}}</td>
                               <td>{{ $resource1->capacity }}</td>
                               <td>{{ $resource1->type }}</td>
-                              <td>
-                                  <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-info">Edit</a>
-                                  <a class="btn btn-danger pull-right" onclick="return isDelete({{$resource1->id}})">Delete</a>
-                              </td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a  onclick="return isEdit({{$resource1->id}})" class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-danger " onclick="return isDelete({{$resource1->id}})">Delete</a>
+
+                                        <a  href="/resource/GenerateTimetable/{{$resource1->hallNo}}/{{$resource1->type}}" class="btn btn-warning">View Timetable</a>
+                                    </div>
+                                </td>
+
                             </tr>
                             @endforeach
                           </tbody>
@@ -158,6 +165,14 @@ function isEdit(id)
                   <div class="col-sm-7">
                       <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
                   </div>
+              </div>
+              <div class="flash-message" id="errordisplay">
+                  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                      @if(Session::has('alert-' . $msg))
+
+                          <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                      @endif
+                  @endforeach
               </div>
             </div>
         </div>

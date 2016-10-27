@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Allowed_User;
 use App\User;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -20,7 +20,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\View\View
      *
      * Returns the view user management compacted with user object
      */
@@ -175,6 +175,19 @@ class UserManagementController extends Controller
         $adminStatus = 1;
 
         /**
+         * If the authorized user is also an registered user and if authorized users staff_id changed then change the staff_id of registered user also
+         */
+
+        $oldAuthorizedUser = $staff_id;
+        //the user ID changed
+        if($request->staff_id != $oldAuthorizedUser->staff_id)
+        {
+            DB::table('users')
+                ->where('staff_id','=',$staff_id->staff_id)
+                ->update(['staff_id' => $request->staff_id]);
+        }
+
+        /**
          * if an Administrator revoke admin privileges then change the admin status to 0 in users table
          */
         if($request['inputPosition'] != 1)
@@ -189,6 +202,9 @@ class UserManagementController extends Controller
             'staff_id' => $request['staff_id'],
             'position' => $request['inputPosition']
         ]);
+
+
+
 
         /**
          * update the users table if the user is an already registered user

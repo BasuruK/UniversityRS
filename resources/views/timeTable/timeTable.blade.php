@@ -13,32 +13,90 @@
 @endsection
 
 @section('content')
-    <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-        @endforeach
-    </div> <!-- end .flash-message -->
-    <div class="col-md-4">
-        <!-- Horizontal Form -->
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">Import Time Table <small>*Upload Excel sheets</small></h3>
-            </div>
-
-            <form action="{{ URL::to('importExcel') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-                <div class="box-body">
-                    {!! csrf_field() !!}
-                    <input type="file" name="import_file" />
-                    <br/>
-                    <div class="box-footer">
-                        <button class="btn btn-primary pull-right"> Import File </button>
-                    </div>
-                </div>
-            </form>
+    <form role="form" method="POST" action="/timetable/batchTimetableForm/batch_Timetable" name="batchTimetableForm" id="batchTimetableForm">
+        <div class="form-group">
+            <label>Year</label>
+            <select class="form-control" name="selectyear" id="selectyear">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
         </div>
-    </div>
+
+
+        <script>
+            /**
+             * Dynamically populate the select options for batches
+             */
+            $(document).ready(function()
+            {
+                $.get("{{ url('/timetable/batchTimetableForm/loadBatches')}}", {option: $('#selectyear').val()},
+
+                        function(data) {
+
+                            var selectedbatch = $('#selectbatch');
+
+                            selectedbatch.empty();
+
+                            $.each(data, function(key, value) {
+
+                                selectedbatch
+
+                                        .append($("<option></option>")
+
+                                                .attr("value",key)
+
+                                                .text(value));
+                            });
+
+                        });
+                $('#selectyear').change(function(){
+
+                    $.get("{{ url('/timetable/batchTimetableForm/loadBatches')}}", {option: $(this).val()},
+
+                            function(data) {
+
+                                var selectedbatch = $('#selectbatch');
+
+                                selectedbatch.empty();
+
+                                $.each(data, function(key, value) {
+
+                                    selectedbatch
+
+                                            .append($("<option></option>")
+
+                                                    .attr("value",key)
+
+                                                    .text(value));
+                                });
+
+                            });
+
+                });
+
+            });
+
+
+        </script>
+
+        <!-- select Batch -->
+        <div class="form-group">
+            <label>Batch</label>
+            <select class="form-control" name="selectbatch" id="selectbatch">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">View Timetable</button>
+            </div>
+        </div>
+        </div>
+        <!-- /.box-body -->
+
+        {!! csrf_field() !!}
+    </form>
 
 @endsection
