@@ -11,6 +11,7 @@ use App\Http\Requests;
 use Response;
 use Illuminate\Support\Facades\Input;
 use DB;
+use SebastianBergmann\Environment\Console;
 
 class AdminRequestController extends Controller
 {
@@ -245,7 +246,6 @@ class AdminRequestController extends Controller
             ->where('id',$adminSemesterRequest->batchNo)
             ->first();
 
-        $resources=\DB::table('resource')->get();
 
         $selectedSub=DB::table('subject')
             ->select('subject.subCode','subject.subName')
@@ -288,43 +288,34 @@ class AdminRequestController extends Controller
     }
 
 
-    public function loadBatches()
-    {
-        $year= Input::get('option');
-        $selectedbatch=\DB::table('batch')
-            ->where('year',$year)
-            ->orderBy('id', 'desc')
-            ->lists('batchNo','id');
-
-        return Response::json($selectedbatch);
-    }
-
-    public function loadSubjects()
-    {
-        $year= Input::get('option');
-        $selectedSubject=\DB::table('subject')
-            ->where('year',$year)
-            ->orderBy('id', 'desc')
-            ->lists('subName','id');
-
-        return Response::json($selectedSubject);
-    }
-
-
     public function loadAvailableResourcesDate()
     {
         $time= Input::get('option2');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
+
         $date= Input::get('option');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
             ->where('status','=','Accepted')
             ->where('requestDate','=',$date)
-            ->where('timeSlot','=',$time)
+            ->where('timeSlot','LIKE',$firsttime .'%')
+            ->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 
@@ -334,17 +325,30 @@ class AdminRequestController extends Controller
     public function loadAvailableResourcesTime()
     {
         $time = Input::get('option');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
         $date = Input::get('option2');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
             ->where('status','=','Accepted')
             ->where('requestDate','=',$date)
-            ->where('timeSlot','=',$time)
+            ->where('timeSlot','LIKE',$firsttime .'%')
+            ->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 

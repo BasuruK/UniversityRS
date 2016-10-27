@@ -22,7 +22,7 @@
             $(document).ready(function()
             {
 
-                $.get("{{ url('/adminRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selectTimeEdit').val()},
+                $.get("{{ url('/adminRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selectTimeEdit').val(),option3: $('#reqResourceType').val(), option4: $('#prevbatch').val()},
 
                         function(data) {
 
@@ -134,7 +134,9 @@
 
                                     $.get("{{ url('/adminRequest/requestForm/loadHallsDate')}}", {
                                                 option: $('#selectdateEdit').val(),
-                                                option2: $('#selectTimeEdit').val()
+                                                option2: $('#selectTimeEdit').val(),
+                                                option3: $('#reqResourceType').val(),
+                                                option4: $('#prevbatch').val()
                                             },
 
                                             function (data) {
@@ -189,20 +191,6 @@
                                 });
                             </script>
 
-                            <!--
-                            <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="userID" value=Auth::user()->id}}>
-                            </div>
-                            <div class="form-group" hidden="">
-                                <input type="text" hidden="" class="form-control"  name="staffID" value="Auth::user()->staff_id}}">
-                            </div>
-
-
-                            <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="prevhall" id="prevhall" value="$adminSemesterRequest->resourceID}}">
-                            </div>
-                            -->
-
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$adminSemesterRequest->batchNo}}">
                             </div>
@@ -212,6 +200,10 @@
                             </div>
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$adminSemesterRequest->timeSlot}}">
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqResourceType" id="reqResourceType" value="{{$adminSemesterRequest->ResourceType}}">
                             </div>
 
 
@@ -310,7 +302,7 @@
 
 
 
-                                    $.get("{{ url('/adminRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2: $('#selectdateEdit').val()},
+                                    $.get("{{ url('/adminRequest/requestForm/loadHallsTime')}}", {option: $(this).val(),option2: $('#selectdateEdit').val(),option3: $('#reqResourceType').val(),option4: $('#prevbatch').val()},
 
                                             function(data) {
 
@@ -337,6 +329,11 @@
                                 });
 
                             </script>
+
+                            <div class="form-group">
+                                <label>Resource Type</label><br>
+                                <p>{{ $adminSemesterRequest->ResourceType }}</p>
+                            </div>
 
                             <!-- select Resource -->
                             <div class="form-group">
