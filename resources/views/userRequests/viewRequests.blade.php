@@ -117,8 +117,10 @@ function isEditSpecial(id)
                               <td>{{$request->timeSlot}}</td>
                                 <td>{{ $request->ResourceType }}</td>
                               <td>
-                                  <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
-                                  <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
+                                  <div class="pull-right">
+                                      <a  onclick="return isEdit({{$request->id}})" class="btn btn-primary">Edit</a>
+                                      <a class="btn btn-danger" onclick="return isDelete({{$request->id}})">Delete</a>
+                                  </div>
                               </td>
                             </tr>
                            @endforeach
