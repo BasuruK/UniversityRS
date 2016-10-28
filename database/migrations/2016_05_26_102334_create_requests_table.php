@@ -17,7 +17,7 @@ class CreateRequestsTable extends Migration
             $table->string('lecturerID');
             $table->string('year')->nullable();
             $table->string('batchNo')->nullable();
-            $table->integer('subjectCode')->nullable()->index();
+            $table->integer('subjectCode')->nullable()->index()->unsigned();
             $table->string('requestDate');
             $table->string('timeSlot');
             $table->string('resourceID')->nullable();
