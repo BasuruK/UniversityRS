@@ -95,18 +95,18 @@ class BatchController extends Controller
     {
         //$batch->update($request->all());
         $this->validate($request,[
-            'batchNo'       => 'bail|numeric|required',
-            'year'          => 'bail|numeric|required',
-            'noStudents'    => 'numeric|required'
+            /*'batchNo'       => 'bail|numeric|required',
+            'year'          => 'bail|numeric|required',*/
+            'noStudents'    => 'bail|numeric|required'
         ]);
 
-        $batch->batchNo         = $request['batchNo'];
-        $batch->year            = $request['year'];
+        //$batch->batchNo         = $request['batchNo'];
+        //$batch->year            = $request['year'];
         $batch->noOfStudents    = $request['noStudents'];
         $batch->type            = $request['selectType'];
 
         $batch->save();
-        
+
         return Redirect::route('batchShow');
     }
 

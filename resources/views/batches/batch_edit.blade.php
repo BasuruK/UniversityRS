@@ -31,6 +31,15 @@
                     </div>
                 @endif
 
+                <div class="flash-message">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
+
+                            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                        @endif
+                    @endforeach
+                </div> <!-- end .flash-message -->
+
                 <div class="box-body">
                     <!-- form start -->
                     <form role="form" method="POST" action="/batch/update/{{ $batch->id }}">
@@ -38,17 +47,12 @@
                     <!-- /.box-header -->
                         <div class="form-group">
                             <label for="batchNo">Batch No</label>
-                            <input type="text" class="form-control" id="batchNo" name="batchNo" value="{{ $batch->batchNo }}"/>
+                            <p>{{ $batch->batchNo }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="year">Year</label>
-                            <input type="text" class="form-control" id="year" name="year" value="{{ $batch->year }}"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="noStudents">No. of Students</label>
-                            <input type="text" class="form-control" id="noStudents" name="noStudents" value="{{ $batch->noOfStudents }}"/>
+                            <p>{{ $batch->year }}</p>
                         </div>
 
                         <div class="form-group">
