@@ -25,7 +25,7 @@ class AdminRequestController extends Controller
 
     public function show()
     {
-        $requests = \DB::table('requests')
+        $requests = DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
             ->join('users', 'requests.lecturerID','=', 'users.staff_id')
