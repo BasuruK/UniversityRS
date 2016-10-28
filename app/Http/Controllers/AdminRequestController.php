@@ -11,7 +11,6 @@ use App\Http\Requests;
 use Response;
 use Illuminate\Support\Facades\Input;
 use DB;
-use SebastianBergmann\Environment\Console;
 
 class AdminRequestController extends Controller
 {
@@ -43,7 +42,7 @@ class AdminRequestController extends Controller
             ->get();*/
 
         
-        return view("adminRequests.admin_request_main")->with('requests',$requests);
+        return view("adminRequests.adminRequestMain")->with('requests',$requests);
     }
     public function SortByBatchYear()
     {
