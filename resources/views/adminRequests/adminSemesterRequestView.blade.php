@@ -106,8 +106,9 @@
                                             <td>{{$semesterRequest->timeSlot}}</td>
                                             <td>{{$semesterRequest->ResourceType}}</td>
                                             <td>
-                                                <a  onclick="return isEdit({{$semesterRequest->id}})" class="btn btn-info">Edit</a>
-                                                <a class="btn btn-danger pull-right" onclick="return isDelete({{$semesterRequest->id}})">Delete</a>
+                                                <a class="btn btn-primary " onclick="return isEdit({{$semesterRequest->id}})">Edit</a>
+                                                <br>
+                                                <a class="btn btn-danger " onclick="return isDelete({{$semesterRequest->id}})">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach

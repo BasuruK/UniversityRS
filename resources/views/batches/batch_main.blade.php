@@ -108,7 +108,7 @@ $(document).ready(function() {
                                         <td>{{ $batch->type }}</td>
 
                                         <td>
-                                            <a onclick="return isEdit({{$batch->id}})" class="btn btn-info">Edit</a>
+                                            <a onclick="return isEdit({{$batch->id}})" class="btn btn-primary">Edit</a>
                                             <a onclick="return isDelete({{$batch->id}})" class="btn btn-danger pull-right">Delete</a>
                                         </td>
                                     </tr>
