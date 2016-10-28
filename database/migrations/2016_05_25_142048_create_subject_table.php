@@ -13,7 +13,7 @@ class CreateSubjectTable extends Migration
     public function up()
     {
         Schema::create('subject', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('subCode')->index();
             $table->string('semester')->index();
             $table->string('subName');
