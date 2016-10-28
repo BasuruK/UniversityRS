@@ -42,7 +42,7 @@ class AdminRequestController extends Controller
             ->where('status','Pending')
             ->get();*/
 
-
+            return $requests;
         return view("adminRequests.admin_request_main",compact('requests'));
     }
     public function SortByBatchYear()
