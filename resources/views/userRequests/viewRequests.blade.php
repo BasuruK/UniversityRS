@@ -8,6 +8,8 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Home</li>
+        <li class="active">User Request</li>
+        <li class="active">View Academic Requests/Special Event Requests</li>
     </ol>
 </section>
 @endsection
@@ -117,8 +119,10 @@ function isEditSpecial(id)
                               <td>{{$request->timeSlot}}</td>
                                 <td>{{ $request->ResourceType }}</td>
                               <td>
-                                  <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
-                                  <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
+                                  <div class="pull-right">
+                                  <a  onclick="return isEdit({{$request->id}})" class="btn btn-primary">Edit</a>
+                                  <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a>
+                                  </div>
                               </td>
                             </tr>
                            @endforeach
@@ -263,8 +267,10 @@ function isEditSpecial(id)
                                         <td>{{ $specialRequest->capacity }}</td>
                                         <td>{{ $specialRequest->ResourceType }}</td>
                                         <td>
-                                            <a  onclick="return isEditSpecial({{$specialRequest->id}})" class="btn btn-info">Edit</a>
-                                            <a class="btn btn-danger pull-right" onclick="return isDelete({{$specialRequest->id}})">Delete</a>
+                                            <div >
+                                            <a  onclick="return isEditSpecial({{$specialRequest->id}})" class="btn btn-primary">Edit</a>
+                                            <a class="btn btn-danger" onclick="return isDelete({{$specialRequest->id}})">Delete</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
