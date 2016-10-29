@@ -11,7 +11,6 @@ use App\Http\Requests;
 use Response;
 use Illuminate\Support\Facades\Input;
 use DB;
-use SebastianBergmann\Environment\Console;
 
 class AdminRequestController extends Controller
 {
@@ -25,7 +24,7 @@ class AdminRequestController extends Controller
 
     public function show()
     {
-        $requests = \DB::table('requests')
+        $requests = DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
             ->join('users', 'requests.lecturerID','=', 'users.staff_id')
@@ -42,8 +41,8 @@ class AdminRequestController extends Controller
             ->where('status','Pending')
             ->get();*/
 
-
-        return view("adminRequests.admin_request_main",compact('requests'));
+        
+        return view("adminRequests.adminRequestMain")->with('requests',$requests);
     }
     public function SortByBatchYear()
     {

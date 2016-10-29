@@ -88,14 +88,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('/myTables/view','userTimetableController@viewTable');
 
-    /**
-     * Mailbox routes
-     */
-
-    Route::get('/Mailbox','MailboxController@index');
-
-    Route::post('/Mailbox/Send','MailboxController@send');
-
 });
 
 /*
@@ -142,7 +134,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     //User Management Routes End
 
     /**
-     * Resource Management Routes
+     * Frce Management Routes
      */
 
     Route::get('/resource/show', 'ResourceController@Index')->Name('Resources');;
