@@ -19,8 +19,10 @@
                 <div class="box-header">
                     <h3 class="box-title">Requests</h3>
                     <tr>
-                        <td><a href='/adminRequest/newForm' id="btnAdd" class="btn btn-primary pull-right">Add Request</a></td>
-                        <td><a href='/adminRequest/BatchSort' id="btnDateSort" class="btn btn-primary">Sort By Batch</a></td>
+                        <div class="pull-right">
+                            <td><a href='/adminRequest/newForm' id="btnAdd" class="btn btn-primary">Add Request</a></td>
+                            <td><a href='/adminRequest/BatchSort' id="btnDateSort" class="btn btn-warning">Sort By Batch</a></td>
+                        </div>
                     </tr>
 
                 </div>
@@ -92,7 +94,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Status</th>
-                                        <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
+                                        <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 120px;">Edit/ Delete/ Notify</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -110,8 +112,9 @@
                                             <td>
                                                 <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
                                                 <a class="btn btn-danger" onclick="return isDelete({{$request->id}})">Delete</a>
+                                                <a href="/adminRequest/notify/{{ $request->id }}" class="btn btn-warning">Notify</a>
                                             </td>
-                                            <td><a href="/adminRequest/notify/{{ $request->id }}" class="btn btn-warning">Notify</a></td>
+
                                         </tr>
                                     @endforeach
                                     </tbody>

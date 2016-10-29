@@ -65,7 +65,7 @@ class AdminRequestController extends Controller
             ->get();*/
 
 
-        return view("adminRequests.admin_request_main",compact('requests'));
+        return view("adminRequests.adminRequestMain",compact('requests'));
     }
 
     /**

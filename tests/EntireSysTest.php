@@ -51,7 +51,7 @@ class EntireSysTest extends TestCase
         $this->visit('/resource/show')
             ->type('B307','hallNo')
             ->type('50','capacity')
-            ->select('Lecture Hall','selectType')
+            ->select('LectureHall','selectType')
             ->press('Submit')
             ->seePageIs('/resource/show');
 

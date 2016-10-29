@@ -61,13 +61,13 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="semester">Semester :</label>
-                            <input type="text" name="semester" id="semester" class="form-control" placeholder="Semester" required>
+                            <label for="year">Year :</label>
+                            <input type="text" name="year" id="year" class="form-control" placeholder="year" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="year">Year :</label>
-                            <input type="text" name="year" id="year" class="form-control" placeholder="year" required>
+                            <label for="semester">Semester :</label>
+                            <input type="text" name="semester" id="semester" class="form-control" placeholder="Semester" required>
                         </div>
 
                         <div class="form-group">

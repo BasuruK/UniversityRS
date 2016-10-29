@@ -24,9 +24,4 @@ class userTimetableController extends Controller
 
         return view('timeTable.lecturerTimetable')->with('fullTimeTable',$fullTable)->with('LecturesTimeDetails',$LecturerTimes);
     }
-
-    public function viewTable(Request $request)
-    {
-        return json_encode("LOLOLOLO");
-    }
 }
