@@ -27,8 +27,6 @@
                         </ul>
                     </div>
                     <div class="box-body box-profile">
-<<<<<<< HEAD
-=======
                         <div class="btn-group pull-right">
                             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-gear"></i></button>
@@ -36,7 +34,6 @@
                                 <li><a href='/profile/ChangePicture/{{  $userData->id  }}'>Change Picture</a></li>
                             </ul>
                         </div>
->>>>>>> Development
                         <img class="profile-user-img img-responsive img-circle" src="/dist/img/{{ $userData->picture }}" alt="User profile picture">
                         <br/>
                         <h3 class="profile-username text-center">{{ $userData->name }}</h3>
