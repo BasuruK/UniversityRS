@@ -45,7 +45,7 @@
                    <div class="form-group">
                   <label>Type</label>
                   <select class="form-control" name="selectType">
-                    <option value="Lecture Hall"> Lecture Hall</option>
+                    <option value="LectureHall"> Lecture Hall</option>
                     <option value="Lab"> Lab</option>
                   </select>
                 </div>
