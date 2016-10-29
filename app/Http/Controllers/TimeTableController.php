@@ -14,11 +14,17 @@ use App\TimeTable;
 
 class TimeTableController extends Controller
 {
+    /**
+     * @return to the view of the timetable
+     */
     public function showGenerateTimetable()
     {
-        return view('timetable.timeTable');
+        return view('timeTable.timeTable');
     }
 
+    /**
+     * @return batches availabe for the selected year
+     */
     public function loadBatches()
     {
         $year= Input::get('option');
@@ -31,6 +37,10 @@ class TimeTableController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return generated timetable
+     */
     public function show(Request $request)
     {
 
