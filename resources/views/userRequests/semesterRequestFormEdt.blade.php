@@ -8,6 +8,8 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Home</li>
+            <li class="active">User Request</li>
+            <li class="active">Edit Semester Requests</li>
         </ol>
     </section>
 @endsection
@@ -112,10 +114,10 @@
                                 <label>Resource Type</label>
                                 <div class="radio">
                                     <label>
-                                        @if($userRequest->ResourceType=='Lecture Hall')
-                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall" checked >
+                                        @if($userRequest->ResourceType=='LectureHall')
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="LectureHall" checked >
                                         @else
-                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall"  >
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="LectureHall"  >
                                         @endif
                                         Lecture Hall
                                     </label>

@@ -7,7 +7,9 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Resource Management</li>
+        <li class="active">Add/View Resources</li>
     </ol>
 </section>
 @endsection
@@ -43,7 +45,7 @@
                    <div class="form-group">
                   <label>Type</label>
                   <select class="form-control" name="selectType">
-                    <option value="Lecture Hall"> Lecture Hall</option>
+                    <option value="LectureHall"> Lecture Hall</option>
                     <option value="Lab"> Lab</option>
                   </select>
                 </div>

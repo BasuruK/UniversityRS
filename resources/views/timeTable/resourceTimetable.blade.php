@@ -5,6 +5,7 @@
         <h1>User Timetables <small> Timetable assigned for Resource</small></h1>
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Resource Management</li>
             <li class="active">Resource Timetable</li>
         </ol>
     </section>

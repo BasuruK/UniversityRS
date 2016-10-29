@@ -44,54 +44,92 @@ class userRequestController extends Controller
      */
     public function AddRequest(Request $request)
     {
-        
-        $this->validate($request, [
-            'selectdate'=>'required',
-            'selecttime'=>'required',
-        ]);
-        
-        $userRequest= new userRequest();
-        
-       
-        $userRequest->lecturerID=$request['staffID'];
-        $userRequest->year=$request['selectyear'];
-        $userRequest->batchNo=$request['selectbatch'];
-        $userRequest->subjectCode=$request['selectsub'];
-        $userRequest->requestDate=$request['selectdate'];
-        $userRequest->timeSlot=$request['selecttime'];
-        $userRequest->timeslotType=$request['SlotType'];
-        $userRequest->capacity=$request['capacity'];
-        $userRequest->specialEvent=$request['specialEvent'];
-        $userRequest->ResourceType=$request['ResourceType'];
-        
-        
-        $userRequest->save();
+        if (userRequest::where('ResourceType', '=', $request['ResourceType'])
+            ->where('year', '=',$request['selectyear'])
+            ->where('batchNo','=',$request['selectbatch'])
+            ->where('subjectCode','=',$request['selectsub'])
+            ->where('requestDate','=',$request['selectdate'])
+            ->where('timeSlot','=',$request['selecttime'])
+            ->where('capacity','=',$request['capacity'])
+            ->where('specialEvent','=',$request['specialEvent'])
+            ->where('ResourceType','=',$request['ResourceType'])
+            ->first())
+        {
+            //return resource::where('hallNo','=' ,$request['hallNoEdit'])->first();
+            $request->session()->flash('alert-danger', 'This request has been already logged by you!');
+            return Redirect::back();
+
+        }
+        else
+        {
+            $this->validate($request, [
+                'selectdate'=>'required',
+                'selecttime'=>'required',
+            ]);
+
+            $userRequest= new userRequest();
 
 
-        return redirect::to('/userRequest/Show/');
+            $userRequest->lecturerID=$request['staffID'];
+            $userRequest->year=$request['selectyear'];
+            $userRequest->batchNo=$request['selectbatch'];
+            $userRequest->subjectCode=$request['selectsub'];
+            $userRequest->requestDate=$request['selectdate'];
+            $userRequest->timeSlot=$request['selecttime'];
+            $userRequest->timeslotType=$request['SlotType'];
+            $userRequest->capacity=$request['capacity'];
+            $userRequest->specialEvent=$request['specialEvent'];
+            $userRequest->ResourceType=$request['ResourceType'];
+
+
+            $userRequest->save();
+
+            $request->session()->flash('alert-success', 'Your Request was successfully logged!');
+            return redirect::to('/userRequest/Show/');
+        }
+        
+
     }
 
     public function AddSemesterRequest(Request $request)
     {
+        if (SemesterRequests::where('ResourceType', '=', $request['ResourceType'])
+            ->where('year', '=',$request['selectyear'])
+            ->where('batchNo','=',$request['selectbatch'])
+            ->where('subjectCode','=',$request['selectsub'])
+            ->where('requestDate','=',$request['selectdate'])
+            ->where('timeSlot','=',$request['selecttime'])
+            ->where('ResourceType','=',$request['ResourceType'])
+            ->first())
+        {
+            //return resource::where('hallNo','=' ,$request['hallNoEdit'])->first();
+            $request->session()->flash('alert-danger', 'This request has been already logged by you!');
+            return Redirect::back();
 
-        $userRequest= new SemesterRequests();
+        }
+
+        else
+        {
+            $userRequest= new SemesterRequests();
 
 
-        $userRequest->lecturerID=$request['staffID'];
-        $userRequest->year=$request['selectyear'];
-        $userRequest->batchNo=$request['selectbatch'];
-        $userRequest->subjectCode=$request['selectsub'];
-        $userRequest->requestDate=$request['selectdate'];
-        $userRequest->timeSlot=$request['selecttime'];
-        $userRequest->semester=$request['selectsemester'];
-        $userRequest->timeslotType=$request['SlotType'];
-        $userRequest->ResourceType=$request['ResourceType'];
+            $userRequest->lecturerID=$request['staffID'];
+            $userRequest->year=$request['selectyear'];
+            $userRequest->batchNo=$request['selectbatch'];
+            $userRequest->subjectCode=$request['selectsub'];
+            $userRequest->requestDate=$request['selectdate'];
+            $userRequest->timeSlot=$request['selecttime'];
+            $userRequest->semester=$request['selectsemester'];
+            $userRequest->timeslotType=$request['SlotType'];
+            $userRequest->ResourceType=$request['ResourceType'];
 
 
-        $userRequest->save();
+            $userRequest->save();
 
-
-        return redirect::to('/userRequest/ShowSemesterRequest/');
+            $request->session()->flash('alert-success', 'Your Request was successfully logged!');
+            return redirect::to('/userRequest/ShowSemesterRequest/');
+        }
+     
     }
 
     /**
