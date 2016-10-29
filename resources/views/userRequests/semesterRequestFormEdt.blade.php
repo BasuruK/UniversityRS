@@ -115,9 +115,9 @@
                                 <div class="radio">
                                     <label>
                                         @if($userRequest->ResourceType=='Lecture Hall')
-                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall" checked >
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="LectureHall" checked >
                                         @else
-                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="Lecture Hall"  >
+                                            <input type="radio" name="ResourceTypeEdit" id="ResourceTypeEdit" value="LectureHall"  >
                                         @endif
                                         Lecture Hall
                                     </label>

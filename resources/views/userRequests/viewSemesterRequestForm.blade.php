@@ -23,6 +23,14 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <div class="flash-message" id="errordisplay">
+                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                            @if(Session::has('alert-' . $msg))
+
+                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                            @endif
+                        @endforeach
+                    </div>
                     <div id="dataTableRegUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
                             <div class="col-sm-6"></div>
@@ -109,8 +117,9 @@
                                             <td>{{$request->ResourceType}}</td>
                                             <td>
                                                  <div class="pull-right">
-                                                <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
-                                                <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a></div>
+                                                <a  onclick="return isEdit({{$request->id}})" class="btn btn-primary">Edit</a>
+                                                <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a>
+                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach

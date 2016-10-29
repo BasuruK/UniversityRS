@@ -95,6 +95,14 @@ function isEditSpecial(id)
 }
 
                       </script>
+                      <div class="flash-message" id="errordisplay">
+                          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                              @if(Session::has('alert-' . $msg))
+
+                                  <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                              @endif
+                          @endforeach
+                      </div>
                       <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                         <thead>
                             <tr role="row">
