@@ -298,23 +298,36 @@ class AdminRequestController extends Controller
         $batch = Input::get('option4');
 
         $batchCap=\DB::table('batch')
-            ->select('noOfStudents')
             ->where('id','=',$batch)
-            ->first();
+            ->value('noOfStudents');
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
-            ->where('status','=','Accepted')
-            ->where('requestDate','=',$date)
-            ->where('timeSlot','LIKE',$firsttime .'%')
-            ->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE',$firsttime .'%'],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE','%'.$lasttime],
+            ])
+            //->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
-            ->where('type','LIKE',$reqResourceType)
-            //->where('capacity','=',$batchCap)
-            //->Where('capacity','>',$batchCap)
+            ->where([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','>',$batchCap],
+            ])
+            /*->orWhere([
+                ['type','LIKE',$reqResourceType],
+                ['capacity','=',$batchCap],
+            ])*/
+
+            //->orWhere('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 
@@ -331,23 +344,36 @@ class AdminRequestController extends Controller
         $batch = Input::get('option4');
 
         $batchCap=\DB::table('batch')
-            ->select('noOfStudents')
             ->where('id','=',$batch)
-            ->first();
+            ->value('noOfStudents');
 
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
-            ->where('status','=','Accepted')
-            ->where('requestDate','=',$date)
-            ->where('timeSlot','LIKE',$firsttime .'%')
-            ->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE',$firsttime .'%'],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE','%'.$lasttime],
+            ])
+            //->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
-            ->where('type','LIKE',$reqResourceType)
-            //->where('capacity','=',$batchCap)
-            //->Where('capacity','>',$batchCap)
+            ->where([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','>',$batchCap],
+            ])
+            /*->orWhere([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','=',$batchCap],
+            ])*/
+
+            //->orWhere('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 

@@ -22,7 +22,7 @@
             $(document).ready(function()
             {
 
-                $.get("{{ url('/adminRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#selectTimeEdit').val(),option3: $('#reqResourceType').val(), option4: $('#prevbatch').val()},
+                $.get("{{ url('/adminRequest/requestForm/loadHallsDate')}}", {option: $('#selectdateEdit').val(),option2: $('#prevtimeslot').val(),option3: $('#reqResourceType').val(), option4: $('#prevbatch').val()},
 
                         function(data) {
 
