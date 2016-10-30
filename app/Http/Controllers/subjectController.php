@@ -79,7 +79,7 @@ class subjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        return view('subjects.Edit_Subject')->with('subject',$subject); 
+        return view('subjects.Edit_Subject')->with('subject',$subject);
     }
 
     /**
@@ -98,14 +98,18 @@ class subjectController extends Controller
 
         $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
-        if($validator->fails())
+        if (DB::table('subject')->where('subCode', $request['subjectCode'])->orwhere('subName',$request['subjectName'])->first())
+        {
+            $request->session()->flash('alert-warning', 'Subject already exists!');
+            return Redirect::back();
+        }
+        else if($validator->fails())
         {
             $request->session()->flash('alert-danger', 'Cannot have empty fields!!');
             return back()->withErrors($validator);
         }
         else
         {
-            //$subject->update($request->all());
             $subject->subCode = $request['subjectCode'];
             $subject->subName = $request['subjectName'];
             $subject->semester = $request['selectsemester'];
@@ -122,9 +126,17 @@ class subjectController extends Controller
      * @param Subject $subject
      * @return mixed
      */
-    public function delete(Subject $subject)
+    public function delete(Subject $subject, Request $request)
     {
-        Subject::destroy($subject['id']);
-        return Redirect::route('Subjectmain'); 
+        if(\DB::table('requests')->where('subjectCode','=',$subject['subCode'])->where('status','=','Accepted')->first()||\DB::table('semester_requests')->where('subjectCode','=',$subject['subCode'])->where('status','=','Accepted')->first())
+        {
+            $request->session()->flash('alert-danger', 'Subject is already being used!');
+            return Redirect::back();
+        }
+        else
+        {
+            Subject::destroy($subject['id']);
+            return Redirect::route('Subjectmain');
+        }
     }
 }

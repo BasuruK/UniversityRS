@@ -185,8 +185,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
     
     Route::get('/subject', 'subjectController@show')->Name('Subjectmain');
     
-    Route::get('/subject/new', 'subjectController@add');
-    
     Route::post('/subject/Add_Subject', 'subjectController@addSubjects');
     
     Route::get('/subject/edit/{subject}', 'subjectController@edit');
@@ -240,6 +238,24 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/adminRequest/requestForm/loadHallsTime','AdminRequestController@loadAvailableResourcesTime');
 
     //Request Management End
+
+    //Special Request Management
+
+    Route::get('/adminRequest/specialRequest','AdminRequestController@showSpecialRequests')->name('adminSpecialRequest');
+
+    Route::get('/adminRequest/specialRequestEdit/{adminSpecialRequest}','AdminRequestController@editSpecialRequest');
+
+    Route::patch('/adminRequest/specialRequestUpdate/{adminSpecialRequest}','AdminRequestController@updateSpecialRequests');
+
+    Route::get('/adminRequest/specialRequestDelete/{adminSpecialRequest}','AdminRequestController@deleteSpecialRequests');
+
+    Route::get('/adminRequest/specialRequestForm/loadHalls','AdminRequestController@loadAvailableResourcesSpecialRequest');
+
+    Route::get('/adminRequest/specialRequestForm/loadHallsDate','AdminRequestController@loadAvailableResourcesDateSpecialRequest');
+
+    Route::get('/adminRequest/SpecialRequestForm/loadHallsTime','AdminRequestController@loadAvailableResourcesTimeSpecialRequest');
+
+    //Special Request Management End
 
     /**
      * Timetable Management Routes

@@ -45,7 +45,7 @@
 
                                         .append($("<option></option>")
 
-                                                .attr("value",key)
+                                                .attr("value",value)
 
                                                 .text(value));
                             });
@@ -67,7 +67,7 @@
 
                                             .append($("<option></option>")
 
-                                                    .attr("value",key)
+                                                    .attr("value",value)
 
                                                     .text(value));
                                 });
