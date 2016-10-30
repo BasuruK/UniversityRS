@@ -43,11 +43,11 @@
 
                         @foreach($fullTimeTable as $timeTable)
 
-                        <!-- Time -->
-                        <tr>
-                        <td>{{ $timeTable->time }}</td>
-                        <!-- Monday -->
-                        <td id="{{ $timeTable->time24Format }}-monday"> </td>
+                            <!-- Time -->
+                            <tr>
+                                <td>{{ $timeTable->time }}</td>
+                                <!-- Monday -->
+                                <td id="{{ $timeTable->time24Format }}-monday"> </td>
                                 <!-- Tuesday -->
                                 <td id="{{ $timeTable->time24Format }}-tuesday"> </td>
                                 <!-- Wednesday -->
@@ -60,11 +60,11 @@
                                 <td id="{{ $timeTable->time24Format }}-saturday"> </td>
                                 <!-- Sunday -->
                                 <td id="{{ $timeTable->time24Format }}-sunday"> </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                                </table>
-                                <script>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <script>
 
                         //Generate the timetable
                         var LecturerTimeData = 0;
@@ -111,6 +111,7 @@
 
 
                         /**
+                         * Create XML header for Excel File
                          * Exports the timetable in excel format
                          */
                         function exportXLS() {
