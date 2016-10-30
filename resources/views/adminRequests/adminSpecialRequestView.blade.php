@@ -3,7 +3,7 @@
 @section('section-header')
     <section class="content-header">
         <h1>
-            Semester Request Management
+            Special Request Management
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Semester Requests</h3>
+                    <h3 class="box-title">Special Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -46,11 +46,11 @@
                                             theme: 'black',
                                             title: 'Confirm Deletion',
                                             icon: 'fa fa-warning',
-                                            content: 'Are you sure want to remove this Semester Request?',
+                                            content: 'Are you sure want to remove this Special Request?',
                                             confirmButton: 'Yes',
                                             confirmButtonClass: 'btn-danger',
                                             confirm: function(){
-                                                location.href="/adminRequest/semesterRequestDelete/"+ID;
+                                                location.href="/adminRequest/specialRequestDelete/"+ID;
                                             }
 
                                         });
@@ -63,31 +63,24 @@
                                             theme: 'black',
                                             title: 'Confirm Deletion',
                                             icon: 'fa fa-warning',
-                                            content: 'Are you sure want to Edit this Semester Request?',
+                                            content: 'Are you sure want to Edit this Special Request?',
                                             confirmButton: 'Yes',
                                             confirmButtonClass: 'btn-danger',
                                             confirm: function(){
-                                                location.href="/adminRequest/semesterRequestEdit/"+ID;
+                                                location.href="/adminRequest/specialRequestEdit/"+ID;
                                             }
 
                                         });
                                         return false;
                                     }
-                                    {{--function LoadEdit(id) {--}}
-                                    {{--var ID=id;--}}
-
-                                    {{--$.get("{{ url('/userRequest/Edit/loadEditDetails')}}", {option:id})--}}
-                                    {{--}--}}
 
                                 </script>
                                 <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Batch</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Year</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Capacity</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Event Details</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
@@ -95,20 +88,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($semesterRequests as $semesterRequest)
+                                    @foreach($specialRequests as $specialRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{$semesterRequest->id}}</td>
-                                            <td>{{$semesterRequest->name}}</td>
-                                            <td>{{$semesterRequest->batchNo}}</td>
-                                            <td>{{$semesterRequest->year}}</td>
-                                            <td>{{$semesterRequest->subName}}</td>
-                                            <td>{{$semesterRequest->requestDate}}</td>
-                                            <td>{{$semesterRequest->timeSlot}}</td>
-                                            <td>{{$semesterRequest->ResourceType}}</td>
+                                            <td class="sorting_1">{{$specialRequest->id}}</td>
+                                            <td>{{$specialRequest->capacity}}</td>
+                                            <td>{{$specialRequest->specialEvent}}</td>
+                                            <td>{{$specialRequest->requestDate}}</td>
+                                            <td>{{$specialRequest->timeSlot}}</td>
+                                            <td>{{$specialRequest->ResourceType}}</td>
                                             <td>
                                                 <div class="pull-right">
-                                                <a  onclick="return isEdit({{$semesterRequest->id}})" class="btn btn-info">Edit</a>
-                                                <a class="btn btn-danger" onclick="return isDelete({{$semesterRequest->id}})">Delete</a>
+                                                    <a  onclick="return isEdit({{$specialRequest->id}})" class="btn btn-info">Edit</a>
+                                                    <a class="btn btn-danger" onclick="return isDelete({{$specialRequest->id}})">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -135,7 +126,7 @@
 
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Accepted Semester Requests</h3>
+                    <h3 class="box-title">Accepted Special Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -154,32 +145,27 @@
                                         $('#dataTableAcceptedSemesterRequests').DataTable();
                                     } );
                                 </script>
-                                <table id="dataTableAcceptedSemesterRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
+                                <table id="dataTableAcceptedSpecialRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Batch</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Year</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Subject</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Capacity</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Event Details</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Time Slot</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Resouce ID</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($acceptedSemesterRequests as $acceptedSemesterRequest)
+                                    @foreach($acceptedSpecialRequests as $acceptedSpecialRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{ $acceptedSemesterRequest->id }}</td>
-                                            <td>{{ $acceptedSemesterRequest->name }}</td>
-                                            <td>{{ $acceptedSemesterRequest->batchNo }}</td>
-                                            <td>{{ $acceptedSemesterRequest->year }}</td>
-                                            <td>{{ $acceptedSemesterRequest->subName }}</td>
-                                            <td>{{$acceptedSemesterRequest->requestDate}}</td>
-                                            <td>{{ $acceptedSemesterRequest->timeSlot }}</td>
-                                            <td>{{ $acceptedSemesterRequest->resourceID }}</td>
-
+                                            <td class="sorting_1">{{ $acceptedSpecialRequest->id }}</td>
+                                            <td>{{ $acceptedSpecialRequest->capacity }}</td>
+                                            <td>{{ $acceptedSpecialRequest->specialEvent }}</td>
+                                            <td>{{ $acceptedSpecialRequest->requestDate }}</td>
+                                            <td>{{ $acceptedSpecialRequest->timeSlot }}</td>
+                                            <td>{{$acceptedSpecialRequest->ResourceType}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

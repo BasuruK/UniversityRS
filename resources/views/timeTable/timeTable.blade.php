@@ -42,49 +42,35 @@
                             {
                                 $.get("{{ url('/timetable/batchTimetableForm/loadBatches')}}", {option: $('#selectyear').val()},
 
-                                        function(data) {
+                                        function (data) {
 
                                             var selectedbatch = $('#selectbatch');
 
                                             selectedbatch.empty();
 
-                                            $.each(data, function(key, value) {
+                                            $.each(data, function (key, value) {
 
-                                                selectedbatch
-
-                                                        .append($("<option></option>")
-
-                                                                .attr("value",key)
-
-                                                                .text(value));
+                                                selectedbatch.append($("<option></option>").attr("value", value).attr("value", key).text(value));
                                             });
 
                                         });
-                                $('#selectyear').change(function(){
+                                $('#selectyear').change(function () {
 
                                     $.get("{{ url('/timetable/batchTimetableForm/loadBatches')}}", {option: $(this).val()},
 
-                                            function(data) {
+                                            function (data) {
 
                                                 var selectedbatch = $('#selectbatch');
 
                                                 selectedbatch.empty();
 
-                                                $.each(data, function(key, value) {
+                                                $.each(data, function (key, value) {
 
-                                                    selectedbatch
-
-                                                            .append($("<option></option>")
-
-                                                                    .attr("value",key)
-
-                                                                    .text(value));
+                                                    selectedbatch.append($("<option></option>").attr("value", key).text(value)).attr("value", value);
                                                 });
-
                                             });
 
                                 });
-
                             });
 
 
