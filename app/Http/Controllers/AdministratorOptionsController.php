@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests;
 use App\Notifications;
@@ -123,6 +124,16 @@ class AdministratorOptionsController extends Controller
 
         //Delete the notification regarding the semester request table
         Notifications::where('type','semesterRequestFormNotification')->delete();
+    }
+
+    /**
+     * Truncates the Timetable table in the database.
+     */
+    public function truncateTimetable()
+    {
+        $exitCode = Artisan::call('truncate:Timetable');
+
+        return back();
     }
 
 }

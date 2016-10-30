@@ -264,6 +264,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/AdminOptions/SemesterDeadlineUnchecked','AdministratorOptionsController@semesterRequestUnchecked');
 
+    Route::get('/AdminOptions/truncateTimeTable','AdministratorOptionsController@truncateTimetable');
+
     // Administrator Options Routes End
 });
 

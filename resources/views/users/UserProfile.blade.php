@@ -19,14 +19,13 @@
 
                 <!-- Profile Image -->
                 <div class="box box-primary">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-gear"></i></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href='/profile/ChangePicture/{{  $userData->id  }}'><b>Change Picture</b></a></li>
-                        </ul>
-                    </div>
                     <div class="box-body box-profile">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-gear"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href='/profile/ChangePicture/{{  $userData->id  }}'><b>Change Picture</b></a></li>
+                            </ul>
                         </div>
                         <img class="profile-user-img img-responsive img-circle" src="/dist/img/{{ $userData->picture }}" alt="User profile picture">
                         <br/>

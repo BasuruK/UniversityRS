@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
          Commands\Inspire::class,
+         Commands\TruncateTables::class,
     ];
 
     /**

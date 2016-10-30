@@ -45,6 +45,74 @@
             return false;
         }
 
+        /**
+         *
+         * @param id
+         * @returns {boolean}
+         *
+         * User confirmation message asking the user to confirm his decision
+         */
+        function ConfirmTimetableTruncate()
+        {
+            $.confirm({
+                theme: 'black',
+                title: 'Are Your Sure ?',
+                icon: 'fa fa-warning',
+                content: 'This will erase all the data related to timetables, Only press yes if it is a must to clear out everything.<br>You wont be able to undo this action later!',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-danger',
+                confirm: function(){
+
+                    $.confirm({
+                        theme: 'black',
+                        title: 'Are Your Sure ?',
+                        icon: 'fa fa-warning',
+                        content: 'Confirm your choice!<br><b>Are you sure you want to erase all data?</b></br>',
+                        confirmButton: 'Yes',
+                        confirmButtonClass: 'btn-danger',
+                        confirm: function () {
+
+                            $.ajax({
+                                type    : 'GET',
+                                url     : "/AdminOptions/truncateTimeTable",
+                                success : function () {
+
+                                    $.notify("Timetable data erased successfully",{
+
+                                        position : 'bottom right',
+                                        className: 'success'
+                                    });
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+            return false;
+        }
+
+        function CustomClearTimetable() {
+
+            $.confirm({
+                keyboardEnabled: true,
+                theme: 'black',
+                title: 'Enter Year and Batch!',
+                icon: 'fa fa-info',
+                content:'Please enter Year and the Batch No <br><br> ' +
+                '<div class="from-group">' +
+                '<input name="year" type="text" class="form-control" placeholder="Year. i.e : 3" />' +
+                '<br> ' +
+                '<input name="batch" class="form-control" type="text" placeholder="Batch No. i.e : 1" />' +
+                '</div>',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-success',
+                confirm: function () {
+
+                }
+            });
+        }
+
 
     </script>
 
@@ -62,12 +130,20 @@
 
                         <div class="form-group">
                             <label for="year">Year :</label>
-                            <input type="text" name="year" id="year" class="form-control" placeholder="year" required>
+                            <select name="year" id="year" class="js-example-responsive form-control" style="width: 100%" required>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="semester">Semester :</label>
-                            <input type="text" name="semester" id="semester" class="form-control" placeholder="Semester" required>
+                            <select name="semester" id="semester" class="js-example-responsive form-control" style="width: 100%" required>
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -177,6 +253,7 @@
 
 
     <div class="row">
+
         <div class="col-md-4">
             <div class="box box-warning">
                 <div class="box-header with-border">
@@ -191,7 +268,25 @@
                 <!-- /.box-body -->
             </div>
         </div>
-    </div>
+
+        <!-- Database Operations -->
+        <div class="col-md-8">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Database Operations</h3> <small> *Database related operations</small>
+                </div>
+                <div class="box-body">
+
+                    <p style="color: red;">All the functions listed here handel Database requests. Handle with extreme care and proceed at your own risk.</p>
+                    <br>
+                    <a class="btn btn-danger" onclick="ConfirmTimetableTruncate()">Clear Timetables</a>
+                    <a class="btn btn-danger" onclick="CustomClearTimetable()">Custom Clear Timetables</a>
+
+                </div><!-- ./box-body -->
+            </div>
+        </div>
+
+    </div><!-- ./row -->
 
     <script>
 
