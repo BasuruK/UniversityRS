@@ -110,10 +110,26 @@ class BatchController extends Controller
      * This function takes the batch to be deleted and carries out the destroy function which deletes
      * the relevant record from the database
      */
-    public function delete(Batch $batch)
+    public function delete(Request $request, Batch $batch)
     {
-        Batch::destroy($batch['id']);
-        return Redirect::route('batchShow');
+        $batchSR = \DB::table('semester_requests')
+            ->where('batchNo','=',$batch['id'])
+            ->first();
+
+        $batchFASER = \DB::table('requests')
+            ->where('batchNo','=',$batch['id'])
+            ->first();
+
+        if($batchSR==NULL && $batchFASER==NULL)
+        {
+            Batch::destroy($batch['id']);
+            return Redirect::route('batchShow');
+        }
+        else
+        {
+            $request->session()->flash('alert-danger', 'Batch is being used!');
+            return Redirect::back();
+        }
     }
     
 }
