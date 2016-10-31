@@ -166,8 +166,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     */
     
     Route::get('/batch', 'BatchController@show')->name('batchShow');
-    
-    Route::get('/batch/new', 'BatchController@add');
+
     
     Route::post('/batch/batch_add', 'BatchController@addBatch');
     
@@ -205,11 +204,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest', 'AdminRequestController@show')->name('adminRequestShow');
 
-    Route::get('/adminRequest/newForm', 'AdminRequestController@newForm');
-
     Route::get('/adminRequest/BatchSort', 'AdminRequestController@SortByBatchYear');
-
-    Route::post('/adminRequest/add', 'AdminRequestController@add');
 
     Route::get('/adminRequest/delete/{admin_request}','AdminRequestController@delete');
 
@@ -218,6 +213,10 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/adminRequest/update/{admin_request}','AdminRequestController@update');
 
     Route::get('/adminRequest/notify/{admin_request}','AdminRequestController@notify');
+
+    Route::get('/adminRequest/requestForm/loadHallsDate_Formal','AdminRequestController@loadAvailableResourcesDate_Formal');
+
+    Route::get('/adminRequest/requestForm/loadHallsTime_Formal','AdminRequestController@loadAvailableResourcesTime_Formal');
 
     //Semester Request Management
 
@@ -228,10 +227,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/adminRequest/semesterRequestUpdate/{adminSemesterRequest}','AdminRequestController@updateSemesterRequest');
 
     Route::get('/adminRequest/semesterRequestDelete/{adminSemesterRequest}','AdminRequestController@deleteSemesterRequest');
-
-    Route::get('/adminRequest/requestForm/loadBatches','AdminRequestController@loadBatches');
-
-    Route::get('/adminRequest/requestForm/loadSubjects','AdminRequestController@loadSubjects');
 
     Route::get('/adminRequest/requestForm/loadHalls','AdminRequestController@loadAvailableResources');
 

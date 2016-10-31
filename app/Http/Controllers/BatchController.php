@@ -19,18 +19,11 @@ class BatchController extends Controller
      */
     public function show()
     {
-        $batches = \DB::table('batch')->get();
+        $batches = \DB::table('batch')
+            ->orderBy('year')
+            ->orderBy('batchNo')
+            ->get();
         return view("batches.batch_main",compact('batches'));
-    }
-
-    /**
-     * @return to a new form
-     *
-     * This functions returns the user a new form in which details can be filled out
-     */
-    public function add()
-    {
-        return view("batches.batch_add");
     }
 
     /**
