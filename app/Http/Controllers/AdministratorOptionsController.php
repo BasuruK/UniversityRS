@@ -8,10 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Requests;
 use App\Notifications;
 use App\Jobs\SendDeadlineEmail;
+use Illuminate\Support\Facades\Auth;
 
 class AdministratorOptionsController extends Controller
 {
@@ -127,13 +128,104 @@ class AdministratorOptionsController extends Controller
     }
 
     /**
-     * Truncates the Timetable table in the database.
+     * Truncates the Timetable table
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function truncateTimetable()
+    public function truncateTimetable(Request $request)
     {
-        $exitCode = Artisan::call('truncate:Timetable');
-
-        return back();
+        if(!$request->ajax())
+        {
+            return redirect('/AdminOptions');
+        }
+        else
+        {
+            $exitCode = Artisan::call('truncate:Timetable');
+            return back();
+        }
     }
 
+    /**
+     * Clears only the entries specified by the batch and year
+     *
+     * @param Request $request
+     * @param $batch
+     * @param $year
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function clearTimetableForBatchAndYear(Request $request,$batch,$year)
+    {
+        //Check if the incoming request is AJAX, redirect if not
+        if(!$request->ajax())
+        {
+            return redirect('/AdminOptions');
+        }
+        {
+            DB::table('timetable')->where('year', '=', $year)->where('batchNo', '=', $batch)->delete();
+        }
+    }
+
+
+    /**
+     *
+     * Reset everything, including database.
+     *
+     * @param Request $request
+     * @param $password
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
+     */
+    public function masterReset(Request $request,$password)
+    {
+        //Check if the incoming request is AJAX, redirect if not
+        if(!$request->ajax())
+        {
+            return redirect('/AdminOptions');
+        }
+        else
+        {
+            //Authenticate the password
+            if(Hash::check($password, Auth::user()->password))
+            {
+                Artisan::call('migrate:refresh', [
+                    '--force' => true,
+                    '--seed'  => true
+                ]);
+            }
+            else
+            {
+                //Return false to indicate that password mismatch
+                return json_encode(false);
+            }
+            //Return true to indicate the operation was success
+            return json_encode(true);
+        }
+    }
+
+    /**
+     * Checks if the password matches with the Auth user password
+     *
+     * @param Request $request
+     * @param $password
+     * @return string
+     */
+    public function checkAuthenticity(Request $request,$password)
+    {
+        //Check if the incoming request is a AJAX request, redirect otherwise.
+        if(!$request->ajax())
+        {
+            return redirect('/AdminOptions');
+        }
+        else
+        {
+            if (Hash::check($password, Auth::user()->password))
+            {
+                return json_encode(true);
+            }
+            else
+            {
+                return json_encode(false);
+            }
+        }
+    }
 }

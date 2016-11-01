@@ -173,7 +173,7 @@
 
 
         <!--Data Table-->
-        <div class="col-xs-8">
+        <div class="col-md-8">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Registered Users</h3>

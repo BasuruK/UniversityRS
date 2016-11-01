@@ -30,21 +30,5 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         // ->everyMinute();
-
-
-        $schedule->call(function () {
-             
-            $date = Carbon::now()->toDateString();
-
-            $name = "Basuru Kusal";
-            $email = "bestbasuru@live.com";
-            
-            Mail::send('email.deadlineNotification',['date' => $date],function ($message) use($name,$email) {
-                $message->from('notify.urscheduler@gmail.com','Admin');
-                $message->to($email,$name);
-                $message->subject('Deadline Notification');
-            });
-
-        })->everyMinute();
     }
 }
