@@ -93,7 +93,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-right">Update User</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update User</button>
                     <a href="/UserManagement" class="btn btn-facebook">Back</a>
                 </div>
                 <!-- /.box-footer -->

@@ -142,6 +142,8 @@ class AdministratorOptionsController extends Controller
         else
         {
             $exitCode = Artisan::call('truncate:Timetable');
+            DB::table('requests')->truncate();
+            DB::table('semester_requests')->truncate();
             return back();
         }
     }
@@ -161,8 +163,11 @@ class AdministratorOptionsController extends Controller
         {
             return redirect('/AdminOptions');
         }
+        else
         {
-            DB::table('timetable')->where('year', '=', $year)->where('batchNo', '=', $batch)->delete();
+            $batchID = $batchID = DB::table('batch')->where('year','=',$year)->where('batchNo','=',$batch)->value('id');
+            DB::table('timetable')->where('year', '=', $year)->where('batchNo', '=', $batchID)->delete();
+            DB::table('semester_requests')->where('year', '=', $year)->where('batchNo', '=', $batchID)->where('status','=','Accepted')->delete();
         }
     }
 
