@@ -55,7 +55,7 @@ $(document).ready(function() {
             @endif
         @endforeach
     </div> <!-- end .flash-message -->
-    
+
             <!-- /.box-header -->
             <div class="col-md-4">
                 <div class="box pull-left">
