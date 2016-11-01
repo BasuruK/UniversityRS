@@ -98,7 +98,7 @@ class subjectController extends Controller
 
         $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
-        if (DB::table('subject')->where('subCode', $request['subjectCode'])->orwhere('subName',$request['subjectName'])->first())
+        if (DB::table('subject')->where('subCode', $request['subjectCode'])->where('subName',$request['subjectName'])->where('year',$request['selectyear'])->where('semester',$request['selectsemester'])->first())
         {
             $request->session()->flash('alert-warning', 'Subject already exists!');
             return Redirect::back();
@@ -107,6 +107,11 @@ class subjectController extends Controller
         {
             $request->session()->flash('alert-danger', 'Cannot have empty fields!!');
             return back()->withErrors($validator);
+        }
+        else if(\DB::table('requests')->where('subjectCode','=',$subject['subCode'])->where('status','=','Accepted')->first()||\DB::table('semester_requests')->where('subjectCode','=',$subject['subCode'])->where('status','=','Accepted')->first())
+        {
+            $request->session()->flash('alert-danger', 'Cannot update, the subject is already being used!');
+            return Redirect::back();
         }
         else
         {
