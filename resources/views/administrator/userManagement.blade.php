@@ -209,6 +209,7 @@
                                                     <a href="#" class="btn btn-primary" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
                                                     <a href="#" class="btn btn-danger" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
                                                 </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
