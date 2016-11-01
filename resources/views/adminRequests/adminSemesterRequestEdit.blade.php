@@ -6,7 +6,7 @@
             Edit Semester Request
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Semester Request</a></li>
             <li class="active">Edit</li>
         </ol>
     </section>
@@ -194,7 +194,6 @@
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$adminSemesterRequest->batchNo}}">
                             </div>
-
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$adminSemesterRequest->subjectCode}}">
                             </div>

@@ -14,8 +14,8 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="container">
+    <div class="row ">
+        <div class="container col-md-6">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Edit Batch</h3>
@@ -46,22 +46,22 @@
                     {{ method_field('PATCH') }}
                     <!-- /.box-header -->
                         <div class="form-group">
-                            <label for="batchNo">Batch No</label>
+                            <label for="batchNo">Batch No:</label>
                             <p>{{ $batch->batchNo }}</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="year">Year</label>
+                            <label for="year">Year:</label>
                             <p>{{ $batch->year }}</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="noStudents">No. of Students</label>
+                            <label for="noStudents">No. of Students:</label>
                             <input type="text" class="form-control" id="noStudents" name="noStudents" value="{{ $batch->noOfStudents }}"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="selectType">Type</label>
+                            <label for="selectType">Type:</label>
                             <select class="form-control" name="selectType" id="selectType">
                                 @if($batch->type=="weekday")
                                     <option value="weekday" selected="selected">Weekday</option>
