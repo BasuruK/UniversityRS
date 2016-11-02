@@ -23,10 +23,10 @@
 
         /**
          *
+         * User confirmation message asking the user to confirm his decision
+         *
          * @param id
          * @returns {boolean}
-         *
-         * User confirmation message asking the user to confirm his decision
          */
         function DeadlineDelete(id)
         {
@@ -45,6 +45,228 @@
             return false;
         }
 
+        /**
+         * User confirmation message asking the user to confirm his decision
+         *
+         * @returns {boolean}
+         */
+        function ConfirmTimetableTruncate()
+        {
+            $.confirm({
+                theme: 'black',
+                title: 'Are Your Sure ?',
+                icon: 'fa fa-warning',
+                content: 'This will erase all the data related to timetables, Only press yes if it is a must to clear out everything.<br>You wont be able to undo this action later!',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-danger',
+                confirm: function(){
+
+                    $.confirm({
+                        theme: 'black',
+                        title: 'Are Your Sure ?',
+                        icon: 'fa fa-warning',
+                        content: 'Confirm your choice!<br><b>Are you sure you want to erase all data?</b></br>' +
+                        '<div class="form-group">' +
+                            '<br><br>' +
+                            '<lable for="checkPasswordTruncate"> Enter your Password: </lable>' +
+                            '<input type="password" id="checkPasswordTruncate" class="form-control">' +
+                        '</div>',
+                        confirmButton: 'Yes',
+                        confirmButtonClass: 'btn-danger',
+                        confirm: function () {
+
+                            //Check for password authenticity
+                            var password = $('#checkPasswordTruncate').val();
+
+                            $.ajax({
+                                type    : 'GET',
+                                url     : "/AdminOptions/checkPassword/" + password,
+                                success : function (status) {
+
+                                    if(status == "true")
+                                    {
+                                        $.ajax({
+                                            type    : 'GET',
+                                            url     : "/AdminOptions/truncateTimeTable",
+                                            success : function () {
+                                                $.notify("Timetable data erased successfully",{
+                                                    position : 'bottom right',
+                                                    className: 'success'
+                                                });
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        $.alert({
+                                            theme: 'black',
+                                            title: 'Error !',
+                                            icon: 'fa fa-close',
+                                            content: 'Password Incorrect!'
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            return false;
+        }
+
+        /**
+         *
+         * Clears the time table according to the batch and the year given
+         *
+         * @returns {boolean}
+         * @constructor
+        */
+        function CustomClearTimetable() {
+
+            $.confirm({
+                keyboardEnabled: true,
+                theme: 'black',
+                title: 'Enter Year and Batch!',
+                icon: 'fa fa-info',
+                content:'Please enter Year and the Batch No <br><br> ' +
+                '<div class="from-group">' +
+                    '<input name="yearDelete" id="yearDelete" type="text" class="form-control" placeholder="Year. i.e : 3" />' +
+                    '<br> ' +
+                    '<input name="batchDelete" id="batchDelete" class="form-control" type="text" placeholder="Batch No. i.e : 1" />' +
+                '</div>',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-warning',
+                confirm: function () {
+
+                    var year = document.getElementById('yearDelete').value;
+                    var batch = document.getElementById('batchDelete').value;
+
+                    if(year == "" || batch == "")
+                    {
+                        $.alert({
+                            theme: 'black',
+                            title: 'Error !',
+                            icon: 'fa fa-close',
+                            content: 'One or more fields are not set!'
+
+                        });
+                    }
+                    else
+                    {
+
+                        $.confirm({
+                            keyboardEnabled: true,
+                            theme: 'black',
+                            title: 'Are you sure ?',
+                            icon: 'fa fa-warning',
+                            content: 'Are you sure you want to delete all the entries related to Batch ' + batch + ' of Year ' + year + ' ? <br>You cannot undo this operation! ' +
+                            '<br><br>' +
+                            '<div class="form-group" ' +
+                                '<lable for="checkPasswordBatchAndYear"> Enter your Password: </lable>' +
+                                '<input type="password" id="checkPasswordBatchAndYear" class="form-control">' +
+                            '</div>',
+                            confirmButton: 'Yes',
+                            confirmButtonClass: 'btn-danger',
+                            confirm: function () {
+
+                                //Check for password authenticity
+                                var password = $('#checkPasswordBatchAndYear').val();
+
+                                $.ajax({
+                                    type    : 'GET',
+                                    url     : "/AdminOptions/checkPassword/" + password,
+                                    success : function (status) {
+
+                                        if(status == "true")
+                                        {
+                                            $.ajax({
+                                                type    : 'GET',
+                                                url     : "/AdminOptions/customClearTables/"+batch+"/"+year,
+                                                success : function () {
+                                                    $.notify("Timetable data for Batch " + batch + "of Year " + year + " erased successfully",{
+                                                        position : 'bottom right',
+                                                        className: 'success'
+                                                    });
+                                                }
+                                            });
+                                        }
+                                        else
+                                        {
+                                            $.alert({
+                                                theme: 'black',
+                                                title: 'Error !',
+                                                icon: 'fa fa-close',
+                                                content: 'Password Incorrect!'
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            return false;
+        }
+
+        /**
+         * Completely reset the system. Redirect the user to login
+         * Proceed with care
+         *
+         * @constructor
+        */
+        function MasterReset()
+        {
+            $.confirm({
+                theme: 'black',
+                title: 'Are Your Sure ?',
+                icon: 'fa fa-warning',
+                content: 'This will clear everything in the databases and reset all the values to default values.<br>You cannot undo this action.<br>Once you press yes you will be redirected to login where you have to login using your default administrator credentials.',
+                confirmButton: 'Yes',
+                confirmButtonClass: 'btn-danger',
+                confirm: function(){
+
+                    $.confirm({
+                        theme: 'black',
+                        title: 'Are Your Sure ?',
+                        icon: 'fa fa-warning',
+                        content: 'Confirm your choice!<br><b>Are you sure you want to erase all data?</b></br>' +
+                        '<br><br>' +
+                        '<div class="form-group" ' +
+                                '<lable for="checkPasswordMasterReset"> Enter your Password: </lable>' +
+                        '<input type="password" id="checkPasswordMasterReset" class="form-control">' +
+                        '</div>',
+                        confirmButton: 'Yes',
+                        confirmButtonClass: 'btn-danger',
+                        confirm: function () {
+
+                            //Check for password authenticity
+                            var password = $('#checkPasswordMasterReset').val();
+
+                            $.ajax({
+                                type    : 'GET',
+                                url     : "/AdminOptions/masterReset/" + password,
+                                success : function (status) {
+                                    if($.parseJSON(status) == false)
+                                    {
+                                        $.alert({
+                                            theme: 'black',
+                                            title: 'Error !',
+                                            icon: 'fa fa-close',
+                                            content: 'Password Incorrect!'
+                                        });
+                                    }
+                                    else
+                                    {
+                                        location.href = "/logout";
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
 
@@ -61,13 +283,21 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="semester">Semester :</label>
-                            <input type="text" name="semester" id="semester" class="form-control" placeholder="Semester" required>
+                            <label for="year">Year :</label>
+                            <select name="year" id="year" class="js-example-responsive form-control" style="width: 100%" required>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="year">Year :</label>
-                            <input type="text" name="year" id="year" class="form-control" placeholder="year" required>
+                            <label for="semester">Semester :</label>
+                            <select name="semester" id="semester" class="js-example-responsive form-control" style="width: 100%" required>
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -103,7 +333,7 @@
 
         <!--Data Table-->
         <div class="col-md-8">
-            <div class="box">
+            <div class="box box-success">
                 <div class="box-header">
                     <h3 class="box-title">Deadlines  <small> *Dealines for semesters</small></h3>
                 </div>
@@ -177,6 +407,7 @@
 
 
     <div class="row">
+
         <div class="col-md-4">
             <div class="box box-warning">
                 <div class="box-header with-border">
@@ -191,7 +422,56 @@
                 <!-- /.box-body -->
             </div>
         </div>
-    </div>
+
+        <!-- Database Operations -->
+        <div class="col-md-8">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Database Operations</h3> <small> *Database related operations</small>
+                </div>
+                <div class="box-body">
+
+                    <p><b>All the functions listed here handel Database requests. Handle with extreme care and proceed at your own risk.</b></p>
+                    <br>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <a class="btn btn-warning" onclick="ConfirmTimetableTruncate()">Clear Timetable</a>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>This will clear all information on timetables.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <a class="btn btn-warning" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>This will clear all information according to the Batch No and the Year given.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <a class="btn btn-danger" onclick="MasterReset()">Master Reset</a>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>This will perform a master reset of the entire system and the user will be redirected to login where the default username and password should be used to login to the system again.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+
+                </div><!-- ./box-body -->
+            </div>
+        </div>
+
+    </div><!-- ./row -->
 
     <script>
 

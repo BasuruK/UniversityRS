@@ -126,41 +126,6 @@ desired effect
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success"><!-- No of messages --></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 0 messages</li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <!-- User Image -->
-<!--                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">-->
-                      </div>
-                      <!-- Message title and timestamp -->
-                      <h4>
-                       <!-- Message Heading -->
-                        <small><i class="fa fa-clock-o"></i> <!-- Message time --></small>
-                      </h4>
-                      <!-- The message -->
-                      <p><!-- short message --></p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                </ul>
-                <!-- /.menu -->
-              </li>
-              <li class="footer"><a href="/Mailbox">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
 
            <!-- Notifications -->
 

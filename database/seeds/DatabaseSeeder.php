@@ -142,19 +142,19 @@ class DatabaseSeeder extends Seeder
         //Resource Seeds
         $Resource= new Resource();
         $Resource->hallNo = "B501";
-        $Resource->type = "Lecture Hall";
+        $Resource->type = "LectureHall";
         $Resource->capacity = "100";
         $Resource->save();
 
         $Resource= new Resource();
         $Resource->hallNo = "B502";
-        $Resource->type = "Lecture Hall";
+        $Resource->type = "LectureHall";
         $Resource->capacity = "130";
         $Resource->save();
 
         $Resource= new Resource();
         $Resource->hallNo = "B506";
-        $Resource->type = "Lecture Hall";
+        $Resource->type = "LectureHall";
         $Resource->capacity = "70";
         $Resource->save();
 
@@ -166,7 +166,7 @@ class DatabaseSeeder extends Seeder
 
         $Resource= new Resource();
         $Resource->hallNo = "D201";
-        $Resource->type = "Lecture Hall";
+        $Resource->type = "LectureHall";
         $Resource->capacity = "46";
         $Resource->save();
 

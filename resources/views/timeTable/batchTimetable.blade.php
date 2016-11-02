@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Batch {{$batch}} and {{$type}} </h3>
+                    <h3 class="box-title">Batch {{$batch}} - {{$type}} </h3>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-gear"></i></button>
@@ -128,36 +128,38 @@
                 /**
                  * Exports the timetable in excel format
                  */
-                function exportXLS() {
+                function exportXLS()
+                {
 
                     var table_content = '<html xmlns:o="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
                     table_content = table_content + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"/>';
                     table_content = table_content + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
-                    table_content = table_content +  '<x:Name>Batch Timetable</x:Name>';
+                    table_content = table_content +  '<x:Name>Batch {{$batch}} Timetable - {{$type}}</x:Name>';
                     table_content = table_content +  '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
                     table_content = table_content +  '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
-                    table_content = table_content +  '<h2 style="text-align: center;">SLIIT Batch Timetable</h2>';
+                    table_content = table_content +  '<h2 style="text-align: center;">Batch {{$batch}} Timetable - {{$type}}</h2>';
                     table_content = table_content +  '<h3 style="text-align: right;">2016</h3>';
                     table_content = table_content +  "<table border='2px'";
-                    table_content = table_content +  $('#LecturerTimetable').html();
+                    table_content = table_content +  $('#batchTimeTable').html();
                     table_content = table_content +  '</table></body></html>';
 
                     var data_type = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
                     $('#exportXLS').attr('href',data_type + ', ' + encodeURIComponent(table_content));
-                    $('#exportXLS').attr('download','Semester Timetable.xls');
+                    $('#exportXLS').attr('download','Batch Timetable.xls');
                 }
 
 
                 /**
                  * Exports the table as a pdf file
                  */
-                function exportPDF() {
+                function exportPDF()
+                {
 
                     var pdf = new jsPDF('l', 'mm', [550, 400]);
-                    pdf.text("Batch Timetable",400,20);
+                    pdf.text("Batch {{$batch}} Timetable - {{$type}}",400,20);
 
-                    source = $('#TableTable')[0];
+                    source = $('#batchTimeTable')[0];
 
                     specialElementHandlers = {
                         '#bypassme': function (element, renderer) {
@@ -178,7 +180,7 @@
                                 'elementHandlers': specialElementHandlers
                             },
                             function (dispose) {
-                                pdf.save('Semester Timetable.pdf');
+                                pdf.save('Batch {{$batch}} Timetable - {{$type}}.pdf');
                             }
                             , margins);
                 }

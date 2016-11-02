@@ -43,24 +43,24 @@
 
                         @foreach($fullTimeTable as $timeTable)
 
-                        <!-- Time -->
-                        <tr>
-                            <td>{{ $timeTable->time }}</td>
-                            <!-- Monday -->
-                            <td id="{{ $timeTable->time24Format }}-monday"> </td>
-                            <!-- Tuesday -->
-                            <td id="{{ $timeTable->time24Format }}-tuesday"> </td>
-                            <!-- Wednesday -->
-                            <td id="{{ $timeTable->time24Format }}-wednesday"> </td>
-                            <!-- Thursday -->
-                            <td id="{{ $timeTable->time24Format }}-thursday"> </td>
-                            <!-- Friday -->
-                            <td id="{{ $timeTable->time24Format }}-friday"> </td>
-                            <!-- Saturday -->
-                            <td id="{{ $timeTable->time24Format }}-saturday"> </td>
-                            <!-- Sunday -->
-                            <td id="{{ $timeTable->time24Format }}-sunday"> </td>
-                        </tr>
+                            <!-- Time -->
+                            <tr>
+                                <td>{{ $timeTable->time }}</td>
+                                <!-- Monday -->
+                                <td id="{{ $timeTable->time24Format }}-monday"> </td>
+                                <!-- Tuesday -->
+                                <td id="{{ $timeTable->time24Format }}-tuesday"> </td>
+                                <!-- Wednesday -->
+                                <td id="{{ $timeTable->time24Format }}-wednesday"> </td>
+                                <!-- Thursday -->
+                                <td id="{{ $timeTable->time24Format }}-thursday"> </td>
+                                <!-- Friday -->
+                                <td id="{{ $timeTable->time24Format }}-friday"> </td>
+                                <!-- Saturday -->
+                                <td id="{{ $timeTable->time24Format }}-saturday"> </td>
+                                <!-- Sunday -->
+                                <td id="{{ $timeTable->time24Format }}-sunday"> </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -70,6 +70,11 @@
                         var LecturerTimeData = 0;
                         LecturerTimeData = <?php echo json_encode($LecturesTimeDetails) ?>;
 
+                        /**
+                         * Calculates hours need for each lecture
+                         * Creates an hourly pair value for each lecturer
+                         * Fills the relevant section in the table according the value generated
+                         * */
                         try {
                             for (var i = 0; i < LecturerTimeData.length; i++) {
 
@@ -106,6 +111,7 @@
 
 
                         /**
+                         * Create XML header for Excel File
                          * Exports the timetable in excel format
                          */
                         function exportXLS() {

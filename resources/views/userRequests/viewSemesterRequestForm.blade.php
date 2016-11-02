@@ -8,6 +8,8 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Home</li>
+            <li class="active">User Request</li>
+            <li class="active">View Semester Requests</li>
         </ol>
     </section>
 @endsection
@@ -17,10 +19,18 @@
         <div class="row">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">My Requests</h3>
+                    <h3 class="box-title">My Semester Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <div class="flash-message" id="errordisplay">
+                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                            @if(Session::has('alert-' . $msg))
+
+                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                            @endif
+                        @endforeach
+                    </div>
                     <div id="dataTableRegUsers_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
                             <div class="col-sm-6"></div>
@@ -106,8 +116,10 @@
                                             <td>{{$request->timeSlot}}</td>
                                             <td>{{$request->ResourceType}}</td>
                                             <td>
-                                                <a  onclick="return isEdit({{$request->id}})" class="btn btn-info">Edit</a>
-                                                <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
+                                                 <div class="pull-right">
+                                                <a  onclick="return isEdit({{$request->id}})" class="btn btn-primary">Edit</a>
+                                                <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a>
+                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -133,7 +145,7 @@
 
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Accepted Requests</h3>
+                    <h3 class="box-title">Accepted Semester Requests</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

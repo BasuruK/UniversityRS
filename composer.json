@@ -19,6 +19,7 @@
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "maatwebsite/excel": "~2.1.0",
+        "phpoffice/phpexcel": "^1.8",
         "laravelcollective/bus": "^5.2",
         "phpunit/phpunit": "5.5.*"
     },

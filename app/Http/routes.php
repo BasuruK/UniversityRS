@@ -86,16 +86,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/myTables','userTimetableController@index');
 
-    Route::post('/myTables/view','userTimetableController@viewTable');
-
-    /**
-     * Mailbox routes
-     */
-
-    Route::get('/Mailbox','MailboxController@index');
-
-    Route::post('/Mailbox/Send','MailboxController@send');
-
 });
 
 /*
@@ -142,7 +132,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     //User Management Routes End
 
     /**
-     * Resource Management Routes
+     * Frce Management Routes
      */
 
     Route::get('/resource/show', 'ResourceController@Index')->Name('Resources');;
@@ -183,8 +173,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
      */
     
     Route::get('/subject', 'subjectController@show')->Name('Subjectmain');
-    
-    Route::get('/subject/new', 'subjectController@add');
     
     Route::post('/subject/Add_Subject', 'subjectController@addSubjects');
     
@@ -236,6 +224,24 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     //Request Management End
 
+    //Special Request Management
+
+    Route::get('/adminRequest/specialRequest','AdminRequestController@showSpecialRequests')->name('adminSpecialRequest');
+
+    Route::get('/adminRequest/specialRequestEdit/{adminSpecialRequest}','AdminRequestController@editSpecialRequest');
+
+    Route::patch('/adminRequest/specialRequestUpdate/{adminSpecialRequest}','AdminRequestController@updateSpecialRequests');
+
+    Route::get('/adminRequest/specialRequestDelete/{adminSpecialRequest}','AdminRequestController@deleteSpecialRequests');
+
+    Route::get('/adminRequest/specialRequestForm/loadHalls','AdminRequestController@loadAvailableResourcesSpecialRequest');
+
+    Route::get('/adminRequest/specialRequestForm/loadHallsDate','AdminRequestController@loadAvailableResourcesDateSpecialRequest');
+
+    Route::get('/adminRequest/SpecialRequestForm/loadHallsTime','AdminRequestController@loadAvailableResourcesTimeSpecialRequest');
+
+    //Special Request Management End
+
     /**
      * Timetable Management Routes
      */
@@ -250,7 +256,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     /**
      * Resource Timetable Management Routes
      */
-    Route::get('/resource/GenerateTimetable/{hallNo}/{hallType}','resourceTimetableController@Index');
+    Route::get('/resource/GenerateTimetable/{hallNo}/{hallType}','resourceTimeTableController@Index');
     //Timetable Management End
 
     /**
@@ -268,6 +274,16 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/AdminOptions/SemesterDeadlineChecked','AdministratorOptionsController@semesterRequestChecked');
 
     Route::get('/AdminOptions/SemesterDeadlineUnchecked','AdministratorOptionsController@semesterRequestUnchecked');
+
+    Route::get('/AdminOptions/truncateTimeTable','AdministratorOptionsController@truncateTimetable');
+
+    Route::get('/AdminOptions/customClearTables/{batch}/{year}','AdministratorOptionsController@clearTimetableForBatchAndYear');
+
+    Route::get('/AdminOptions/masterReset/{password}','AdministratorOptionsController@masterReset');
+
+    Route::get('/AdminOptions/checkPassword/{password}','AdministratorOptionsController@checkAuthenticity');
+
+
 
     // Administrator Options Routes End
 });

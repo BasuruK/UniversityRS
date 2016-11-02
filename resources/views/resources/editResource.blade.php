@@ -7,6 +7,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="">Resource Management</li>
         <li class="active">Edit Resource</li>
     </ol>
@@ -45,12 +46,12 @@
                         <div class="form-group">
                             <label>Type</label>
                             <select class="form-control" name="selectTypeEdit">
-                                @if ($resource->type === "Lecture Hall")
-                                    <option value="Lecture Hall" selected="selected"> Lecture Hall</option>
+                                @if ($resource->type === "LectureHall")
+                                    <option value="LectureHall" selected="selected"> Lecture Hall</option>
                                 @elseif ($resource->type === "Lab")
                                     <option value="Lab"> Lab</option>
                                 @endif
-                                <option value="Lecture Hall"> Lecture Hall</option>
+                                <option value="LectureHall"> Lecture Hall</option>
                                 <option value="Lab"> Lab</option>
                             </select>
                         </div>

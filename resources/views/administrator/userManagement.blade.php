@@ -173,7 +173,7 @@
 
 
         <!--Data Table-->
-        <div class="col-xs-8">
+        <div class="col-md-8">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Registered Users</h3>
@@ -209,6 +209,7 @@
                                                     <a href="#" class="btn btn-primary" onclick ="return isEdit( {{ $RegUser->id }} )">Edit</a>
                                                     <a href="#" class="btn btn-danger" onclick="return isDelete( {{ $RegUser->id }} )">Delete</a>
                                                 </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

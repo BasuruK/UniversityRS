@@ -19,7 +19,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 style="font-size: 30px;">Requests</h3>
+                        <h3 style="font-size: 30px;">Requests Management</h3>
 
                         <p>View Requests</p>
                     </div>

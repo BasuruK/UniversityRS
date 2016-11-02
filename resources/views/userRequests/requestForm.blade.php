@@ -8,6 +8,8 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Home</li>
+        <li class="active">User Request</li>
+        <li class="active">Add Academic/Special Event Requests</li>
     </ol>
 </section>
 @endsection
@@ -91,7 +93,7 @@
                           <label>Resource Type</label>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                  <input type="radio" name="ResourceType" id="ResourceType" value="LectureHall" checked >
                                   Lecture Hall
                               </label>
                           </div>
@@ -101,7 +103,7 @@
                                   Lab
                               </label>
                           </div>
-
+                      </div>
                       <div  class="form-group">
                           <label>Start Time</label>
                           <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
@@ -423,8 +425,16 @@
                               </ul>
 
                       @endif
-                      </div>
+                     </div>
 
+                      <div class="flash-message" id="errordisplay">
+                          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                              @if(Session::has('alert-' . $msg))
+
+                                  <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                              @endif
+                          @endforeach
+                      </div>
                       <button id="submitbtn" type="button" class="btn btn-primary pull-right" onclick="return ValidateCapacity()" >Submit</button>
 
 
@@ -437,7 +447,9 @@
           </div>
         </div>
     </div>
-    <script>
+
+
+<script>
         function Success()
         {
             $.notify("Your request has been successfully logged", "success",
@@ -475,10 +487,17 @@
                     $('#errordisplay').text("Capacity should be a number");
                     return false;
                 }
+
+
+
+
             }
+
             //submit the form if there are no errors
-            $('#requestForm').submit();
-            Success();
+            $('#requestForm').submit()
+                    //Success();
+
+
 
         }
         // ValidateCapacity();

@@ -11,7 +11,6 @@ use App\Http\Requests;
 use Response;
 use Illuminate\Support\Facades\Input;
 use DB;
-use SebastianBergmann\Environment\Console;
 
 class AdminRequestController extends Controller
 {
@@ -25,7 +24,7 @@ class AdminRequestController extends Controller
 
     public function show()
     {
-        $requests = \DB::table('requests')
+        $requests = DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
             ->join('users','requests.lecturerID','=', 'users.staff_id')
@@ -43,12 +42,9 @@ class AdminRequestController extends Controller
             ->where('requests.specialEvent',NULL)
             ->get();
 
-
-        return view('adminRequests.AdminRequestMain',compact('requests','acceptedrequests'));
-
-
-        //return view("adminRequests.admin_request_main",compact('requests'));
+        return view("adminRequests.adminRequestMain")->with('requests',$requests);
     }
+
     public function SortByBatchYear()
     {
         $requests = \DB::table('requests')
@@ -70,7 +66,7 @@ class AdminRequestController extends Controller
             ->get();*/
 
 
-        return view("adminRequests.admin_request_main",compact('requests'));
+        return view("adminRequests.adminRequestMain",compact('requests'));
     }
 
 
@@ -187,7 +183,9 @@ class AdminRequestController extends Controller
         return redirect::route('adminRequestShow');
     }
 
-    //Semester Requests Functions
+    /**
+     * Semester Requests
+     */
 
     public function showSemesterRequests()
     {
@@ -359,6 +357,13 @@ class AdminRequestController extends Controller
         return Response::json($availableHalls);
     }
 
+    /**
+     * Semester Requests End
+     */
+
+    /**
+     * Formal Request Loading Available Resources
+     */
     public function loadAvailableResourcesDate_Formal()
     {
         $time= Input::get('option2');
@@ -452,4 +457,141 @@ class AdminRequestController extends Controller
 
         return Response::json($availableHalls);
     }
+
+    /**
+     * End of Formal Request Loading Available Requests
+     */
+
+
+    /**
+     * Special Requests
+     */
+
+    /**
+     * Show special request interface
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showSpecialRequests()
+    {
+        $specialRequests = \DB::table('requests')
+            ->join('users','requests.lecturerID','=', 'users.staff_id')
+            ->select('requests.*','users.name','requests.capacity','requests.specialEvent')
+            ->where('requests.status','!=','Accepted')
+            ->get();
+        $acceptedSpecialRequests=\DB::table('requests')
+            ->join('users','requests.lecturerID','=', 'users.staff_id')
+            ->select('requests.*','users.name','requests.capacity','requests.specialEvent')
+            ->where('requests.status','=','Accepted')
+            ->get();
+
+
+        return view('adminRequests.adminSpecialRequestView',compact('specialRequests','acceptedSpecialRequests'));
+    }
+
+    /**
+     * @param Admin_Request $adminSpecialRequest
+     * Special requests edit view
+     */
+    public function editSpecialRequest(Admin_Request $adminSpecialRequest)
+    {
+        $requestedUser=DB::table('users')
+            ->select('users.id','users.name')
+            ->where('staff_id',$adminSpecialRequest->lecturerID)
+            ->first();
+
+        return view('adminRequests.adminSpecialRequestEdit',compact('adminSpecialRequest','requestedUser'));
+    }
+
+    /**
+     * @param Request $request
+     * @param Admin_Request $adminSpecialRequest
+     * @return updating special requests
+     */
+    public function updateSpecialRequest(Request $request,Admin_Request $adminSpecialRequest)
+    {
+        $adminSpecialRequest->requestDate=$request['selectdateEdit'];
+        $adminSpecialRequest->timeSlot=$request['selectTimeEdit'];
+        $adminSpecialRequest->resourceID=$request['selectResources'];
+        $adminSpecialRequest->status='Accepted';
+
+        $adminSpecialRequest->save();
+
+        return redirect::route('adminSpecialRequest');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function loadAvailableResourcesDateSpecialRequest()
+    {
+        $time= Input::get('option2');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
+
+        $date= Input::get('option');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','LIKE',$firsttime .'%')
+            ->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+        return Response::json($availableHalls);
+    }
+
+    public function loadAvailableResourcesTimeSpecialRequest()
+    {
+        $time = Input::get('option');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
+        $date = Input::get('option2');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->select('noOfStudents')
+            ->where('id','=',$batch)
+            ->first();
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where('status','=','Accepted')
+            ->where('requestDate','=',$date)
+            ->where('timeSlot','LIKE',$firsttime .'%')
+            ->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where('type','LIKE',$reqResourceType)
+            //->where('capacity','=',$batchCap)
+            //->Where('capacity','>',$batchCap)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+
+        return Response::json($availableHalls);
+    }
+
+    /**
+     * Special Requests End
+     */
+
 }

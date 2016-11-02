@@ -8,6 +8,8 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Home</li>
+            <li class="active">User Request</li>
+            <li class="active">Add Semester Requests</li>
         </ol>
     </section>
 @endsection
@@ -71,7 +73,7 @@
                                 <label>Resource Type</label>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="ResourceType" id="ResourceType" value="Lecture Hall" checked >
+                                        <input type="radio" name="ResourceType" id="ResourceType" value="LectureHall" checked >
                                         Lecture Hall
                                     </label>
                                 </div>
@@ -282,6 +284,17 @@
 
                                 @endif
                             </div>
+
+                            <div class="flash-message" id="errordisplay">
+                                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                    @if(Session::has('alert-' . $msg))
+
+                                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                                    @endif
+                                @endforeach
+                            </div>
+
+
                             <script>
                                 function Success()
                                 {
@@ -314,7 +327,7 @@
 
                                     //submit the form is there are no errors
                                     $('#SemesterRequestForm').submit();
-                                    Success();
+                                    //Success();
                                 }
                             </script>
 
