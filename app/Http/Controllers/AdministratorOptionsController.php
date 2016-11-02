@@ -258,7 +258,7 @@ class AdministratorOptionsController extends Controller
         Artisan::call('db:backup',[
             '--database'         => 'mysql',
             '--destination'      => 'local',
-            '--destinationPath'  => 'databaseBackup/' . $date,
+            '--destinationPath'  => 'databaseBackup/' . $date . ".sql",
             '--compression'      => 'gzip'
         ]);
 
@@ -277,18 +277,25 @@ class AdministratorOptionsController extends Controller
      * @param Manager $manager
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function databaseRestore(Request $request,Manager $manager)
+    public function databaseRestore(Request $request)
     {
         $file = $request->file('dbSQL');
-        $destination = "databaseRestore/";
+        $destination = "/home/forge/default/storage/app/databaseBackup/";
         $request->file('dbSQL')->move($destination,"upload.sql.gz");
 
-        Artisan::call('migrate:reset', [
+        Artisan::call('migrate:refresh', [
             '--force' => true
         ]);
+ 	
+	Artisan::call('db:restore',[             
+		'--database'         	=> 'mysql',             
+		'--source'	      	=> 'local',             
+		'--sourcePath'  	=> 'databaseBackup/upload.sql.gz',
+        	'--compression'      	=> 'gzip'       
 
-        $this->manager = $manager;
-        $manager->makeRestore()->run('local','databaseRestore/upload.sql.gz','universityrs','gzip');
+	]);
+
+	unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");
 
         return back();
     }
