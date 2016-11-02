@@ -6,7 +6,7 @@ use App\AdminSemesterRequest;
 use App\TimeTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use Response;
 use Illuminate\Support\Facades\Input;
@@ -491,6 +491,7 @@ class AdminRequestController extends Controller
     /**
      * @param Admin_Request $adminSpecialRequest
      * Special requests edit view
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function editSpecialRequest(Admin_Request $adminSpecialRequest)
     {
