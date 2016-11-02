@@ -277,7 +277,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/AdminOptions/truncateTimeTable','AdministratorOptionsController@truncateTimetable');
 
-    Route::get('/AdminOptions/customClearTables/{batch}/{year}','AdministratorOptionsController@clearTimetableForBatchAndYear');
+    Route::get('/AdminOptions/customClearTables/{batch}/{year}/{semesterRequestCheck}/{formalRequestCheck}','AdministratorOptionsController@clearTimetableForBatchAndYear');
 
     Route::get('/AdminOptions/masterReset/{password}','AdministratorOptionsController@masterReset');
 

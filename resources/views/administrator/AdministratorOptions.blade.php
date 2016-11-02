@@ -128,11 +128,17 @@
                 theme: 'black',
                 title: 'Enter Year and Batch!',
                 icon: 'fa fa-info',
-                content:'Please enter Year and the Batch No <br><br> ' +
+                content:'Please enter Year and the Batch No <br xmlns="http://www.w3.org/1999/html"><br> ' +
                 '<div class="from-group">' +
                     '<input name="yearDelete" id="yearDelete" type="text" class="form-control" placeholder="Year. i.e : 3" />' +
                     '<br> ' +
                     '<input name="batchDelete" id="batchDelete" class="form-control" type="text" placeholder="Batch No. i.e : 1" />' +
+                    '<br>' +
+                    '<input type="checkbox" id="checkSemesterTimetable" required> ' +
+                    '<label for="checkSemesterTimetable"> Clear from Semester Requests Timetables</label>' +
+                    '<br>' +
+                    '<input type="checkbox" id="checkFormalTimetable" required> ' +
+                    '<label for="checkFormalTimetable"> Clear from Formal Requests Timetables</label>' +
                 '</div>',
                 confirmButton: 'Yes',
                 confirmButtonClass: 'btn-warning',
@@ -140,8 +146,12 @@
 
                     var year = document.getElementById('yearDelete').value;
                     var batch = document.getElementById('batchDelete').value;
+                    var semesterTimetableOption = $('#checkSemesterTimetable');
+                    var formalRequestTimetableOption =$('#checkFormalTimetable');
 
-                    if(year == "" || batch == "")
+                    console.log('semesterTimetable : ' + semesterTimetableOption.is(':checked'));
+
+                    if(year == "" || batch == "" || (semesterTimetableOption.is(':checked') == false && formalRequestTimetableOption.is(':checked') == false))
                     {
                         $.alert({
                             theme: 'black',
@@ -181,7 +191,7 @@
                                         {
                                             $.ajax({
                                                 type    : 'GET',
-                                                url     : "/AdminOptions/customClearTables/"+batch+"/"+year,
+                                                url     : "/AdminOptions/customClearTables/"+batch+"/"+year+"/"+semesterTimetableOption+"/"+formalRequestTimetableOption,
                                                 success : function () {
                                                     $.notify("Timetable data for Batch " + batch + "of Year " + year + " erased successfully",{
                                                         position : 'bottom right',
