@@ -110,8 +110,25 @@ class AdminRequestController extends Controller
             ->select('users.id','users.name')
             ->where('staff_id',$admin_request->lecturerID)
             ->first();
+
+        list($year,$month,$day,$dayName) = explode("-",$admin_request->requestDate);
+
+        if($dayName=="mon")
+            $date="monday";
+        else if ($dayName=="tue")
+            $date="tuesday";
+        else if ($dayName=="wed")
+            $date="wednesday";
+        else if ($dayName=="thu")
+            $date="thursday";
+        else if ($dayName=="fri")
+            $date="friday";
+        else if ($dayName=="sat")
+            $date="saturday";
+        else if ($dayName=="sun")
+            $date="sunday";
         
-        return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser'));
+        return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser','date'));
 
     }
 
