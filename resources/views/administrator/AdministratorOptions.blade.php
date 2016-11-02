@@ -283,6 +283,7 @@
                 title: 'Select a file',
                 icon: 'fa fa-info',
                 content: '<p>Select a .sql.gz backup file to upload</p>' +
+                    '<p>This will clear all data before restoring the new file.</p>' +
                     '<form name="uploadDBFile" id="uploadDBFile" method="POST" class="form-group" action="/AdminOptions/databaseRestore" enctype="multipart/form-data">' +
                         '{{csrf_field()}}' +
                         '<input type="file" class="form-control" name="dbSQL" required>' +
