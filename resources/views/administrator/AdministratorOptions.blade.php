@@ -435,10 +435,10 @@
                     <br>
 
                     <div class="col-lg-12">
-                        <div class="col-lg-4">
+                        <div class="col-lg-5">
                             <a class="btn btn-warning" onclick="ConfirmTimetableTruncate()">Clear Timetable</a>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-7">
                             <p>This will clear all information on timetables.</p>
                         </div>
                     </div>
@@ -446,10 +446,10 @@
                     <hr>
 
                     <div class="col-lg-12">
-                        <div class="col-lg-4">
+                        <div class="col-lg-5">
                             <a class="btn btn-warning" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-7">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
                         </div>
                     </div>
@@ -457,10 +457,10 @@
                     <hr>
 
                     <div class="col-lg-12">
-                        <div class="col-lg-4">
+                        <div class="col-lg-5">
                             <a class="btn btn-danger" onclick="MasterReset()">Master Reset</a>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-7">
                             <p>This will perform a master reset of the entire system and the user will be redirected to login where the default username and password should be used to login to the system again.</p>
                         </div>
                     </div>
