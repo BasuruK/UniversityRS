@@ -245,17 +245,17 @@ class AdministratorOptionsController extends Controller
 
     public function createDatabaseBackup()
     {
-        $date           = Carbon::now()->toW3cString();
+        $date           = Carbon::now()->toDateString();
         $environment    = env('APP_ENV');
 
         Artisan::call('db:backup',[
-            '--database'        => 'mysql',
+            '--database'         => 'mysql',
             '--destination'      => 'local',
-            '--destinationPath' => '`date +\%Y/%d-%m-%Y`',
-            ' --compression'    => 'gzip'
+            '--destinationPath'  => 'databaseBackup/' . $date,
+            '--compression'      => 'gzip'
         ]);
 
-        return "/home/forge/default/storage/app/2016/02-11-2016.gz";
+        return "/home/forge/default/storage/app/2016/" . $date . ".gz";
     }
 
 }
