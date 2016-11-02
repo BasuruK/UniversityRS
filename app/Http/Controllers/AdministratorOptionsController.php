@@ -271,31 +271,48 @@ class AdministratorOptionsController extends Controller
     }
 
     /**
-     * Restores the database
+     * Restores the database, clears everything before restoring
      *
      * @param Request $request
-     * @param Manager $manager
      * @return \Illuminate\Http\RedirectResponse
+     * @internal param Manager $manager
      */
     public function databaseRestore(Request $request)
     {
-        $file = $request->file('dbSQL');
+        //Validate
+        if(!$request->hasFile('dbSQL'))
+        {
+            return back()->withErrors(['Please select a file!']);
+        }
+        if(!$request->file('dbSQL')->isValid())
+        {
+            return back()->withErrors(['File upload failed!']);
+        }
+        if($request->file('dbSQL')->getClientOriginalExtension() != "gz")
+        {
+            return back()->withErrors(['Only .gz backup files are allowed!']);
+        }
+
         $destination = "/home/forge/default/storage/app/databaseBackup/";
+        //Move the file to the destination
         $request->file('dbSQL')->move($destination,"upload.sql.gz");
 
+        //Clear the database
         Artisan::call('migrate:refresh', [
             '--force' => true
         ]);
- 	
-	Artisan::call('db:restore',[             
-		'--database'         	=> 'mysql',             
-		'--source'	      	=> 'local',             
-		'--sourcePath'  	=> 'databaseBackup/upload.sql.gz',
-        	'--compression'      	=> 'gzip'       
 
-	]);
+        //migrate the uploaded backup file
+        Artisan::call('db:restore',[
+            '--database'      => 'mysql',
+            '--source'	      => 'local',
+            '--sourcePath'    => 'databaseBackup/upload.sql.gz',
+            '--compression'   => 'gzip'
 
-	unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");
+        ]);
+
+        //remove the redundant backup file
+        unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");
 
         return back();
     }

@@ -284,9 +284,12 @@
                 icon: 'fa fa-info',
                 content: '<p>Select a .sql.gz backup file to upload</p>' +
                     '<p>This will clear all data before restoring the new file.</p>' +
+                    '<br>' +
                     '<form name="uploadDBFile" id="uploadDBFile" method="POST" class="form-group" action="/AdminOptions/databaseRestore" enctype="multipart/form-data">' +
                         '{{csrf_field()}}' +
-                        '<input type="file" class="form-control" name="dbSQL" required>' +
+                        '<div class="form-group">' +
+                            '<input type="file" class="form-control" name="dbSQL" required>' +
+                        '<div>' +
                     '</form>',
                 confirm: function () {
                     $('#uploadDBFile').submit();
@@ -463,7 +466,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-facebook" onclick="ConfirmTimetableTruncate()">Clear Timetable</a>
+                            <a class="btn btn-facebook" onclick="ConfirmTimetableTruncate()"> <i class="fa fa-trash-o" aria-hidden="true"></i> Clear Timetable</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information on timetables.</p>
@@ -474,7 +477,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-facebook" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
+                            <a class="btn btn-facebook" onclick="CustomClearTimetable()"> <i class="fa fa-wrench" aria-hidden="true"></i> Clear Semester Timetable (Custom)</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
@@ -485,8 +488,8 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a href="/AdminOptions/databaseBackup" class="btn btn-facebook" onclick="">Database Backup</a>
-                            <a class="btn btn-facebook" onclick="DatabaseRestore()">Database Restore</a>
+                            <a href="/AdminOptions/databaseBackup" class="btn btn-facebook" onclick=""> <i class="fa fa-download" aria-hidden="true"></i> Database Backup</a>
+                            <a class="btn btn-facebook" onclick="DatabaseRestore()"> <i class="fa fa-upload" aria-hidden="true"></i> Database Restore</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will perform a backup of the entire system and save the file.</p>
@@ -497,7 +500,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-danger" onclick="MasterReset()">Master Reset</a>
+                            <a class="btn btn-danger" onclick="MasterReset()"> <i class="fa fa-refresh" aria-hidden="true"></i> Master Reset</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will perform a master reset of the entire system and the user will be redirected to login where the default username and password should be used to login to the system again.</p>
@@ -505,7 +508,15 @@
                     </div>
                     <br>
                     <hr>
-
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div><!-- ./box-body -->
             </div>
         </div>
