@@ -16,12 +16,11 @@ class AdminRequestController extends Controller
 {
 
     /**
-     * @return view(view to be redirected,collection of requests)
-     *
      * This function creates the collection of requests and pass the collection to the
      * Admin Request Management's main page.
+     *
+     * @return \Illuminate\View\View
      */
-
     public function show()
     {
         $requests = DB::table('requests')
@@ -42,7 +41,7 @@ class AdminRequestController extends Controller
             ->where('requests.specialEvent',NULL)
             ->get();
 
-        return view("adminRequests.adminRequestMain")->with('requests',$requests);
+        return view("adminRequests.adminRequestMain")->with('requests',$requests)->with('acceptedrequests',$acceptedrequests);
     }
 
     public function SortByBatchYear()

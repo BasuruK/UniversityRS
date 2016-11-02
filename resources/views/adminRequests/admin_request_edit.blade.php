@@ -194,14 +194,12 @@
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$admin_request->batchNo}}">
                             </div>
-                            o
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$admin_request->subjectCode}}">
                             </div>
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$admin_request->timeSlot}}">
                             </div>
-
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="reqResourceType" id="reqResourceType" value="{{$admin_request->ResourceType}}">
                             </div>
