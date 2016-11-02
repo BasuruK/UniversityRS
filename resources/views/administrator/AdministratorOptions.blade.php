@@ -276,15 +276,21 @@
             });
         }
 
-        function DatabaseBackup()
+        function DatabaseRestore()
         {
-
-            $.ajax({
-                type: 'GET',
-                url: "/AdminOptions/databaseBackup",
-                success: function (filePath) {
-                    this.http.post();
+            $.confirm({
+                theme: 'black',
+                title: 'Select a file',
+                icon: 'fa fa-info',
+                content: '<p>Select a .sql.gz backup file to upload</p>' +
+                    '<form name="uploadDBFile" id="uploadDBFile" method="POST" class="form-group" action="/AdminOptions/databaseRestore" enctype="multipart/form-data">' +
+                        '{{csrf_field()}}' +
+                        '<input type="file" class="form-control" name="dbSQL" required>' +
+                    '</form>',
+                confirm: function () {
+                    $('#uploadDBFile').submit();
                 }
+
             });
         }
 
@@ -456,7 +462,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-warning" onclick="ConfirmTimetableTruncate()">Clear Timetable</a>
+                            <a class="btn btn-facebook" onclick="ConfirmTimetableTruncate()">Clear Timetable</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information on timetables.</p>
@@ -467,7 +473,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-warning" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
+                            <a class="btn btn-facebook" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
@@ -478,7 +484,8 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a href="/AdminOptions/databaseBackup" class="btn btn-warning" onclick="">Database Backup</a>
+                            <a href="/AdminOptions/databaseBackup" class="btn btn-facebook" onclick="">Database Backup</a>
+                            <a class="btn btn-facebook" onclick="DatabaseRestore()">Database Restore</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will perform a backup of the entire system and save the file.</p>

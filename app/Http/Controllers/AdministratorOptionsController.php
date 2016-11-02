@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications;
 use App\Jobs\SendDeadlineEmail;
 use Illuminate\Support\Facades\Auth;
+use BackupManager\Manager;
 
 class AdministratorOptionsController extends Controller
 {
@@ -244,6 +245,11 @@ class AdministratorOptionsController extends Controller
         }
     }
 
+    /**
+     * creates a database backup file
+     *
+     * @return mixed
+     */
     public function createDatabaseBackup()
     {
         $date           = Carbon::now()->toW3cString();
@@ -260,8 +266,31 @@ class AdministratorOptionsController extends Controller
 		'Content-Type: application/gzip',
 	);
 
-	$file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".gz";
-	return Response::download($file,'databasebackup.gz',$headers);
+	$file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".sql.gz";
+	return Response::download($file,'databasebackup.sql.gz',$headers);
+    }
+
+    /**
+     * Restores the database
+     *
+     * @param Request $request
+     * @param Manager $manager
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function databaseRestore(Request $request,Manager $manager)
+    {
+        $file = $request->file('dbSQL');
+        $destination = "databaseRestore/";
+        $request->file('dbSQL')->move($destination,"upload.sql.gz");
+
+        Artisan::call('migrate:reset', [
+            '--force' => true
+        ]);
+
+        $this->manager = $manager;
+        $manager->makeRestore()->run('local','databaseRestore/upload.sql.gz','universityrs','gzip');
+
+        return back();
     }
 
 }

@@ -285,6 +285,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/AdminOptions/databaseBackup','AdministratorOptionsController@createDatabaseBackup');
 
+    Route::post('/AdminOptions/databaseRestore','AdministratorOptionsController@databaseRestore');
+
 
 
     // Administrator Options Routes End
