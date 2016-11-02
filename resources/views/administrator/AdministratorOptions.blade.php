@@ -149,15 +149,13 @@
                     var semesterTimetableOption = $('#checkSemesterTimetable');
                     var formalRequestTimetableOption =$('#checkFormalTimetable');
 
-                    console.log('semesterTimetable : ' + semesterTimetableOption.is(':checked'));
-
                     if(year == "" || batch == "" || (semesterTimetableOption.is(':checked') == false && formalRequestTimetableOption.is(':checked') == false))
                     {
                         $.alert({
                             theme: 'black',
                             title: 'Error !',
                             icon: 'fa fa-close',
-                            content: 'One or more fields are not set!'
+                            content: 'One or more fields not set!'
 
                         });
                     }
@@ -441,7 +439,7 @@
                 </div>
                 <div class="box-body">
 
-                    <p><b>All the functions listed here handel Database requests. Handle with extreme care and proceed at your own risk.</b></p>
+                    <p><b>All the functions listed here handel operations with critical data. Handle with extreme care and proceed at your own risk.</b></p>
                     <br>
 
                     <div class="col-lg-12">
@@ -461,6 +459,17 @@
                         </div>
                         <div class="col-lg-8">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <a class="btn btn-warning" onclick="">Database Backup</a>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>This will perform a backup of the entire system and save the file.</p>
                         </div>
                     </div>
                     <br>
