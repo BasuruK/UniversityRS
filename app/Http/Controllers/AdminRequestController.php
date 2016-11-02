@@ -388,6 +388,109 @@ class AdminRequestController extends Controller
      */
 
     /**
+     * Formal Request Loading Available Resources
+     */
+
+    public function loadAvailableResourcesDate_Formal()
+    {
+        $time= Input::get('option2');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
+
+        $date= Input::get('option');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->where('id','=',$batch)
+            ->value('noOfStudents');
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE',$firsttime .'%'],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE','%'.$lasttime],
+            ])
+            //->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','>',$batchCap],
+            ])
+            /*->orWhere([
+                ['type','LIKE',$reqResourceType],
+                ['capacity','=',$batchCap],
+            ])*/
+
+            //->orWhere('capacity','>',$batchCap)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+        return Response::json($availableHalls);
+    }
+
+    public function loadAvailableResourcesTime_Formal()
+    {
+        $time = Input::get('option');
+
+        list($firsttime, $dash, $lasttime) = explode(" ",$time);
+        $date = Input::get('option2');
+        $reqResourceType = Input::get('option3');
+        $batch = Input::get('option4');
+
+        $batchCap=\DB::table('batch')
+            ->where('id','=',$batch)
+            ->value('noOfStudents');
+
+        $nonAvailableHalls=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE',$firsttime .'%'],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$date],
+                ['timeSlot','LIKE','%'.$lasttime],
+            ])
+            //->orWhere('timeSlot','LIKE','%'.$lasttime)
+            ->lists('resourceID');
+
+        $availableHalls=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls)
+            ->where([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','>',$batchCap],
+            ])
+            /*->orWhere([
+                ['type','LIKE',$reqResourceType],
+                //['capacity','=',$batchCap],
+            ])*/
+
+            //->orWhere('capacity','>',$batchCap)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+
+        return Response::json($availableHalls);
+    }
+
+    /**
+     * End of Formal Request Loading Available Requests
+     */
+
+
+    /**
      * Special Requests
      */
 
@@ -517,4 +620,5 @@ class AdminRequestController extends Controller
     /**
      * Special Requests End
      */
+
 }

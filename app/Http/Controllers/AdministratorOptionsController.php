@@ -144,6 +144,7 @@ class AdministratorOptionsController extends Controller
             $exitCode = Artisan::call('truncate:Timetable');
             DB::table('requests')->truncate();
             DB::table('semester_requests')->truncate();
+            DB::table('requests')->truncate();
             return back();
         }
     }
@@ -156,7 +157,7 @@ class AdministratorOptionsController extends Controller
      * @param $year
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function clearTimetableForBatchAndYear(Request $request,$batch,$year)
+    public function clearTimetableForBatchAndYear(Request $request,$batch,$year,$semesterRequestCheck,$formalRequestCheck)
     {
         //Check if the incoming request is AJAX, redirect if not
         if(!$request->ajax())
@@ -167,7 +168,15 @@ class AdministratorOptionsController extends Controller
         {
             $batchID = $batchID = DB::table('batch')->where('year','=',$year)->where('batchNo','=',$batch)->value('id');
             DB::table('timetable')->where('year', '=', $year)->where('batchNo', '=', $batchID)->delete();
-            DB::table('semester_requests')->where('year', '=', $year)->where('batchNo', '=', $batchID)->where('status','=','Accepted')->delete();
+
+            if($semesterRequestCheck == true)
+            {
+                DB::table('semester_requests')->where('year', '=', $year)->where('batchNo', '=', $batchID)->where('status', '=', 'Accepted')->delete();
+            }
+            if($formalRequestCheck == true)
+            {
+                DB::table('requests')->where('year', '=', $year)->where('batchNo', '=', $batchID)->where('status', '=', 'Accepted')->delete();
+            }
         }
     }
 

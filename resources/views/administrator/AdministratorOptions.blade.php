@@ -128,11 +128,17 @@
                 theme: 'black',
                 title: 'Enter Year and Batch!',
                 icon: 'fa fa-info',
-                content:'Please enter Year and the Batch No <br><br> ' +
+                content:'Please enter Year and the Batch No <br xmlns="http://www.w3.org/1999/html"><br> ' +
                 '<div class="from-group">' +
                     '<input name="yearDelete" id="yearDelete" type="text" class="form-control" placeholder="Year. i.e : 3" />' +
                     '<br> ' +
                     '<input name="batchDelete" id="batchDelete" class="form-control" type="text" placeholder="Batch No. i.e : 1" />' +
+                    '<br>' +
+                    '<input type="checkbox" id="checkSemesterTimetable" required> ' +
+                    '<label for="checkSemesterTimetable"> Clear from Semester Requests Timetables</label>' +
+                    '<br>' +
+                    '<input type="checkbox" id="checkFormalTimetable" required> ' +
+                    '<label for="checkFormalTimetable"> Clear from Formal Requests Timetables</label>' +
                 '</div>',
                 confirmButton: 'Yes',
                 confirmButtonClass: 'btn-warning',
@@ -140,14 +146,16 @@
 
                     var year = document.getElementById('yearDelete').value;
                     var batch = document.getElementById('batchDelete').value;
+                    var semesterTimetableOption = $('#checkSemesterTimetable');
+                    var formalRequestTimetableOption =$('#checkFormalTimetable');
 
-                    if(year == "" || batch == "")
+                    if(year == "" || batch == "" || (semesterTimetableOption.is(':checked') == false && formalRequestTimetableOption.is(':checked') == false))
                     {
                         $.alert({
                             theme: 'black',
                             title: 'Error !',
                             icon: 'fa fa-close',
-                            content: 'One or more fields are not set!'
+                            content: 'One or more fields not set!'
 
                         });
                     }
@@ -181,7 +189,7 @@
                                         {
                                             $.ajax({
                                                 type    : 'GET',
-                                                url     : "/AdminOptions/customClearTables/"+batch+"/"+year,
+                                                url     : "/AdminOptions/customClearTables/"+batch+"/"+year+"/"+semesterTimetableOption+"/"+formalRequestTimetableOption,
                                                 success : function () {
                                                     $.notify("Timetable data for Batch " + batch + "of Year " + year + " erased successfully",{
                                                         position : 'bottom right',
@@ -431,7 +439,7 @@
                 </div>
                 <div class="box-body">
 
-                    <p><b>All the functions listed here handel Database requests. Handle with extreme care and proceed at your own risk.</b></p>
+                    <p><b>All the functions listed here handel operations with critical data. Handle with extreme care and proceed at your own risk.</b></p>
                     <br>
 
                     <div class="col-lg-12">
@@ -451,6 +459,17 @@
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-5">
+                            <a class="btn btn-warning" onclick="">Database Backup</a>
+                        </div>
+                        <div class="col-lg-7">
+                            <p>This will perform a backup of the entire system and save the file.</p>
                         </div>
                     </div>
                     <br>

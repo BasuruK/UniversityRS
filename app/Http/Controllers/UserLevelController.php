@@ -131,8 +131,8 @@ class UserLevelController extends Controller
 
     /**
      * @param Request $request
-     * @param User $user
      * @return mixed
+     * @internal param User $user
      */
     public function pictureUpload(Request $request)
     {
