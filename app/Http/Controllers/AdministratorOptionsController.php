@@ -23,8 +23,8 @@ class AdministratorOptionsController extends Controller
      */
     public function index()
     {
-        $deadlines = Deadline::all();
-        $adminOptions = DB::table('administrator_options')->first();
+        $deadlines      = Deadline::all();
+        $adminOptions   = DB::table('administrator_options')->first();
 
         if($adminOptions == null)
         {
@@ -242,4 +242,13 @@ class AdministratorOptionsController extends Controller
             }
         }
     }
+
+    public function createDatabaseBackup()
+    {
+        $date           = Carbon::now()->toW3cString();
+        $environment    = env('APP_ENV');
+
+        Artisan::call('')
+    }
+
 }

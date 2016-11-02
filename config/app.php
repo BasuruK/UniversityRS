@@ -159,6 +159,7 @@ return [
         //Collective\Bus\BusServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
+        BackupManager\Laravel\Laravel5ServiceProvider::class,
 
     ],
 
