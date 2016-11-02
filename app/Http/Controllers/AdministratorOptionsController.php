@@ -254,7 +254,7 @@ class AdministratorOptionsController extends Controller
             '--destinationPath'  => 'databaseBackup/' . $date,
             '--compression'      => 'gzip'
         ]);
-        
+
         return "/home/forge/default/storage/app/2016/" . $date . ".gz";
     }
 

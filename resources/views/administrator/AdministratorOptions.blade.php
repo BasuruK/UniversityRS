@@ -280,9 +280,12 @@
         {
 
             $.ajax({
-                type    : 'GET',
-                url     : "/AdminOptions/databaseBackup",
-                success : function () {
+                type: 'GET',
+                url: "/AdminOptions/databaseBackup",
+                success: function (filePath) {
+                    console.log(filePath);
+                }
+            });
         }
 
     </script>
