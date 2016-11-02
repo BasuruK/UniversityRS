@@ -6,6 +6,7 @@ use App\Deadline;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use DB;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
@@ -245,7 +246,7 @@ class AdministratorOptionsController extends Controller
 
     public function createDatabaseBackup()
     {
-        $date           = Carbon::now()->toDateString();
+        $date           = Carbon::now()->toW3cString();
         $environment    = env('APP_ENV');
 
         Artisan::call('db:backup',[
@@ -255,7 +256,12 @@ class AdministratorOptionsController extends Controller
             '--compression'      => 'gzip'
         ]);
 
-        return "/home/forge/default/storage/app/2016/" . $date . ".gz";
+	$headers = array(
+		'Content-Type: application/gzip',
+	);
+
+	$file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".gz";
+	return Response::download($file,'databasebackup.gz',$headers);
     }
 
 }
