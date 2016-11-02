@@ -1,198 +1,412 @@
 @extends('layouts.Main')
 
+@section('section-header')
+    <section class="content-header">
+        <h1>
+            Edit Formal Request
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Formal Request</a></li>
+            <li class="active">Edit</li>
+        </ol>
+    </section>
+@endsection
+
 @section('content')
     <div class="container-fluid">
+
+        <script>
+            /**
+             * Dynamically populate the select options for available resources
+             */
+            $(document).ready(function()
+            {
+
+                $.get("{{ url('/adminRequest/requestForm/loadHallsDate_Formal')}}", {option: $('#selectdateEdit').val(),option2: $('#prevtimeslot').val(),option3: $('#reqResourceType').val(), option4: $('#prevbatch').val()},
+
+                        function(data) {
+
+                            var availableHalls = $('#selectResources');
+
+                            availableHalls.empty();
+
+                            $.each(data, function(key, value) {
+
+                                availableHalls
+
+                                        .append($("<option></option>")
+
+                                                .attr("value",key)
+
+                                                .text(key+value));
+                            });
+
+                        });
+
+            });
+        </script>
+
+
+
         <div class="row">
             <div class="col col-sm-7">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Edit Request</h3>
+                        <h3 class="box-title">Edit Details</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form role="form" method="POST" action="/adminRequest/update/{{$admin_request->id}}" >
+                        <form role="form" method="POST" action="/adminRequest/update/{{$admin_request->id}}" name="semesterReqEdit">
                         {{method_field('PATCH')}}
                         {!! csrf_field() !!}
 
+
+
                         <!--Date-->
                             <div class="form-group">
-                                <label>Date:</label>
-
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control pull-right" id="datepicker" name="selectdateEdit" value="{{$admin_request->requestDate}}">
-                                    <script type="text/javascript">
-                                        $(function() {
-                                            $('input[name="selectdate"]').daterangepicker({
-                                                        singleDatePicker: true,
-                                                        showDropdowns: true,
-                                                        locale: {
-                                                            format: 'YYYY-MM-DD-ddd'
-                                                        }
-                                                    },
-                                                    function(start,end,label){
-                                                        var years = moment().diff(start,'years');
-                                                    }
-                                            );
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-
-                            <!-- time slot -->
-                            <div class="form-group">
-                                <label>Time Slot:</label>
-                                <select class="form-control" name="selecttimeslotEdit">
-                                    @if ($admin_request->timeSlot === "8.30-10.30")
-                                        <option value="8.30-10.30" selected="selected">8.30 - 10.30</option>
-                                        <option value="10.30-12.30">10.30 - 12.30</option>
-                                        <option value="12.30-1.30">12.30 - 1.30</option>
-                                        <option value="1.30-3.30">1.30 - 3.30</option>
-                                        <option value="3.30-5.30">3.30 - 5.30</option>
-                                    @elseif ($admin_request->timeSlot === "10.30-12.30")
-                                        <option value="8.30-10.30">8.30 - 10.30</option>
-                                        <option value="10.30-12.30" selected="selected">10.30 - 12.30</option>
-                                        <option value="12.30-1.30">12.30 - 1.30</option>
-                                        <option value="1.30-3.30">1.30 - 3.30</option>
-                                        <option value="3.30-5.30">3.30 - 5.30</option>
-                                    @elseif ($admin_request->timeSlot === "12.30-1.30")
-                                        <option value="8.30-10.30">8.30 - 10.30</option>
-                                        <option value="10.30-12.30">10.30 - 12.30</option>
-                                        <option value="12.30-1.30" selected="selected">12.30 - 1.30</option>
-                                        <option value="1.30-3.30">1.30 - 3.30</option>
-                                        <option value="3.30-5.30">3.30 - 5.30</option>
-                                    @elseif ($admin_request->timeSlot === "1.30-3.30")
-                                        <option value="8.30-10.30">8.30 - 10.30</option>
-                                        <option value="10.30-12.30">10.30 - 12.30</option>
-                                        <option value="12.30-1.30">12.30 - 1.30</option>
-                                        <option value="1.30-3.30" selected="selected">1.30 - 3.30</option>
-                                        <option value="3.30-5.30">3.30 - 5.30</option>
-                                    @elseif ($admin_request->timeSlot === "3.30-5.30")
-                                        <option value="8.30-10.30">8.30 - 10.30</option>
-                                        <option value="10.30-12.30">10.30 - 12.30</option>
-                                        <option value="12.30-1.30">12.30 - 1.30</option>
-                                        <option value="1.30-3.30">1.30 - 3.30</option>
-                                        <option value="3.30-5.30" selected="selected">3.30 - 5.30</option>
+                                <label>Day:</label>
+                                <select class="form-control" name="selectdateEdit" id="selectdateEdit">
+                                    @if($admin_request->requestDate=='monday')
+                                        <option  value="monday" selected="selected">Monday</option >
+                                        <option  value="tuesday">Tuesday</option>
+                                        <option  value="wednesday">Wednesday</option>
+                                        <option  value="thursday">Thursday</option>
+                                        <option  value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="tuesday")
+                                        <option  value="monday">Monday</option>
+                                        <option  value="tuesday" selected="selected">Tuesday</option>
+                                        <option  value="wednesday">Wednesday</option>
+                                        <option  value="thursday">Thursday</option>
+                                        <option  value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="wednesday")
+                                        <option  value="monday">Monday</option>
+                                        <option  value="tuesday">Tuesday</option>
+                                        <option  value="wednesday" selected="selected">Wednesday</option>
+                                        <option  value="thursday">Thursday</option>
+                                        <option  value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="thursday")
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday" selected="selected">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="friday")
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday" selected="selected">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="saturday")
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday" selected="selected">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                    @elseif($admin_request->requestDate=="sunday")
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday" selected="selected">Sunday</option>
                                     @endif
 
                                 </select>
+
+                            </div>
+
+                            <script>
+
+                                $(document).ready(function() {
+
+                                    $.get("{{ url('/adminRequest/requestForm/loadHallsDate_Formal')}}", {
+                                                option: $('#selectdateEdit').val(),
+                                                option2: $('#selectTimeEdit').val(),
+                                                option3: $('#reqResourceType').val(),
+                                                option4: $('#prevbatch').val()
+                                            },
+
+                                            function (data) {
+
+                                                var availableHalls = $('#selectResources');
+
+                                                availableHalls.empty();
+
+                                                $.each(data, function (key, value) {
+
+
+                                                    availableHalls
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value", key)
+
+                                                                    .text(key + value));
+                                                });
+
+                                            });
+
+                                    $('#selectdateEdit').change(function () {
+
+
+                                        $.get("{{ url('/adminRequest/requestForm/loadHallsDate_Formal')}}", {
+                                                    option: $(this).val(),
+                                                    option2: $('#selectTimeEdit').val()
+                                                },
+
+                                                function (data) {
+
+                                                    var availableHalls = $('#selectResources');
+
+                                                    availableHalls.empty();
+
+                                                    $.each(data, function (key, value) {
+
+                                                        availableHalls
+
+                                                                .append($("<option></option>")
+
+                                                                        .attr("value", key)
+
+                                                                        .text(key + value));
+                                                    });
+
+                                                });
+
+                                    });
+
+                                });
+                            </script>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$admin_request->batchNo}}">
+                            </div>
+                            o
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$admin_request->subjectCode}}">
+                            </div>
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$admin_request->timeSlot}}">
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqResourceType" id="reqResourceType" value="{{$admin_request->ResourceType}}">
                             </div>
 
 
-                            <div class="form-group">
-                                <label>Staff Member</label>
-                                <select class="form-control" name="selectstaffEdit">
 
-                                    @foreach($users as $user)
-                                        @if($admin_request->lecturerID === $user->staff_id)
-                                            <option value="{{$user->staff_id}}" selected="selected">{{$user->name}}</option>
+                            {{--Select time slot type--}}
+                            <div class="form-group">
+                                <label>Time Slot Type</label>
+                                <div class="radio">
+                                    <label>
+                                        @if($admin_request->timeslotType=='1')
+                                            <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')" checked>
                                         @else
-                                            <option value="{{$user->staff_id}}">{{$user->name}}</option>
+                                            <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="1"  onclick="setSelect('1')" disabled>
                                         @endif
-                                    @endforeach
-                                </select>
-                            </div>
+                                        One hour Slot
+                                    </label>
+                                </div>
 
-                            <!-- select Year  -->
+                                <div class="radio">
+                                    <label>
+                                        @if($admin_request->timeslotType=='2')
+                                            <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')" checked>
+                                        @else
+                                            <input type="radio" name="SlotTypeEdit" id="SlotTypeEdit" value="2"  onclick="setSelect('2')" disabled>
+                                        @endif
+                                        Two Hour Slot
+                                    </label>
+                                </div>
+                            </div >
+
+
+
+
+                            <script>
+                                /**
+                                 * Dynamically populate the select options for timeslots
+                                 */
+                                var OneHourSet=['8.30 - 9.30','9.30 - 10.30','10.30 - 11.30','11.30 - 12.30','12.30 - 14.30','14.30 - 15.30','15.30 - 16.30','16.30 - 17.30','17.30 - 18.30'];
+                                var TwoHourSet=['8.30 - 10.30','10.30 - 12.30','14.30 - 16.30','16.30 - 18.30'];
+
+
+                                function setSelect(v) {
+                                    var x = document.getElementById("selectTimeEdit");
+                                    for (i = 0; i < x.length; ) {
+                                        x.remove(x.length -1);
+                                    }
+                                    var a;
+                                    if (v=='1'){
+
+                                        a = OneHourSet;
+                                    } else if (v=='2'){
+
+                                        a = TwoHourSet
+                                    }
+
+                                    for (i = 0; i < a.length; ++i) {
+                                        if(a[i]==document.getElementById("prevtimeslot").value)
+                                        {
+                                            var option = document.createElement("option");
+                                            option.text = a[i];
+                                            option.value = a[i];
+                                            option.selected='selected';
+                                            x.add(option);
+                                        }
+                                        else
+                                        {
+                                            var option = document.createElement("option");
+                                            option.value = a[i];
+                                            option.text = a[i];
+                                            x.add(option);
+                                        }
+                                    }
+                                }
+                                function load() {
+                                    var currentType=document.semesterReqEdit.SlotTypeEdit.value;
+
+                                    setSelect(currentType);
+                                }
+                                window.onload = load;
+                            </script>
+
+
+
+
+                            <!-- select Time Slot  -->
                             <div class="form-group">
-                                <label>Year</label>
-                                <select class="form-control" name="selectyearEdit">
-                                    @if ($admin_request->year === "Y1")
-                                        <option value="Y1" selected="selected"> 1</option>
-                                        <option value="Y2"> 2</option>
-                                        <option value="Y3"> 3</option>
-                                        <option value="Y4"> 4</option>
-                                    @elseif ($admin_request->year === "Y2")
-                                        <option value="Y2" selected="selected"> 2</option>
-                                        <option value="Y1" > 1</option>
-                                        <option value="Y3"> 3</option>
-                                        <option value="Y4"> 4</option>
-                                    @elseif ($admin_request->year === "Y3")
-                                        <option value="Y3" selected="selected"> 3</option>
-                                        <option value="Y1" > 1</option>
-                                        <option value="Y2"> 2</option>
-                                        <option value="Y4"> 4</option>
-                                    @elseif ($admin_request->year === "Y4")
-                                        <option value="Y4" selected="selected"> 4</option>
-                                        <option value="Y1" > 1</option>
-                                        <option value="Y2"> 2</option>
-                                        <option value="Y3"> 3</option>
-                                    @endif
+                                <label>Time Slot</label><br>
+                                <select class="form-control" name="selectTimeEdit" id="selectTimeEdit">
 
                                 </select>
                             </div>
+
+                            <script>
+
+                                $('#selectTimeEdit').change(function(){
+
+
+
+                                    $.get("{{ url('/adminRequest/requestForm/loadHallsTime_Formal')}}", {option: $(this).val(),option2: $('#selectdateEdit').val(),option3: $('#reqResourceType').val(),option4: $('#prevbatch').val()},
+
+                                            function(data) {
+
+                                                var availableHalls = $('#selectResources');
+
+
+
+                                                availableHalls.empty();
+
+                                                $.each(data, function(key, value) {
+
+                                                    availableHalls
+
+                                                            .append($("<option></option>")
+
+                                                                    .attr("value",key)
+
+                                                                    .text(key+value));
+
+                                                });
+
+                                            });
+
+                                });
+
+                            </script>
+
+                            <div class="form-group">
+                                <label>Resource Type</label><br>
+                                <p>{{ $admin_request->ResourceType }}</p>
+                            </div>
+
+                            <!-- select Resource -->
+                            <div class="form-group">
+                                <label>Resource</label><br>
+                                <select class="form-control" name="selectResources" id="selectResources">
+
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Lecturer</label><br>
+                                <p>{{ $requestedUser->name }}</p>
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqLect" id="reqLect" value="{{ $requestedUser->name }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Semester</label><br>
+                                <p>{{ $admin_request->semester }}</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Year</label></br>
+                                <p>{{ $admin_request->year }}</p>
+                            </div>
+
+
 
                             <!-- select Batch -->
                             <div class="form-group">
-                                <label>Batch</label>
-                                <select class="form-control" name="selectbatchEdit">
-                                    @foreach($batches as $batch)
-                                        @if($admin_request->batchNo === $batch->id)
-                                            <option value="{{$batch->ide}}" selected="selected"> {{$batch->batchNo}}</option>
-                                        @else
-                                            <option value="{{$batch->id}}"> {{$batch->batchNo}}</option>
-                                        @endif
-
-                                    @endforeach
-                                </select>
+                                <label>Batch</label><br>
+                                <p>{{ $batch->batchNo }}</p>
                             </div>
+
+
 
                             <!-- select Subject -->
                             <div class="form-group">
-                                <label>Subject</label>
-                                <select class="form-control" name="selectsubEdit">
-
-                                    @foreach($subjects as $subject)
-                                        @if($admin_request->subjectCode === $subject->id)
-                                            <option value="{{$subject->id}}" selected="selected"> {{$subject->subName}}</option>
-                                        @else
-                                            <option value="{{$subject->id}}"> {{$subject->subName}}</option>
-                                            @endif
-                                    @endforeach
-                                </select>
+                                <label>Subject</label><br>
+                                <p>{{ $selectedSub->subName }}</p>
                             </div>
 
-                            <!-- select Hall -->
-                            <div class="form-group">
-                                <label>Lecture Hall/Lab</label>
-                                <select class="form-control" name="selectresEdit">
-
-                                    @foreach($resources as $resource)
-                                        @if($admin_request->resourceID === $resource->hallNo)
-                                            <option value="{{$resource->hallNo}}" selected="selected"> {{$resource->hallNo}}</option>
-                                        @else
-                                            <option value="{{$resource->hallNo}}"> {{$resource->hallNo}}</option>
-                                        @endif
-                                    @endforeach
-
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-control" name="selectStatusEdit">
-                                    @if ($admin_request->status === "Approved")
-                                        <option value="Approved" selected="selected">Approved</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    @elseif ($admin_request->status === "Pending")
-                                        <option value="Pending" selected="selected">Pending</option>
-                                        <option value="Approved" >Approved</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    @elseif ($admin_request->status === "Cancelled")
-                                        <option value="Cancelled" selected="selected">Cancelled</option>
-                                        <option value="Approved" >Approved</option>
-                                        <option value="Pending">Pending</option>
-                                    @endif
-                                </select>
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="subName" id="subName" value="{{ $selectedSub->subName }}">
                             </div>
 
 
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                        @endif
+                        <!--<script>
+                                function Success()
+                                {
+                                    $.notify("Request has been successfully Edited", "success",
+                                            {position:"center"}
+                                    );
+                                }
+                            </script>-->
 
-                            <button type="submit " class="btn btn-primary pull-right">Update</button>
-                            <a href="/adminRequest" class="btn btn-primary">Cancel</a>
+                            <br>
+                            <br>
+                            <a href="/adminRequest" class="btn btn-warning">Cancel</a>
+
+                            <button id="submitbtn" type="submit " class="btn btn-primary pull-right" >Submit</button>
                         </form>
                     </div>
                     <!-- /.box-body -->
@@ -201,5 +415,8 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 @endsection

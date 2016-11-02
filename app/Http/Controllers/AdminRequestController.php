@@ -26,24 +26,25 @@ class AdminRequestController extends Controller
     {
         $requests = DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
-            ->join('resource', 'requests.resourceID', '=', 'resource.hallNo')
-            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
-            ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
-            ->select('requests.*','subject.subName','resource.hallNo','users.name','allowed_users.position')
-            ->orderby('allowed_users.position','asc')
+            ->join('batch', 'requests.batchNo', '=', 'batch.id')
+            ->join('users','requests.lecturerID','=', 'users.staff_id')
+            ->select('requests.*','subject.subName','batch.batchNo','users.name')
+            ->where('requests.status','!=','Accepted')
+            ->where('requests.specialEvent',NULL)
             ->get();
 
-        /*$c_requests = \DB::table('requests')
+        $acceptedrequests=\DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
-            ->join('resource', 'requests.resourceID', '=', 'resource.id')
-            ->join('users', 'requests.lecturerID','=', 'users.staff_id')
-            ->select('requests.*','subject.subName','resource.hallNo','users.name')
-            ->where('status','Pending')
-            ->get();*/
+            ->join('users','requests.lecturerID','=', 'users.staff_id')
+            ->join('batch', 'requests.batchNo', '=', 'batch.id')
+            ->select('requests.*','subject.subName','batch.batchNo','users.name')
+            ->where('requests.status','=','Accepted')
+            ->where('requests.specialEvent',NULL)
+            ->get();
 
-        
         return view("adminRequests.adminRequestMain")->with('requests',$requests);
     }
+
     public function SortByBatchYear()
     {
         $requests = \DB::table('requests')
@@ -68,49 +69,6 @@ class AdminRequestController extends Controller
         return view("adminRequests.adminRequestMain",compact('requests'));
     }
 
-    /**
-     * @return to a new form
-     */
-    public function newForm()
-    {
-        $users = \DB::table('users')->get();
-        $batches = \DB::table('batch')->get();
-        $subjects = \DB::table('subject')->get();
-        $resources = \DB::table('resource')->get();
-        return view("adminRequests.admin_request_add", compact('batches','subjects','resources','users'));
-    }
-
-    /**
-     * @param Request $request <- details of the new request from the form
-     * @return to the main page
-     *
-     * This function creates an object from the Admin_Request model, then assign the values
-     * received from the form and saves as a record in the database
-     */
-    public function add(Request $request)
-    {
-
-        $this->validate($request, [
-            'selectdate'=>'required',
-        ]);
-
-        $Admin_Request= new Admin_Request();
-
-
-        $Admin_Request->lecturerID=$request['selectstaff'];
-        $Admin_Request->year=$request['selectyear'];
-        $Admin_Request->batchNo=$request['selectbatch'];
-        $Admin_Request->subjectCode=$request['selectsub'];
-        $Admin_Request->timeSlot=$request['selecttimeslot'];
-        $Admin_Request->requestDate=$request['selectdate'];
-        $Admin_Request->resourceID=$request['selectres'];
-        $Admin_Request->status=$request['selectstatus'];
-
-
-        $Admin_Request->save();
-
-        return Redirect::route('adminRequestShow');
-    }
 
     /**
      * @param Admin_Request $admin_request <- record to be deleted
@@ -137,8 +95,24 @@ class AdminRequestController extends Controller
         $batches=\DB::table('batch')->get();
         $subjects=\DB::table('subject')->get();
         $resources=\DB::table('resource')->get();
+
+        $batch=\DB::table('batch')
+            ->select('batch.batchNo')
+            ->where('id',$admin_request->batchNo)
+            ->first();
+
+
+        $selectedSub=DB::table('subject')
+            ->select('subject.subCode','subject.subName')
+            ->where('id',$admin_request->subjectCode)
+            ->first();
+
+        $requestedUser=DB::table('users')
+            ->select('users.id','users.name')
+            ->where('staff_id',$admin_request->lecturerID)
+            ->first();
         
-        return view('adminRequests.admin_request_edit',compact('admin_request','batches','subjects','resources','users'));
+        return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser'));
 
     }
 
@@ -390,7 +364,6 @@ class AdminRequestController extends Controller
     /**
      * Formal Request Loading Available Resources
      */
-
     public function loadAvailableResourcesDate_Formal()
     {
         $time= Input::get('option2');
