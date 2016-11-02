@@ -447,7 +447,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-4">
-                            <a class="btn btn-warning" onclick="CustomClearTimetable()">Clear Timetable (Custom)</a>
+                            <a class="btn btn-warning" onclick="CustomClearTimetable()">Clear Semester Timetable (Custom)</a>
                         </div>
                         <div class="col-lg-8">
                             <p>This will clear all information according to the Batch No and the Year given.</p>
