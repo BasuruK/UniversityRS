@@ -2,7 +2,7 @@
 
 @section('section-header')
     <section class="content-header">
-        <h1>User Timetables <small> Timetable assigned for Resource</small></h1>
+        <h1>Resource Timetables <small> Timetable assigned for Resource</small></h1>
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Resource Management</li>
@@ -22,6 +22,7 @@
                             <i class="fa fa-gear"></i></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" id="exportXLS" onclick="exportXLS()">Export excel</a></li>
+                            <li><a href="#" id="exportPDF" onclick="exportPDF()">Export PDF</a></li>
                         </ul>
                     </div>
 
@@ -98,6 +99,63 @@
                         catch (exception)
                         {
 
+                        }
+                        /**
+                         * Exports the timetable in excel format
+                         */
+                        function exportXLS() {
+
+                            var table_content = '<html xmlns:o="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
+                            table_content = table_content + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"/>';
+                            table_content = table_content + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+                            table_content = table_content +  '<x:Name>Resource Timetable</x:Name>';
+                            table_content = table_content +  '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+                            table_content = table_content +  '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+                            table_content = table_content +  '<h2 style="text-align: center;">SLIIT Resource Timetable for {{$hallNo}} {{$hallType}}</h2>';
+                            table_content = table_content +  '<h3 style="text-align: right;">2016</h3>';
+                            table_content = table_content +  "<table border='2px'";
+                            table_content = table_content +  $('#ResourceTimetable').html();
+                            table_content = table_content +  '</table></body></html>';
+
+                            var data_type = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+                            $('#exportXLS').attr('href',data_type + ', ' + encodeURIComponent(table_content));
+                            $('#exportXLS').attr('download','Resource Timetable.xls');
+                        }
+
+
+                        /**
+                         * Exports the table as a pdf file
+                         */
+                        function exportPDF() {
+
+                            var pdf = new jsPDF('l', 'mm', [550, 400]);
+                            pdf.text("Resource Timetable for {{$hallNo}} {{$hallType}} ",400,20);
+
+                            source = $('#TableTable')[0];
+
+                            specialElementHandlers = {
+                                '#bypassme': function (element, renderer) {
+                                    return true
+                                }
+                            };
+                            pdf.setFont("times");
+                            margins = {
+                                top: 20,
+                                //bottom: 20,
+                                left: 50,
+                                //width: 522
+                            };
+
+                            pdf.fromHTML(
+                                    source, margins.left, margins.top, {
+                                        'width': margins.width, // max width of content on PDF
+                                        'elementHandlers': specialElementHandlers
+                                    },
+                                    function (dispose) {
+                                        pdf.save('Resource Timetable.pdf');
+                                    }
+                                    , margins);
                         }
 
                     </script>
