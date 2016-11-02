@@ -283,6 +283,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/AdminOptions/checkPassword/{password}','AdministratorOptionsController@checkAuthenticity');
 
+    Route::get('/AdminOptions/databaseBackup','AdministratorOptionsController@createDatabaseBackup');
+
 
 
     // Administrator Options Routes End
