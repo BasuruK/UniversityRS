@@ -255,7 +255,7 @@ class AdministratorOptionsController extends Controller
             ' --compression'    => 'gzip'
         ]);
 
-        return "/home/forge/default/storage/app/2016/02-11-2016.gz";
+        return json_encode("/home/forge/default/storage/app/2016/02-11-2016.gz");
     }
 
 }

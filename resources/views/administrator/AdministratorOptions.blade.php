@@ -276,6 +276,15 @@
             });
         }
 
+        function DatabaseBackup()
+        {
+
+            $.ajax({
+                type    : 'GET',
+                url     : "/AdminOptions/databaseBackup",
+                success : function () {
+        }
+
     </script>
 
     <div class="row">
@@ -466,7 +475,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-warning" onclick="">Database Backup</a>
+                            <a class="btn btn-warning" onclick="DatabaseBackup()">Database Backup</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will perform a backup of the entire system and save the file.</p>
