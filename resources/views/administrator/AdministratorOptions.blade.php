@@ -283,7 +283,7 @@
                 type: 'GET',
                 url: "/AdminOptions/databaseBackup",
                 success: function (filePath) {
-                    console.log(filePath);
+                    this.http.post();
                 }
             });
         }
@@ -478,7 +478,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-warning" onclick="DatabaseBackup()">Database Backup</a>
+                            <a href="/AdminOptions/databaseBackup" class="btn btn-warning" onclick="">Database Backup</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will perform a backup of the entire system and save the file.</p>
