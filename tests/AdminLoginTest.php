@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class clientTest extends TestCase
+class AdminLoginTest extends TestCase
 {
     /**
      * A basic test example.
@@ -17,15 +17,9 @@ class clientTest extends TestCase
 
         $this->visit('/login')
             ->see('Sign in')
-            ->type('sheydenb31@gmail.com','email')
-            ->type('SandyB12','password')
+            ->type('bestbasuru@live.com','email')
+            ->type('rrk10ict','password')
             ->press('Sign in')
             ->seePageIs('/');
-
-        $this->visit('/myTables')
-            ->see('User Timetables');
-
-        $this->visit('/logout')
-            ->see('/');
     }
 }

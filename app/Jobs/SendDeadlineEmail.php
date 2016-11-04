@@ -26,17 +26,20 @@ class SendDeadlineEmail extends Job implements ShouldQueue
 
     /**
      * Execute the job.
+     * Send a mail to every user in the system using redis
      *
      * @param Mailer $mailer
      */
     public function handle(Mailer $mailer)
     {
+        //Get all of user information
         $userData   = User::all();
-        $dateData = Deadline::all()->last();
-        $semester = $dateData->semester;
-        $date     = $dateData->deadline;
-        $year     = $dateData->year;
+        $dateData   = Deadline::all()->last();
+        $semester   = $dateData->semester;
+        $date       = $dateData->deadline;
+        $year       = $dateData->year;
 
+        //Send an email for each user
         foreach ($userData as $UserDetails)
         {
             $name   = $UserDetails->name;

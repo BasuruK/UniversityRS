@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications;
 use App\Jobs\SendDeadlineEmail;
 use Illuminate\Support\Facades\Auth;
-use BackupManager\Manager;
 
 class AdministratorOptionsController extends Controller
 {

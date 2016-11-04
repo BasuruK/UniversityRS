@@ -165,12 +165,27 @@ class UserManagementController extends Controller
     public function EditAuthorizedUserUpdate(Request $request,Allowed_User $staff_id)
     { 
         /**
-         * Validation for the User Add form
+         * Validation for the User Edit form
          */
         $this->validate($request,[
             'staff_id'  => 'required|max:10',
             'inputPosition' => 'required'
         ]);
+
+        /**
+         * Check if the entry user enters exists on the table apart from the actual value, prevent user from updating and creating a duplicate entry.
+         */
+        $userStaffID    = $staff_id->staff_id;
+        $newStaffID     = $request->staff_id;
+
+        $status = DB::table('allowed_users')->where('staff_id','=',$newStaffID)->where('staff_id','!=',$userStaffID)->count();
+
+        if($status > 0)
+        {
+            //Duplicate entry
+            return back()->withErrors(['Duplicate Entry','The Staff_id is already taken by another person.']);
+        }
+
 
         $adminStatus = 1;
 

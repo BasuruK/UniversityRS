@@ -2,7 +2,7 @@
 
 @section('section-header')
     <section class="content-header">
-        <h1>User Management <small>Edit User</small></h1>
+        <h1>Authorized User Management <small>Edit Authorized User</small></h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>User Management</li>
@@ -14,11 +14,11 @@
 @section('content')
 
     <!--Box 1-->
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-12">
         <!-- Horizontal Form -->
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Edit User</h3>
+                <h3 class="box-title">Edit Authorized User</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -27,16 +27,10 @@
                 {{ csrf_field() }}
                 <div class="box-body">
 
-                    <div class="form-group{{ $errors->has('staff_id') ? ' has-error' : '' }}">
-                        <label for="inputStaff_id" class="col-sm-2 control-label">StaffID</label>
-
+                    <div class="form-group">
+                        <label for="inputStaff_id" class="col-sm-2 control-label">Staff ID</label>
                         <div class="col-sm-10">
                             <input type="text" name="staff_id" class="form-control" id="inputName" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ $userData->staff_id }}" required>
-                            @if ($errors->has('staff_id'))
-                                <span class="help-block">
-                <strong>{{ $errors->first('staff_id') }}</strong>
-            </span>
-                            @endif
                         </div>
                     </div>
 
@@ -47,31 +41,35 @@
                         });
                     </script>
 
-                    <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
+                    <div class="form-group">
                         <label for="inputPosition" class="col-sm-2 control-label">Priority</label>
                         <div class="col-sm-10">
-                            <select name="inputPosition" id="inputPosition" class="select2DropDown form-control" style="width: 100%" required>
+                            <select name="inputPosition" id="inputPosition" class="form-control" style="width: 100%" required>
                                 @foreach($PriorityCat as $cat)
                                     <option value="{{ $cat->id }}"@if($PriorityLevel=== $cat->id) selected @endif>{{ $cat->priorityName }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('position'))
-                                <span class="help-block">
-                                     <strong>{{ $errors->first('position') }}</strong>
-                                </span>
-                            @endif
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary pull-right">Edit</button>
+                    <a href="/UserManagement" class="btn btn-facebook">Back</a>
                 </div>
+
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right">Update User</button>
-                    <a href="/UserManagement" class="btn btn-facebook">Back</a>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <!-- /.box-footer -->
 
             </form>
-
         </div>
     </div>
 
