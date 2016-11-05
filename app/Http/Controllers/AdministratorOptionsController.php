@@ -303,6 +303,10 @@ class AdministratorOptionsController extends Controller
         {
             return back()->withErrors(['Only .gz backup files are allowed!']);
         }
+        if($request->file('dbSQL')->getMimeType() != "application/x-gzip")
+        {
+            return back()->withErrors(['Uploaded file does not contain a Gzip content type!']);
+        }
 
         $destination = "/home/forge/default/storage/app/databaseBackup/";
         //Move the file to the destination
