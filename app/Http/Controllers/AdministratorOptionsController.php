@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications;
 use App\Jobs\SendDeadlineEmail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdministratorOptionsController extends Controller
 {
@@ -65,6 +66,7 @@ class AdministratorOptionsController extends Controller
         $deadline->save();
         $this->sendMail();
 
+        Session::flash('success','Deadline entry added successfully.');
         return back();
     }
 
@@ -87,41 +89,49 @@ class AdministratorOptionsController extends Controller
 //    Administrator options
     /**
      * If SemesterRequest checkbox is checked update or insert the variable to the database
+     *
+     * @return void
      */
     public function semesterRequestChecked()
     {
+        //Check if the value is already set initially
         $alreadyFilledStatus = DB::table('administrator_options')->count();
         if($alreadyFilledStatus == 0)
         {
             DB::table('administrator_options')->insert([
-                'semesterRequestForm' => '1',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'semesterRequestForm'   => '1',
+                'created_at'            => Carbon::now(),
+                'updated_at'            => Carbon::now(),
 
             ]);
         }
         else
         {
+            //if value is set then update the value.
             DB::table('administrator_options')
                 ->where('id','1')
                 ->update([
-                    'semesterRequestForm' => '1',
-                    'updated_at' => Carbon::now()
+                    'semesterRequestForm'   => '1',
+                    'updated_at'            => Carbon::now()
                 ]);
         }
+
+        //Send a notification to the user
         Notifications::sendNotification('Semester Form now Available',0 , 'semesterRequestFormNotification','/userRequest/requestFormSemester/');
     }
 
     /**
      * If SemesterRequest checkbox is unchecked update the variable to 0 on the database
+     *
+     * @return void
      */
     public function semesterRequestUnchecked()
     {
         DB::table('administrator_options')
             ->where('id','1')
             ->update([
-                'semesterRequestForm' => '0',
-                'updated_at' => Carbon::now(),
+                'semesterRequestForm'   => '0',
+                'updated_at'            => Carbon::now(),
             ]);
 
         //Delete the notification regarding the semester request table
@@ -145,7 +155,6 @@ class AdministratorOptionsController extends Controller
             $exitCode = Artisan::call('truncate:Timetable');
             DB::table('requests')->truncate();
             DB::table('semester_requests')->truncate();
-            DB::table('requests')->truncate();
             return back();
         }
     }
@@ -156,6 +165,8 @@ class AdministratorOptionsController extends Controller
      * @param Request $request
      * @param $batch
      * @param $year
+     * @param $semesterRequestCheck
+     * @param $formalRequestCheck
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function clearTimetableForBatchAndYear(Request $request,$batch,$year,$semesterRequestCheck,$formalRequestCheck)
@@ -252,8 +263,7 @@ class AdministratorOptionsController extends Controller
     public function createDatabaseBackup()
     {
         $date           = Carbon::now()->toW3cString();
-        $environment    = env('APP_ENV');
-
+        //Call the artisan command to create the backup
         Artisan::call('db:backup',[
             '--database'         => 'mysql',
             '--destination'      => 'local',
@@ -261,12 +271,14 @@ class AdministratorOptionsController extends Controller
             '--compression'      => 'gzip'
         ]);
 
-	$headers = array(
-		'Content-Type: application/gzip',
-	);
+        //Specify the file type for Response Facade in Laravel.
+        $headers = array(
+            'Content-Type: application/gzip',
+        );
+        //File path for the newly created backup file
+        $file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".sql.gz";
 
-	$file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".sql.gz";
-	return Response::download($file,'databasebackup.sql.gz',$headers);
+        return Response::download($file,'databasebackup.sql.gz',$headers);
     }
 
     /**
@@ -302,13 +314,14 @@ class AdministratorOptionsController extends Controller
         ]);
 
         //migrate the uploaded backup file
-        Artisan::call('db:restore',[
+        $exitCode = Artisan::call('db:restore',[
             '--database'      => 'mysql',
             '--source'	      => 'local',
             '--sourcePath'    => 'databaseBackup/upload.sql.gz',
             '--compression'   => 'gzip'
 
         ]);
+        return $exitCode;
 
         //remove the redundant backup file
         unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");

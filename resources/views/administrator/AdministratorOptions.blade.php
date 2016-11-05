@@ -355,6 +355,13 @@
                                 </ul>
                             </div>
                         @endif
+
+                        @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -461,12 +468,12 @@
                 </div>
                 <div class="box-body">
 
-                    <p><b>All the functions listed here handel operations with critical data. Handle with extreme care and proceed at your own risk.</b></p>
+                    <p><b>All the functions listed here handel operations with critical data. Handle with extreme caution and proceed at your own risk.</b></p>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-facebook" onclick="ConfirmTimetableTruncate()"> <i class="fa fa-trash-o" aria-hidden="true"></i> Clear Timetable</a>
+                            <a class="btn bg-orange" onclick="ConfirmTimetableTruncate()"> <i class="fa fa-trash-o" aria-hidden="true"></i> Clear Timetable</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information on timetables.</p>
@@ -477,7 +484,7 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg-5">
-                            <a class="btn btn-facebook" onclick="CustomClearTimetable()"> <i class="fa fa-wrench" aria-hidden="true"></i> Clear Semester Timetable (Custom)</a>
+                            <a class="btn bg-orange" onclick="CustomClearTimetable()"> <i class="fa fa-wrench" aria-hidden="true"></i> Clear Semester Timetable (Custom)</a>
                         </div>
                         <div class="col-lg-7">
                             <p>This will clear all information according to the Batch No and the Year given.</p>

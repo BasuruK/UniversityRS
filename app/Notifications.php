@@ -35,7 +35,7 @@ class Notifications extends Model
             {
                 $url = "#";
             }
-            $Notification = new Notifications();
+            $Notification               = new Notifications();
             $Notification->notification = $notification;
             $Notification->forAdmin     = $userStatus;
             $Notification->url          = $url;
