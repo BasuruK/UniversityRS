@@ -23,7 +23,7 @@
             $(document).ready(function()
             {
 
-                $.get("{{ url('/adminRequest/requestForm/loadHallsDate_Formal')}}", {option: $('#selectdateEdit').val(),option2: $('#prevtimeslot').val(),option3: $('#reqResourceType').val(), option4: $('#prevbatch').val()},
+                $.get("{{ url('/adminRequest/requestForm/loadHallsDateFormal')}}", {option: $('#dateFinal').val(), option2: $('#prevTimeSlot').val(), option3: $('#reqResourceType').val(), option4: $('#prevBatch').val(), option5: $('#formalDate').val()},
 
                         function(data) {
 
@@ -69,54 +69,32 @@
                                 <p>{{ $admin_request->requestDate }}</p>
                             </div>
 
-                            <script>
 
-                                $(document).ready(function() {
-
-                                    $.get("{{ url('/adminRequest/requestForm/loadHallsDate_Formal')}}", {
-                                                option: $('#selectdateEdit').val(),
-                                                option2: $('#selectTimeEdit').val(),
-                                                option3: $('#reqResourceType').val(),
-                                                option4: $('#prevbatch').val()
-                                            },
-
-                                            function (data) {
-
-                                                var availableHalls = $('#selectResources');
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function (key, value) {
-
-
-                                                    availableHalls
-
-                                                            .append($("<option></option>")
-
-                                                                    .attr("value", key)
-
-                                                                    .text(key + value));
-                                                });
-
-                                            });
-
-                                });
-                            </script>
 
                             <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="prevbatch" id="prevbatch" value="{{$admin_request->batchNo}}">
+                                <input type="text"  class="form-control"  name="prevBatch" id="prevBatch" value="{{$admin_request->batchNo}}">
                             </div>
                             <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="prevsub" id="prevsub" value="{{$admin_request->subjectCode}}">
+                                <input type="text"  class="form-control"  name="prevSub" id="prevSub" value="{{$admin_request->subjectCode}}">
                             </div>
                             <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="prevtimeslot" id="prevtimeslot" value="{{$admin_request->timeSlot}}">
+                                <input type="text"  class="form-control"  name="prevTimeSlot" id="prevTimeSlot" value="{{$admin_request->timeSlot}}">
                             </div>
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="reqResourceType" id="reqResourceType" value="{{$admin_request->ResourceType}}">
                             </div>
 
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqLect" id="reqLect" value="{{ $requestedUser->name }}">
+                            </div>
 
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="dateFinal" id="dateFinal" value="{{ $dateFinal }}">
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="formalDate" id="formalDate" value="{{ $admin_request->requestDate }}">
+                            </div>
 
                             {{--Select time slot type--}}
                             <div class="form-group">
@@ -150,52 +128,12 @@
                                 <p>{{ $admin_request->timeSlot }}</p>
                             </div>
 
-                            <script>
-
-                                $('#selectTimeEdit').change(function(){
-
-
-
-                                    $.get("{{ url('/adminRequest/requestForm/loadHallsTime_Formal')}}", {option: $(this).val(),option2: $('#selectdateEdit').val(),option3: $('#reqResourceType').val(),option4: $('#prevbatch').val()},
-
-                                            function(data) {
-
-                                                var availableHalls = $('#selectResources');
-
-
-
-                                                availableHalls.empty();
-
-                                                $.each(data, function(key, value) {
-
-                                                    availableHalls
-
-                                                            .append($("<option></option>")
-
-                                                                    .attr("value",key)
-
-                                                                    .text(key+value));
-
-                                                });
-
-                                            });
-
-                                });
-
-                            </script>
-
                             <div class="form-group">
                                 <label>Resource Type</label><br>
                                 <p>{{ $admin_request->ResourceType }}</p>
                             </div>
 
-                            <!-- select Resource -->
-                            <div class="form-group">
-                                <label>Resource</label><br>
-                                <select class="form-control" name="selectResources" id="selectResources">
 
-                                </select>
-                            </div>
 
 
                             <div class="form-group">
@@ -233,6 +171,14 @@
                                 <p>{{ $selectedSub->subName }}</p>
                             </div>
 
+                            <!-- select Resource -->
+                            <div class="form-group">
+                                <label>Resource</label><br>
+                                <select class="form-control" name="selectResources" id="selectResources">
+
+                                </select>
+                            </div>
+
                             <div class="form-group"  hidden="">
                                 <input type="text"  class="form-control"  name="subName" id="subName" value="{{ $selectedSub->subName }}">
                             </div>
@@ -246,7 +192,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                        @endif
+                            @endif
                         <!--<script>
                                 function Success()
                                 {
