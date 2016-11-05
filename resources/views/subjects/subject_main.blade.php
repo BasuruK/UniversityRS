@@ -136,11 +136,11 @@
                                     <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                         <thead>
                                         <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Subject ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Subject ID</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Subject ID: activate to sort column descending" style="width: 30px;" aria-sort="ascending">Subject ID</th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="subject code: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Subject Code</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Subject Name: activate to sort column ascending" style="width: 45px;">Subject Name</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Semester: activate to sort column ascending" style="width: 110px;">Semester</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Year: activate to sort column ascending" style="width: 140px;">Year</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Subject Name: activate to sort column ascending" style="width: 150px;">Subject Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Semester: activate to sort column ascending" style="width: 20px;">Semester</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Year: activate to sort column ascending" style="width: 20px;">Year</th>
                                             <th tabindex="0"  rowspan="1" colspan="1" aria-label="Edit/ Delete" style="width: 60px;">Edit/ Delete</th>
                                         </tr>
                                         </thead>

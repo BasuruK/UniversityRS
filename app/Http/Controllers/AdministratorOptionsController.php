@@ -325,7 +325,6 @@ class AdministratorOptionsController extends Controller
             '--compression'   => 'gzip'
 
         ]);
-        return $exitCode;
 
         //remove the redundant backup file
         unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");
