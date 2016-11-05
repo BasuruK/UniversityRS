@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Deadline;
 
 class DeadlineManagementTest extends TestCase
 {
@@ -18,8 +19,14 @@ class DeadlineManagementTest extends TestCase
         parent::AdminLogin();
 
         $this->addDeadline();
+        $this->deleteDeadline();
     }
 
+    /**
+     * Add a new Deadline
+     *
+     * @return void
+     */
     public function addDeadline()
     {
         $this->visit('/AdminOptions')
@@ -27,6 +34,20 @@ class DeadlineManagementTest extends TestCase
             ->select('1','year')
             ->select('1','semester')
             ->type('01/07/2017', 'datepicker')
-            ->press('Save and notify users');
+            ->press('Save and notify users')
+            ->see('Deadline entry added successfully');
+    }
+
+    /**
+     * Delete the previously added deadline
+     *
+     * @return void
+     */
+    public function deleteDeadline()
+    {
+        $deadline = Deadline::all()->last();
+        $this->visit('AdminOptions/' . $deadline->id . '/DeadlineDelete')
+            ->seePageIs('AdminOptions/');
+
     }
 }

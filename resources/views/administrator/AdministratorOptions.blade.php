@@ -190,11 +190,23 @@
                                             $.ajax({
                                                 type    : 'GET',
                                                 url     : "/AdminOptions/customClearTables/"+batch+"/"+year+"/"+semesterTimetableOption+"/"+formalRequestTimetableOption,
-                                                success : function () {
-                                                    $.notify("Timetable data for Batch " + batch + "of Year " + year + " erased successfully",{
-                                                        position : 'bottom right',
-                                                        className: 'success'
-                                                    });
+                                                success : function (status) {
+
+                                                    if(status)
+                                                    {
+                                                        $.alert({
+                                                            theme: 'black',
+                                                            title: 'Error !',
+                                                            icon: 'fa fa-close',
+                                                            content: status
+                                                        });
+                                                    }
+                                                    else {
+                                                        $.notify("Timetable data for Batch " + batch + "of Year " + year + " erased successfully", {
+                                                            position: 'bottom right',
+                                                            className: 'success'
+                                                        });
+                                                    }
                                                 }
                                             });
                                         }

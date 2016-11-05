@@ -90,7 +90,7 @@ class AdministratorOptionsController extends Controller
     /**
      * If SemesterRequest checkbox is checked update or insert the variable to the database
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function semesterRequestChecked()
     {
@@ -118,12 +118,13 @@ class AdministratorOptionsController extends Controller
 
         //Send a notification to the user
         Notifications::sendNotification('Semester Form now Available',0 , 'semesterRequestFormNotification','/userRequest/requestFormSemester/');
+        return back();
     }
 
     /**
      * If SemesterRequest checkbox is unchecked update the variable to 0 on the database
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function semesterRequestUnchecked()
     {
@@ -136,6 +137,7 @@ class AdministratorOptionsController extends Controller
 
         //Delete the notification regarding the semester request table
         Notifications::where('type','semesterRequestFormNotification')->delete();
+        return back();
     }
 
     /**
@@ -146,7 +148,7 @@ class AdministratorOptionsController extends Controller
      */
     public function truncateTimetable(Request $request)
     {
-        if(!$request->ajax())
+        if(!$request->ajax() xor $request->isJson())
         {
             return redirect('/AdminOptions');
         }
@@ -172,13 +174,20 @@ class AdministratorOptionsController extends Controller
     public function clearTimetableForBatchAndYear(Request $request,$batch,$year,$semesterRequestCheck,$formalRequestCheck)
     {
         //Check if the incoming request is AJAX, redirect if not
-        if(!$request->ajax())
+        if(!$request->ajax() xor $request->isJson())
         {
             return redirect('/AdminOptions');
         }
         else
         {
-            $batchID = $batchID = DB::table('batch')->where('year','=',$year)->where('batchNo','=',$batch)->value('id');
+            $batchID = DB::table('batch')->where('year','=',$year)->where('batchNo','=',$batch)->value('id');
+
+            //Validate BatchID
+            if($batchID == null)
+            {
+                return json_encode("No information found regarding the batch and the year");
+            }
+
             DB::table('timetable')->where('year', '=', $year)->where('batchNo', '=', $batchID)->delete();
 
             if($semesterRequestCheck == true)

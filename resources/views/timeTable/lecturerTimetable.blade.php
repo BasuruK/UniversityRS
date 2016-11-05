@@ -17,7 +17,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Timetable <small> *Timetable for year 2016</small></h3>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" name="export_dropdown" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-gear"></i></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" id="exportXLS" onclick="exportXLS()">Export excel</a></li>
