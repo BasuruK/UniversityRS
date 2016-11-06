@@ -76,7 +76,8 @@ class UserLevelController extends Controller
     /**
      * @param Request $request
      * @param User $user
-     * @return $this
+     *
+     * @return mixed
      */
     public  function  editPassword(Request $request, User $user)
     {
