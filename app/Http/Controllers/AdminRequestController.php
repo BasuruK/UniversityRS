@@ -129,7 +129,103 @@ class AdminRequestController extends Controller
         else if ($dayName=="Sun")
             $dateFinal="sunday";
 
-        return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser'))->with('dateFinal',$dateFinal);
+        list($firsttime, $dash, $lasttime) = explode(" ",$admin_request->timeSlot);
+
+        /**
+         * checking in the semester requests table
+         */
+        $nonAvailableHalls_semester=\DB::table('semester_requests')
+            ->select('resourceID')
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$dateFinal],
+                ['timeSlot','LIKE',$firsttime .'%'],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$dateFinal],
+                ['timeSlot','LIKE','%'.$lasttime],
+            ])
+            ->lists('resourceID');
+
+        $availableHalls_semester=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls_semester)
+            ->where('type','LIKE',$admin_request->ResourceType)
+            ->orderBy('id', 'desc')
+            ->lists('hallNo');
+
+        /**
+         * checking formal requests in the requests table
+         */
+        $nonAvailableHalls_formal=\DB::table('requests')
+            ->select('resourceID')
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$admin_request->requestDate],
+                ['timeSlot','LIKE',$firsttime .'%'],
+                ['specialEvent',NULL],
+            ])
+            ->orWhere([
+                ['status','=','Accepted'],
+                ['requestDate','=',$admin_request->requestDate],
+                ['timeSlot','LIKE','%'.$lasttime],
+                ['specialEvent',NULL],
+            ])
+            ->lists('resourceID');
+
+        $availableHalls_formal=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls_formal)
+            ->where('type','LIKE',$admin_request->ResourceType)
+            ->orderBy('id', 'desc')
+            ->lists('hallNo');
+
+        /**
+         * Checking the special event requests in the requests table
+         */
+
+        $specialRequests=\DB::table('requests')
+            ->select('*')
+            ->where([
+                ['status','=','Accepted'],
+                ['requestDate','=',$admin_request->requestDate],
+                ['specialEvent','!=',NULL],
+            ])
+            ->get();
+
+        $nonAvailableHalls_Special = NULL;
+
+        foreach($specialRequests as $specialRequest)
+        {
+            $i=0;
+            list($startTimeSpecial, $dash, $endTimeSpecial) = explode(" ",$specialRequest->timeSlot);
+            $duration=$endTimeSpecial - $startTimeSpecial;
+            while($startTimeSpecial<=$endTimeSpecial)
+            {
+                 if($startTimeSpecial==$firsttime)
+                 {
+                     $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
+                     $i=$i+1;
+                 }
+                 elseif ($startTimeSpecial==$lasttime)
+                 {
+                     $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
+                     $i=$i+1;
+                 }
+                 $startTimeSpecial=$startTimeSpecial+1.00;
+            }
+        }
+
+        $availableHalls_Special=\DB::table('resource')
+            ->whereNotIn('hallNo',$nonAvailableHalls_Special)
+            ->where('type','LIKE',$admin_request->ResourceType)
+            ->orderBy('id', 'desc')
+            ->lists('type','hallNo');
+
+        $finalHalls = array_intersect($availableHalls_semester, $availableHalls_formal);
+
+        //$finalHalls = array_intersect($sem_form_int,$availableHalls_Special);
+
+        return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser','finalHalls'))->with('dateFinal',$dateFinal)->with('finalHalls',$finalHalls);
 
     }
 
@@ -371,122 +467,6 @@ class AdminRequestController extends Controller
     /**
      * Semester Requests End
      */
-
-    /**
-     * Formal Request Loading Available Resources
-     */
-    public function loadAvailableResourcesDateFormal()
-    {
-        $time= Input::get('option2');
-
-        list($firsttime, $dash, $lasttime) = explode(" ",$time);
-
-        $date= Input::get('option');
-        $reqResourceType = Input::get('option3');
-        $batch = Input::get('option4');
-        $formalDate = Input::get('option5');
-
-        /**
-         * checking in the semester requests table
-         */
-        $nonAvailableHalls_semester=\DB::table('semester_requests')
-            ->select('resourceID')
-            ->where([
-                ['status','=','Accepted'],
-                ['requestDate','=',$date],
-                ['timeSlot','LIKE',$firsttime .'%'],
-            ])
-            ->orWhere([
-                ['status','=','Accepted'],
-                ['requestDate','=',$date],
-                ['timeSlot','LIKE','%'.$lasttime],
-            ])
-            ->lists('resourceID');
-
-        $availableHalls_semester=\DB::table('resource')
-            ->whereNotIn('hallNo',$nonAvailableHalls_semester)
-            ->where('type','LIKE',$reqResourceType)
-            ->orderBy('id', 'desc')
-            ->lists('type','hallNo');
-
-        /**
-         * checking formal requests in the requests table
-         */
-        $nonAvailableHalls_formal=\DB::table('requests')
-            ->select('resourceID')
-            ->where([
-                ['status','=','Accepted'],
-                ['requestDate','=',$formalDate],
-                ['timeSlot','LIKE',$firsttime .'%'],
-                ['specialEvent',NULL],
-            ])
-            ->orWhere([
-                ['status','=','Accepted'],
-                ['requestDate','=',$formalDate],
-                ['timeSlot','LIKE','%'.$lasttime],
-                ['specialEvent',NULL],
-            ])
-            ->lists('resourceID');
-
-        $availableHalls_formal=\DB::table('resource')
-            ->whereNotIn('hallNo',$nonAvailableHalls_formal)
-            ->where('type','LIKE',$reqResourceType)
-            ->orderBy('id', 'desc')
-            ->lists('type','hallNo');
-
-        /**
-         * Checking the special event requests in the requests table
-         */
-
-        $specialRequests=\DB::table('requests')
-            ->select('*')
-            ->where([
-                ['status','=','Accepted'],
-                ['requestDate','=',$formalDate],
-                ['specialEvent','!=',NULL],
-            ])
-            ->get();
-
-        foreach($specialRequests as $specialRequest)
-        {
-            $i=0;
-            list($startTimeSpecial, $dash, $endTimeSpecial) = explode(" ",$specialRequest->timeSlot);
-            $duration=$endTimeSpecial - $startTimeSpecial;
-            while($startTimeSpecial<=$endTimeSpecial)
-            {
-                 if($startTimeSpecial==$firsttime)
-                 {
-                     $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
-                     $i=$i+1;
-                 }
-                 elseif ($startTimeSpecial==$lasttime)
-                 {
-                     $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
-                     $i=$i+1;
-                 }
-                 $startTimeSpecial=$startTimeSpecial+1.00;
-            }
-        }
-
-        $availableHalls_Special=\DB::table('resource')
-            ->whereNotIn('hallNo',$nonAvailableHalls_Special)
-            ->where('type','LIKE',$reqResourceType)
-            ->orderBy('id', 'desc')
-            ->lists('type','hallNo');
-
-        /**
-         * Intersecting the derived collections
-         */
-
-        $finalResources = $availableHalls_formal->intersect($availableHalls_semester);
-
-        return Response::json($finalResources);
-    }
-
-    /**
-     * End of Formal Request Loading Available Requests
-     */
-
 
     /**
      * Special Requests

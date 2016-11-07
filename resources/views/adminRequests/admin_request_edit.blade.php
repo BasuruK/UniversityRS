@@ -15,40 +15,6 @@
 @section('content')
     <div class="container-fluid">
 
-        <script>
-            /**
-             * Dynamically populate the
-             * select options for available resources
-             */
-            $(document).ready(function()
-            {
-
-                $.get("{{ url('/adminRequest/requestForm/loadHallsDateFormal')}}", {option: $('#dateFinal').val(), option2: $('#prevTimeSlot').val(), option3: $('#reqResourceType').val(), option4: $('#prevBatch').val(), option5: $('#formalDate').val()},
-
-                        function(data) {
-
-                            var availableHalls = $('#selectResources');
-
-                            availableHalls.empty();
-
-                            $.each(data, function(key, value) {
-
-                                availableHalls
-
-                                        .append($("<option></option>")
-
-                                                .attr("value",key)
-
-                                                .text(key+value));
-                            });
-
-                        });
-
-            });
-        </script>
-
-
-
         <div class="row">
             <div class="col col-sm-7">
                 <div class="box box-primary">
@@ -175,7 +141,9 @@
                             <div class="form-group">
                                 <label>Resource</label><br>
                                 <select class="form-control" name="selectResources" id="selectResources">
-
+                                    @foreach($finalHalls as $finalHall)
+                                        <option value="{{$finalHall}}">{{$finalHall}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

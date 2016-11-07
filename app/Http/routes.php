@@ -202,9 +202,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest/notify/{admin_request}','AdminRequestController@notify');
 
-    Route::get('/adminRequest/requestForm/loadHallsDate_Formal','AdminRequestController@loadAvailableResourcesDate_Formal');
-
-    Route::get('/adminRequest/requestForm/loadHallsTime_Formal','AdminRequestController@loadAvailableResourcesTime_Formal');
+    Route::get('/adminRequest/requestForm/loadHallsFormal','AdminRequestController@loadAvailableResourcesFormal');
 
     //Semester Request Management
 
