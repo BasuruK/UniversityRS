@@ -213,7 +213,7 @@ class AdministratorOptionsController extends Controller
     public function masterReset(Request $request,$password)
     {
         //Check if the incoming request is AJAX, redirect if not
-        if(!$request->ajax())
+        if(!$request->ajax() xor $request->isJson())
         {
             return redirect('/AdminOptions');
         }
