@@ -111,6 +111,7 @@
                             </div>
 
                             <div  class="form-group">
+                                <p>Previous Time Slot: {{$userRequest->timeSlot}}</p>
                                 <label>Start Time</label>
                                 <input  type="text" class="form-control"  id="selectTimeSpecialST" name="selectTimeSpecialST">
 
@@ -133,10 +134,10 @@
                                                 $('#selecttimeEdit').val(special);
                                             },
                                             timeFormat: 'H:mm',
-                                            interval:'30',
-                                            minTime: '8:00',
+                                            interval:'60',
+                                            minTime: '8:30',
                                             maxTime: '18:30',
-                                            defaultTime:'8:00',
+                                            defaultTime:'8:30',
                                             scrollbar:'true',
                                             disableTextInput: 'true'
                                         });
@@ -164,10 +165,10 @@
                                                 $('#selecttimeEdit').val(special);
                                             },
                                             timeFormat: 'H:mm' ,
-                                            interval:'30',
-                                            minTime: '8:30',
+                                            interval:'60',
+                                            minTime: '9:30',
                                             maxTime: '18:30',
-                                            defaultTime:'8:30',
+                                            defaultTime:'9:30',
                                             scrollbar:'true',
                                             disableTextInput: 'true'
 

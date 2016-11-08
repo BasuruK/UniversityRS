@@ -127,10 +127,10 @@
                                           $('#selecttimeforSp').val(special);
                                       },
                                       timeFormat: 'H:mm',
-                                      interval:'30',
-                                      minTime: '8:00',
-                                      maxTime: '18:30',
-                                      defaultTime:'8:00',
+                                      interval:'60',
+                                      minTime: '8:30',
+                                      maxTime: '18:00',
+                                      defaultTime:'8:30',
                                       scrollbar:'true',
                                       disableTextInput: 'true'
                                   });
@@ -158,10 +158,10 @@
                                       $('#selecttimeforSp').val(special);
                                   },
                                   timeFormat: 'H:mm' ,
-                                  interval:'30',
-                                  minTime: '8:30',
+                                  interval:'60',
+                                  minTime: '9:30',
                                   maxTime: '18:30',
-                                  defaultTime:'8:30',
+                                  defaultTime:'9:30',
                                   scrollbar:'true',
                                   disableTextInput: 'true'
 
