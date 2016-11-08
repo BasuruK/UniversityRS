@@ -17,6 +17,25 @@
 
         <div class="row">
             <div class="col col-sm-7">
+                <script>
+                    function isNotify(id)
+                    {
+                        var ID =id;
+                        $.confirm({
+                            theme: 'black',
+                            title: 'Confirm Notification',
+                            icon: 'fa fa-warning',
+                            content: 'Are you sure want to notify the User that the Request has no Available Resources?',
+                            confirmButton: 'Yes',
+                            confirmButtonClass: 'btn-danger',
+                            confirm: function(){
+                                location.href="/adminRequest/notifyNR/"+ID;
+                            }
+
+                        });
+                        return false;
+                    }
+                </script>
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Edit Details</h3>
@@ -112,11 +131,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Semester</label><br>
-                                <p>{{ $admin_request->semester }}</p>
-                            </div>
-
-                            <div class="form-group">
                                 <label>Year</label></br>
                                 <p>{{ $admin_request->year }}</p>
                             </div>
@@ -173,6 +187,7 @@
                             <br>
                             <br>
                             <a href="/adminRequest" class="btn btn-warning">Cancel</a>
+                            <a class="btn btn-danger" onclick="return isNotify({{$admin_request->id}})">No Resources</a>
 
                             <button id="submitbtn" type="submit " class="btn btn-primary pull-right" >Submit</button>
                         </form>

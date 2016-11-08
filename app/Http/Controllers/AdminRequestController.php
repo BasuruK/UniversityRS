@@ -14,6 +14,9 @@ use DB;
 
 class AdminRequestController extends Controller
 {
+    /**
+     * Formal Request Management Methods
+     */
 
     /**
      * This function creates the collection of requests and pass the collection to the
@@ -213,7 +216,7 @@ class AdminRequestController extends Controller
                      $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
                      $i=$i+1;
                  }
-                 elseif ($startTimeSpecial==$lasttime)
+                 if ($startTimeSpecial==$lasttime)
                  {
                      $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
                      $i=$i+1;
@@ -290,12 +293,61 @@ class AdminRequestController extends Controller
                                Resource: '.$request_hall[0].'
                                On: '.$request_date[0].'
                                For:  '.$request_timeslot[0].' Time Slot
-                               is '.$request_status[0]);
+                               is Approved');
         });
 
 
         return redirect::route('adminRequestShow');
     }
+
+    /**
+     * @param Admin_Request $admin_request <- details of the request
+     * @return to the main view
+     *
+     * This functions takes the details of the request as the parameter, then extracts details
+     * such as user email of the user who made the request and then creates the body of the request
+     * and send an email to the user's email address
+     */
+    public function notifyNoResources(Admin_Request $admin_request)
+    {
+
+        $user = \DB::table('users')
+            ->select('users.*')
+            ->where('users.staff_id','like',$admin_request->lecturerID)
+            ->get();
+
+        $user_request= \DB::table('requests')
+            ->select('requests.*')
+            ->where('requests.id','=',$admin_request->id)
+            ->get();
+
+        $user_email = array_pluck($user, 'email');
+        $request_hall = array_pluck($user_request,'resourceID');
+        $request_status = array_pluck($user_request,'status');
+        $request_date = array_pluck($user_request,'requestDate');
+        $request_timeslot = array_pluck($user_request,'timeSlot');
+        $request_type = array_pluck($user_request,'ResourceType');
+
+
+
+        Mail::send([], [], function ($message) use ($user_email,$request_hall,$request_status,$request_date,$request_timeslot,$admin_request) {
+            $message->to($user_email)
+                ->subject('No Resources Available for the Request')
+
+                ->setBody('Your Request For
+                               Type: '.$admin_request->ResourceType.'
+                               On: '.$request_date[0].'
+                               For:  '.$request_timeslot[0].' Time Slot
+                               Has no available resources to be assigned.');
+        });
+
+
+        return redirect::route('adminRequestShow');
+    }
+
+    /**
+     * End of Formal Request Management Methods
+     */
 
     /**
      * Semester Requests

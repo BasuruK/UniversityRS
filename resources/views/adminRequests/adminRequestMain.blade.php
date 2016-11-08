@@ -56,6 +56,7 @@
                                         });
                                         return false;
                                     }
+
                                     function isEdit(id)
                                     {
                                         var ID =id;
@@ -68,6 +69,24 @@
                                             confirmButtonClass: 'btn-danger',
                                             confirm: function(){
                                                 location.href="/adminRequest/edit/"+ID;
+                                            }
+
+                                        });
+                                        return false;
+                                    }
+
+                                    function isNotify(id)
+                                    {
+                                        var ID =id;
+                                        $.confirm({
+                                            theme: 'black',
+                                            title: 'Confirm Notification',
+                                            icon: 'fa fa-warning',
+                                            content: 'Are you sure want to notify the User regarding the Request?',
+                                            confirmButton: 'Yes',
+                                            confirmButtonClass: 'btn-danger',
+                                            confirm: function(){
+                                                location.href="/adminRequest/notify/"+ID;
                                             }
 
                                         });
@@ -109,6 +128,8 @@
                                                 <div class="pull-right">
                                                     <a class="btn btn-primary " onclick="return isEdit({{$request->id}})">Edit</a>
                                                     <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a>
+                                                    <br>
+                                                    <a class="btn btn-warning" onclick="return isNotify({{$request->id}})">Notify</a>
                                                 </div>
                                             </td>
                                         </tr>

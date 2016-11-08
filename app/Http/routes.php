@@ -202,6 +202,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest/notify/{admin_request}','AdminRequestController@notify');
 
+    Route::get('/adminRequest/notifyNR/{admin_request}','AdminRequestController@notifyNoResources');
+
     Route::get('/adminRequest/requestForm/loadHallsFormal','AdminRequestController@loadAvailableResourcesFormal');
 
     //Semester Request Management
