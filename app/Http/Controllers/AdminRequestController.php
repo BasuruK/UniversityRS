@@ -184,23 +184,30 @@ class AdminRequestController extends Controller
          */
 
         $specialRequests=\DB::table('requests')
-            ->select('*')
+            ->select('requests.*')
             ->where([
                 ['status','=','Accepted'],
-                ['requestDate','=',$admin_request->requestDate],
+                ['requestDate','LIKE',$admin_request->requestDate],
                 ['specialEvent','!=',NULL],
             ])
             ->get();
 
-        $nonAvailableHalls_Special = NULL;
+        $nonAvailableHalls_Special[0]='1';
 
         foreach($specialRequests as $specialRequest)
         {
-            $i=0;
+            $i=1;
             list($startTimeSpecial, $dash, $endTimeSpecial) = explode(" ",$specialRequest->timeSlot);
             $duration=$endTimeSpecial - $startTimeSpecial;
+
+            $startTimeSpecial = (int)$startTimeSpecial;
+            $endTimeSpecial = (int)$endTimeSpecial;
+            $firsttime = (int)$firsttime;
+            $lasttime = (int)$lasttime;
+
             while($startTimeSpecial<=$endTimeSpecial)
             {
+
                  if($startTimeSpecial==$firsttime)
                  {
                      $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
@@ -219,11 +226,11 @@ class AdminRequestController extends Controller
             ->whereNotIn('hallNo',$nonAvailableHalls_Special)
             ->where('type','LIKE',$admin_request->ResourceType)
             ->orderBy('id', 'desc')
-            ->lists('type','hallNo');
+            ->lists('hallNo');
 
-        $finalHalls = array_intersect($availableHalls_semester, $availableHalls_formal);
+        $sem_form_int = array_intersect($availableHalls_semester, $availableHalls_formal);
 
-        //$finalHalls = array_intersect($sem_form_int,$availableHalls_Special);
+        $finalHalls = array_intersect($sem_form_int,$availableHalls_Special);
 
         return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser','finalHalls'))->with('dateFinal',$dateFinal)->with('finalHalls',$finalHalls);
 
