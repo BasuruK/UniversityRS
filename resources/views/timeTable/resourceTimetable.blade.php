@@ -69,37 +69,45 @@
                         var resourceTimeData = 0;
                         resourceTimeData = <?php echo json_encode($ResourceTimeDetails) ?>;
 
-                        try {
-                            for (var i = 0; i < resourceTimeData.length; i++) {
-
-                                timeSlot = resourceTimeData[i].timeSlot;
-                                startTime         = timeSlot.split(" ")[0];
-                                endTime           = timeSlot.split(" ")[2];
-                                totalHours       = endTime - startTime;
-                                endTimeOfPeriod      = parseFloat(startTime) + totalHours;
-
-                                for (var k = 0; k < totalHours; k++) {
-
-
-                                    timeCount           = parseFloat(startTime) + 1;
-                                    timeOfBeginingAndEnd = startTime + " " + "-" + " " + timeCount + "0";
-
-                                    document.getElementById(timeOfBeginingAndEnd + "-" + resourceTimeData[i].day).innerHTML = resourceTimeData[i].subjectCode + " <br>Lecturer: " + resourceTimeData[i].lecturerName + "</br>" + " Year: " + resourceTimeData[i].year + "<br> Batch: " + resourceTimeData[i].batchNo + "</br>";
-
-
-                                    document.getElementById(timeOfBeginingAndEnd + "-" + resourceTimeData[i].day).style["background-color"] = "lightblue";
-
-                                    startTime         = parseFloat(startTime) + 1 + ("0");
-
-                                }
-                            }
-
-
-                        }
-                        catch (exception)
+                        if(resourceTimeData==0)
                         {
-
+                            document.getElementById('TableTable').innerHTML="This resource has not been assigned to any academic activities yet";
                         }
+                        else
+                        {
+                            try {
+                                for (var i = 0; i < resourceTimeData.length; i++) {
+
+                                    timeSlot = resourceTimeData[i].timeSlot;
+                                    startTime         = timeSlot.split(" ")[0];
+                                    endTime           = timeSlot.split(" ")[2];
+                                    totalHours       = endTime - startTime;
+                                    endTimeOfPeriod      = parseFloat(startTime) + totalHours;
+
+                                    for (var k = 0; k < totalHours; k++) {
+
+
+                                        timeCount           = parseFloat(startTime) + 1;
+                                        timeOfBeginingAndEnd = startTime + " " + "-" + " " + timeCount + "0";
+
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + resourceTimeData[i].day).innerHTML = resourceTimeData[i].subjectCode + " <br>Lecturer: " + resourceTimeData[i].lecturerName + "</br>" + " Year: " + resourceTimeData[i].year + "<br> Batch: " + resourceTimeData[i].batchNo + "</br>";
+
+
+                                        document.getElementById(timeOfBeginingAndEnd + "-" + resourceTimeData[i].day).style["background-color"] = "lightblue";
+
+                                        startTime         = parseFloat(startTime) + 1 + ("0");
+
+                                    }
+                                }
+
+
+                            }
+                            catch (exception)
+                            {
+
+                            }
+                        }
+
                         /**
                          * Exports the timetable in excel format
                          */
