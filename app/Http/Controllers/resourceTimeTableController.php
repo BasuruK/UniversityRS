@@ -17,7 +17,7 @@ class resourceTimeTableController extends Controller
         $hallNo=$request->hallNo;
         $hallType=$request->hallType;
 
-        $ResourceTime  = TimeTable::join('batch','TimeTable.batchNo','=','batch.id')->select('batch.*','TimeTable.year','TimeTable.subjectCode','TimeTable.timeSlot','TimeTable.day','TimeTable.resourceName','TimeTable.lecturerName')->where('resourceName','=',$hallNo)->get()->toArray();
+        $ResourceTime  = TimeTable::join('batch','timetable.batchNo','=','batch.id')->select('batch.*','timetable.year','timetable.subjectCode','timetable.timeSlot','timetable.day','timetable.resourceName','timetable.lecturerName')->where('resourceName','=',$hallNo)->get()->toArray();
         $fullTable      = TimeFormatTable::all();
 
   
