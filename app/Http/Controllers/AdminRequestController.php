@@ -54,6 +54,7 @@ class AdminRequestController extends Controller
             ->select('requests.*','subject.subName','resource.hallNo','users.name','allowed_users.position')
             ->orderby('requests.year','asc')
             ->orderby('requests.batchNo','asc')
+            ->orderby('allowed_users.position','asc')
             ->get();
 
         /*$c_requests = \DB::table('requests')
