@@ -102,8 +102,7 @@
                                 <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 10px;" aria-sort="ascending">Request ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
+                                        <th class="" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 30px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 30px;">Year</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Subject</th>
@@ -116,7 +115,6 @@
                                     <tbody>
                                     @foreach($requests as $request)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{$request->id}}</td>
                                             <td>{{$request->name}}</td>
                                             <td>{{$request->batchNo}}</td>
                                             <td>{{$request->year}}</td>
@@ -125,9 +123,9 @@
                                             <td>{{$request->timeSlot}}</td>
                                             <td>{{$request->ResourceType}}</td>
                                             <td>
-                                                <div class="pull-right">
-                                                    <a class="btn btn-primary " onclick="return isEdit({{$request->id}})">Edit</a>
-                                                    <a class="btn btn-danger " onclick="return isDelete({{$request->id}})">Delete</a>
+                                                <div class="">
+                                                    <a class="btn btn-primary pull-left" onclick="return isEdit({{$request->id}})">Edit</a>
+                                                    <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
                                                     <br>
                                                     <a class="btn btn-warning" onclick="return isNotify({{$request->id}})">Notify</a>
                                                 </div>
@@ -178,7 +176,6 @@
                                 <table id="dataTableAcceptedFormalRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 30px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 30px;">Year</th>
@@ -192,7 +189,6 @@
                                     <tbody>
                                     @foreach($acceptedrequests as $acceptedrequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{ $acceptedrequest->id }}</td>
                                             <td>{{ $acceptedrequest->name }}</td>
                                             <td>{{ $acceptedrequest->batchNo }}</td>
                                             <td>{{ $acceptedrequest->year }}</td>

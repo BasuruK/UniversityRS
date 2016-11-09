@@ -26,13 +26,17 @@ class AdminRequestController extends Controller
      */
     public function show()
     {
-        $requests = DB::table('requests')
+        $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
             ->join('users','requests.lecturerID','=', 'users.staff_id')
-            ->select('requests.*','subject.subName','batch.batchNo','users.name')
+            ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
+            ->select('requests.*','subject.subName','batch.batchNo','users.name','allowed_users.position')
             ->where('requests.status','!=','Accepted')
             ->where('requests.specialEvent',NULL)
+            ->orderBy('requests.year','asc')
+            //->orderBy('batch.batchNo','asc')
+            //->orderBy('allowed_users.position','asc')
             ->get();
 
         $acceptedrequests=\DB::table('requests')
@@ -42,6 +46,8 @@ class AdminRequestController extends Controller
             ->select('requests.*','subject.subName','batch.batchNo','users.name')
             ->where('requests.status','=','Accepted')
             ->where('requests.specialEvent',NULL)
+            //->orderBy('requests.year')
+            //->orderBy('requests.batchNo')
             ->get();
 
         return view("adminRequests.adminRequestMain")->with('requests',$requests)->with('acceptedrequests',$acceptedrequests);
@@ -306,7 +312,7 @@ class AdminRequestController extends Controller
      *
      * This functions takes the details of the request as the parameter, then extracts details
      * such as user email of the user who made the request and then creates the body of the request
-     * and send an email to the user's email address
+     * and send an email to the user's email address notifying there are not available resources
      */
     public function notifyNoResources(Admin_Request $admin_request)
     {
@@ -359,8 +365,12 @@ class AdminRequestController extends Controller
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'semester_requests.batchNo', '=', 'batch.id')
             ->join('users','semester_requests.lecturerID','=', 'users.staff_id')
-            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name')
+            ->join('allowed_users','semester_requests.lecturerID','=','allowed_users.staff_id')
+            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name','allowed_users.position')
             ->where('semester_requests.status','!=','Accepted')
+            ->orderBy('allowed_users.position')
+            ->orderBy('semester_requests.year')
+            ->orderBy('batch.batchNo')
             ->get();
         $acceptedSemesterRequests=\DB::table('semester_requests')
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')

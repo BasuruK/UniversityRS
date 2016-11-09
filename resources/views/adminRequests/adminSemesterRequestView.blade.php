@@ -83,7 +83,6 @@
                                 <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Year</th>
@@ -97,7 +96,6 @@
                                     <tbody>
                                     @foreach($semesterRequests as $semesterRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{$semesterRequest->id}}</td>
                                             <td>{{$semesterRequest->name}}</td>
                                             <td>{{$semesterRequest->batchNo}}</td>
                                             <td>{{$semesterRequest->year}}</td>
@@ -157,7 +155,6 @@
                                 <table id="dataTableAcceptedSemesterRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Staff ID: activate to sort column descending" style="width: 55px;" aria-sort="ascending">Request ID</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Batch</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 140px;">Year</th>
@@ -171,7 +168,6 @@
                                     <tbody>
                                     @foreach($acceptedSemesterRequests as $acceptedSemesterRequest)
                                         <tr role="row" class="odd">
-                                            <td class="sorting_1">{{ $acceptedSemesterRequest->id }}</td>
                                             <td>{{ $acceptedSemesterRequest->name }}</td>
                                             <td>{{ $acceptedSemesterRequest->batchNo }}</td>
                                             <td>{{ $acceptedSemesterRequest->year }}</td>
