@@ -11,6 +11,10 @@ use Excel;
 
 class resourceTimeTableController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
 

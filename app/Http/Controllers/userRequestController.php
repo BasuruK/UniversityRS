@@ -91,6 +91,10 @@ class userRequestController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function AddSemesterRequest(Request $request)
     {
         if (SemesterRequests::where('ResourceType', '=', $request['ResourceType'])
@@ -222,7 +226,10 @@ class userRequestController extends Controller
 
     }
 
-
+    /**
+     * @param SemesterRequests $userRequest
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function EditSemesterRequestForm(SemesterRequests $userRequest )
     {
 
@@ -259,16 +266,14 @@ class userRequestController extends Controller
          return redirect::to('/userRequest/Show/');
     }
 
+    /**
+     * @param Request $request
+     * @param SemesterRequests $userRequest
+     * @return mixed
+     */
     public function UpdateSemesterRequest(Request $request,SemesterRequests $userRequest)
     {
-//        $this->validate($request, [
-//            'selectdateEdit'=>'required',
-//            'selectyearEdit'=>'required',
-//            'selectbatchEdit'=>'required',
-//            'selecttimeEdit'=>'required',
-//            'selectresEdit'=>'required',
-//            'semesterselectEdit'=>'required',
-//        ]);
+
         $userRequest->year=$request['selectyearEdit'];
         $userRequest->batchNo=$request['selectbatchEdit'];
         $userRequest->subjectCode=$request['selectsubEdit'];
@@ -295,6 +300,10 @@ class userRequestController extends Controller
         
     }
 
+    /**
+     * @param SemesterRequests $userRequest
+     * @return mixed
+     */
     public function deleteSemesterRequest(SemesterRequests $userRequest)
     {
         SemesterRequests::destroy($userRequest['id']);
