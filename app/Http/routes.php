@@ -188,6 +188,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
      * Request Management
      */
 
+    Route::get('/adminRequest/requestsSelection','AdminRequestController@selectionShow');
+
     //Formal Request Routes
 
     Route::get('/adminRequest', 'AdminRequestController@show')->name('adminRequestShow');

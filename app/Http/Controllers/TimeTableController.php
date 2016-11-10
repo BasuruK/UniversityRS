@@ -39,7 +39,7 @@ class TimeTableController extends Controller
 
     /**
      * @param Request $request
-     * @return generated timetable
+     * @return $this
      */
     public function show(Request $request)
     {

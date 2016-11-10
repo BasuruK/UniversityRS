@@ -273,7 +273,14 @@ desired effect
           <a href="#"><i class="fa fa-tachometer"></i> <span>Management</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
             <li><a href="/UserManagement">User Management</a></li>
-            <li><a href="/adminRequest">Requests Management</a></li>
+            <li>
+                <a href="#"> Requests Management<i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu menu-open" style="display: none;">
+                    <li><a href="/adminRequest">Formal Requests</a></li>
+                    <li><a href="/adminRequest/semesterRequest">Semester Requests</a></li>
+                    <li><a href="/adminRequest/specialRequest">Special Requests</a></li>
+                </ul>
+            </li>
             <li><a href="#">Data Management</a></li>
             <li><a href="/resource/show">Resource Management</a></li>
             <li><a href="/subject">Subject Management</a></li>

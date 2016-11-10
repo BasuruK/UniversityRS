@@ -26,7 +26,7 @@
                     <div class="icon">
                         <i class="ion-ios-calendar-outline"></i>
                     </div>
-                    <a href="/adminRequest" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/adminRequest/requestsSelection" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 

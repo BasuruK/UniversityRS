@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add Users <small> *Users who are allowed to register</small></h3>
+                    <h3 class="box-title">Show Timetables <small> *Show timetable of a batch</small></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

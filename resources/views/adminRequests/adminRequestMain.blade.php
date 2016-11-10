@@ -123,10 +123,9 @@
                                             <td>{{$request->timeSlot}}</td>
                                             <td>{{$request->ResourceType}}</td>
                                             <td>
-                                                <div class="">
-                                                    <a class="btn btn-primary pull-left" onclick="return isEdit({{$request->id}})">Edit</a>
-                                                    <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
-                                                    <br>
+                                                <div class="pull-right">
+                                                    <a class="btn btn-primary" onclick="return isEdit({{$request->id}})">Edit</a>
+                                                    <a class="btn btn-danger" onclick="return isDelete({{$request->id}})">Delete</a>
                                                     <a class="btn btn-warning" onclick="return isNotify({{$request->id}})">Notify</a>
                                                 </div>
                                             </td>

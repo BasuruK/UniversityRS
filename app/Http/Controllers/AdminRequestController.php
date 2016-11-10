@@ -14,6 +14,17 @@ use DB;
 
 class AdminRequestController extends Controller
 {
+
+    /**
+     * Display the selection window for the type of request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function selectionShow()
+    {
+        return view('adminRequests.selectRequests');
+    }
+
+
     /**
      * Formal Request Management Methods
      */

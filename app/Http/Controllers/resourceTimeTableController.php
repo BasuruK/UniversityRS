@@ -22,7 +22,7 @@ class resourceTimeTableController extends Controller
         $hallType=$request->hallType;
 
         $ResourceTime  = TimeTable::join('batch','timetable.batchNo','=','batch.id')->select('batch.*','timetable.year','timetable.subjectCode','timetable.timeSlot','timetable.day','timetable.resourceName','timetable.lecturerName')->where('resourceName','=',$hallNo)->get()->toArray();
-        $fullTable      = TimeFormatTable::all();
+        $fullTable     = TimeFormatTable::all();
 
   
 

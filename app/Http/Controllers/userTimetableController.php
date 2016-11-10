@@ -19,9 +19,8 @@ class userTimetableController extends Controller
     public function index()
     {
         $userName       = Auth::user()->name;
-        $LecturerTimes  = TimeTable::where('lecturerName','=',$userName)->get()->toArray();
+        $LecturerTimes  = TimeTable::join('batch','timetable.batchNo','=','batch.id')->select('batch.batchNo', 'timetable.year', 'timetable.subjectCode', 'timetable.timeSlot','timetable.day','timetable.resourceName','timetable.lecturerName')->get()->toArray();
         $fullTable      = TimeFormatTable::all();
-
         return view('timeTable.lecturerTimetable')->with('fullTimeTable',$fullTable)->with('LecturesTimeDetails',$LecturerTimes);
     }
 }
