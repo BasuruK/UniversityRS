@@ -15,6 +15,7 @@ use App\Notifications;
 use App\Jobs\SendDeadlineEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Queue;
 
 class AdministratorOptionsController extends Controller
 {
