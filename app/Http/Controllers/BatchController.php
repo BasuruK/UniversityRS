@@ -37,7 +37,7 @@ class BatchController extends Controller
     {
 
         $this->validate($request,[
-            'batchNo'       => 'bail|numeric|required',
+            'batchNo'       => 'bail|required',
             'year'          => 'bail|numeric|required',
             'noStudents'    => 'numeric|required'
         ]);
