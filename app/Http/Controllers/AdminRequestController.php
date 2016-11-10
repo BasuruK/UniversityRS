@@ -311,11 +311,12 @@ class AdminRequestController extends Controller
             $message->to($user_email)
                     ->subject('A Request Has Been Approved')
 
-                    ->setBody('Your Request For
-                               Resource: '.$request_hall[0].'
+                    ->setBody('Your Request
                                On: '.$request_date[0].'
                                For:  '.$request_timeslot[0].' Time Slot
-                               is Approved');
+                               is Approved for
+                               Resource: '.$request_hall[0]
+                    );
         });
 
         return redirect::route('adminRequestShow');

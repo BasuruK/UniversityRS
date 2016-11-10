@@ -126,8 +126,6 @@
                                                 <div class="">
                                                     <a class="btn btn-primary pull-left" onclick="return isEdit({{$request->id}})">Edit</a>
                                                     <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
-                                                    <br>
-                                                    <a class="btn btn-warning" onclick="return isNotify({{$request->id}})">Notify</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -196,7 +194,11 @@
                                             <td>{{$acceptedrequest->requestDate}}</td>
                                             <td>{{ $acceptedrequest->timeSlot }}</td>
                                             <td>{{ $acceptedrequest->resourceID }}</td>
-
+                                            <td>
+                                                <div class="">
+                                                    <a class="btn btn-warning" onclick="return isNotify({{$acceptedrequest->id}})">Notify</a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
