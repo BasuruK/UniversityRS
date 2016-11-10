@@ -37,9 +37,9 @@ class AdminRequestController extends Controller
             ->select('requests.*','subject.subName','batch.batchNo','users.name','allowed_users.position')
             ->where('requests.status','!=','Accepted')
             ->where('requests.specialEvent',NULL)
+            ->orderBy('allowed_users.position','asc')
             ->orderBy('requests.year','asc')
             ->orderBy('batch.batchNo','asc')
-            ->orderBy('allowed_users.position','asc')
             ->get();
 
         /**
