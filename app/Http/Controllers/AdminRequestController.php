@@ -37,6 +37,9 @@ class AdminRequestController extends Controller
      */
     public function show()
     {
+        /**
+         * Load Pending Requests
+         */
         $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
@@ -46,10 +49,13 @@ class AdminRequestController extends Controller
             ->where('requests.status','!=','Accepted')
             ->where('requests.specialEvent',NULL)
             ->orderBy('requests.year','asc')
-            //->orderBy('batch.batchNo','asc')
-            //->orderBy('allowed_users.position','asc')
+            ->orderBy('batch.batchNo','asc')
+            ->orderBy('allowed_users.position','asc')
             ->get();
 
+        /**
+         * Load Accepted Requests
+         */
         $acceptedrequests=\DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('users','requests.lecturerID','=', 'users.staff_id')
@@ -57,8 +63,8 @@ class AdminRequestController extends Controller
             ->select('requests.*','subject.subName','batch.batchNo','users.name')
             ->where('requests.status','=','Accepted')
             ->where('requests.specialEvent',NULL)
-            //->orderBy('requests.year')
-            //->orderBy('requests.batchNo')
+            ->orderBy('requests.year')
+            ->orderBy('requests.batchNo')
             ->get();
 
         return view("adminRequests.adminRequestMain")->with('requests',$requests)->with('acceptedrequests',$acceptedrequests);
@@ -116,22 +122,33 @@ class AdminRequestController extends Controller
         $subjects=\DB::table('subject')->get();
         $resources=\DB::table('resource')->get();
 
+        /**
+         * Get the batch No from the batch record ID
+         */
         $batch=\DB::table('batch')
             ->select('batch.batchNo')
             ->where('id',$admin_request->batchNo)
             ->first();
 
-
+        /**
+         * Get the subject code from the subject record ID
+         */
         $selectedSub=DB::table('subject')
             ->select('subject.subCode','subject.subName')
             ->where('id',$admin_request->subjectCode)
             ->first();
 
+        /**
+         * Get the lecturer Name from the lecturer's staff ID
+         */
         $requestedUser=DB::table('users')
             ->select('users.id','users.name')
             ->where('staff_id',$admin_request->lecturerID)
             ->first();
 
+        /**
+         * Isolates the day for later query use
+         */
         list($year,$month,$day,$dayName) = explode("-",$admin_request->requestDate);
 
         $dateFinal="test";
@@ -150,6 +167,9 @@ class AdminRequestController extends Controller
         else if ($dayName=="Sun")
             $dateFinal="sunday";
 
+        /**
+         * Isolates the start time and end time for later query use
+         */
         list($firsttime, $dash, $lasttime) = explode(" ",$admin_request->timeSlot);
 
         /**
@@ -249,8 +269,14 @@ class AdminRequestController extends Controller
             ->orderBy('id', 'desc')
             ->lists('hallNo');
 
+        /**
+         * Intersecting the available resources from the Semester Requests and Formal Requests
+         */
         $sem_form_int = array_intersect($availableHalls_semester, $availableHalls_formal);
 
+        /**
+         * Intersecting the available resources from the previous array and Special Event Requests
+         */
         $finalHalls = array_intersect($sem_form_int,$availableHalls_Special);
 
         return view('adminRequests.admin_request_edit',compact('admin_request','batch','selectedSub','requestedUser','finalHalls'))->with('dateFinal',$dateFinal)->with('finalHalls',$finalHalls);
@@ -324,21 +350,31 @@ class AdminRequestController extends Controller
      *
      * This functions takes the details of the request as the parameter, then extracts details
      * such as user email of the user who made the request and then creates the body of the request
-     * and send an email to the user's email address notifying there are not available resources
+     * and send an email to the user's email address notifying there are no available resources
+     * for the time period and day requested.
      */
     public function notifyNoResources(Admin_Request $admin_request)
     {
 
+        /**
+         * Retrieving lecturer's details
+         */
         $user = \DB::table('users')
             ->select('users.*')
             ->where('users.staff_id','like',$admin_request->lecturerID)
             ->get();
 
+        /**
+         * Retrieving request details
+         */
         $user_request= \DB::table('requests')
             ->select('requests.*')
             ->where('requests.id','=',$admin_request->id)
             ->get();
 
+        /**
+         * Plucking individual details and storing in variables
+         */
         $user_email = array_pluck($user, 'email');
         $request_hall = array_pluck($user_request,'resourceID');
         $request_status = array_pluck($user_request,'status');
@@ -346,8 +382,9 @@ class AdminRequestController extends Controller
         $request_timeslot = array_pluck($user_request,'timeSlot');
         $request_type = array_pluck($user_request,'ResourceType');
 
-
-
+        /**
+         * Creating the Email content and sending it
+         */
         Mail::send([], [], function ($message) use ($user_email,$request_hall,$request_status,$request_date,$request_timeslot,$admin_request) {
             $message->to($user_email)
                 ->subject('No Resources Available for the Request')
@@ -371,8 +408,16 @@ class AdminRequestController extends Controller
      * Semester Requests
      */
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * This function populates the Tables in the Main View of Semester Request Management
+     */
     public function showSemesterRequests()
     {
+        /**
+         * Retrieving Pending Semester Requests
+         */
         $semesterRequests = \DB::table('semester_requests')
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'semester_requests.batchNo', '=', 'batch.id')
@@ -384,6 +429,10 @@ class AdminRequestController extends Controller
             ->orderBy('semester_requests.year')
             ->orderBy('batch.batchNo')
             ->get();
+
+        /**
+         * Retrieving Accepted Semester Requests
+         */
         $acceptedSemesterRequests=\DB::table('semester_requests')
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
             ->join('users','semester_requests.lecturerID','=', 'users.staff_id')
@@ -396,25 +445,46 @@ class AdminRequestController extends Controller
         return view('adminRequests.adminSemesterRequestView',compact('semesterRequests','acceptedSemesterRequests'));
     }
 
+    /**
+     * @param AdminSemesterRequest $adminSemesterRequest <- details of the Semester Request
+     * @return to the Main View of Semester Request Management
+     *
+     * This functions deletes a Semester Request Record from the Database
+     */
     public function deleteSemesterRequest(AdminSemesterRequest $adminSemesterRequest)
     {
         AdminSemesterRequest::destroy($adminSemesterRequest['id']);
         return redirect::to('/adminRequest/semesterRequest');
     }
 
+    /**
+     * @param AdminSemesterRequest $adminSemesterRequest <- details of the Semester Request
+     * @return to the Edit Form of the Semester Request
+     *
+     * This function retrieves necessary details and redirects the user to to the Edit Form of the
+     * Semester Request where the user can allocate a Resource to the request.
+     */
     public function editSemesterRequest(AdminSemesterRequest $adminSemesterRequest)
     {
+        /**
+         * Retrieving batch No from the batch record ID
+         */
         $batch=\DB::table('batch')
             ->select('batch.batchNo')
             ->where('id',$adminSemesterRequest->batchNo)
             ->first();
 
-
+        /**
+         * Retrieving the subject code and name from the subject record ID
+         */
         $selectedSub=DB::table('subject')
             ->select('subject.subCode','subject.subName')
             ->where('id',$adminSemesterRequest->subjectCode)
             ->first();
 
+        /**
+         * Retrieving the user name using the user staff ID
+         */
         $requestedUser=DB::table('users')
             ->select('users.id','users.name')
             ->where('staff_id',$adminSemesterRequest->lecturerID)
@@ -423,38 +493,99 @@ class AdminRequestController extends Controller
         return view('adminRequests.adminSemesterRequestEdit',compact('adminSemesterRequest','requestedUser','batch','selectedSub'));
     }
 
+    /**
+     * @param Request $request <- Details from the Edit Form
+     * @param AdminSemesterRequest $adminSemesterRequest <- Details of the Semester Request
+     * @return to the Main View of Semester Request Management
+     *
+     * This function updates the existing record with the allocated resource and modified time and day if done
+     * in the semester_request table and creates a new record in the timetable table.
+     */
     public function updateSemesterRequest(Request $request,AdminSemesterRequest $adminSemesterRequest)
     {
-        $adminSemesterRequest->requestDate=$request['selectdateEdit'];
-        $adminSemesterRequest->timeSlot=$request['selectTimeEdit'];
-        $adminSemesterRequest->resourceID=$request['selectResources'];
-        $adminSemesterRequest->status='Accepted';
+        /**
+         * Checking for duplicate Records
+         */
+        if (DB::table('semester_requests')
+            ->where('lecturerID', $request['lectID'])
+            ->where('year',$request['reqYear'])
+            ->where('batchNo',$request['reqBatch'])
+            ->where('subjectCode',$request['prevsub'])
+            ->where('requestDate',$request['selectdateEdit'])
+            ->where('timeSlot',$request['selectTimeEdit'])
+            ->where('semester',$request['reqSemester'])
+            ->where('timeslotType',$request['SlotTypeEdit'])
+            ->where('ResourceType',$request['reqResourceType'])
+            ->where('status','Accepted')
+            ->first()
+        )
+        {
+            $request->session()->flash('alert-warning', 'Duplicate Request Already Exists!');
+            return Redirect::back();
+        }
+        /**
+         * Checking whether the Lecturer is available during the given time slot and day
+         */
+        elseif (DB::table('semester_requests')
+            ->where('lecturerID', $request['lectID'])
+            ->where('requestDate',$request['selectdateEdit'])
+            ->where('timeSlot',$request['selectTimeEdit'])
+            ->where('timeslotType',$request['SlotTypeEdit'])
+            ->where('status','Accepted')
+            ->first()
+        )
+        {
+            $request->session()->flash('alert-warning', 'Lecturer not available at the requested Time and Day!');
+            return Redirect::back();
+        }
+        else
+        {
+            /**
+             * Updating the record in the 'semester_requests' table
+             */
+            $adminSemesterRequest->requestDate = $request['selectdateEdit'];
+            $adminSemesterRequest->timeSlot = $request['selectTimeEdit'];
+            $adminSemesterRequest->resourceID = $request['selectResources'];
+            $adminSemesterRequest->status = 'Accepted';
 
-        $adminSemesterRequest->save();
+            $adminSemesterRequest->save();
 
-        $timetable= new TimeTable();
+            /**
+             * Creating the record in the 'timetable' table
+             */
+            $timetable = new TimeTable();
 
+            $timetable->year = $adminSemesterRequest['year'];
+            $timetable->batchNo = $adminSemesterRequest['batchNo'];
+            $timetable->subjectCode = $request['subName'];
+            $timetable->timeSlot = $adminSemesterRequest['timeSlot'];
+            $timetable->day = $request['selectdateEdit'];
+            $timetable->resourceName = $request['selectResources'];
+            $timetable->lecturerName = $request['reqLect'];
 
-        $timetable->year=$adminSemesterRequest['year'];
-        $timetable->batchNo=$adminSemesterRequest['batchNo'];
-        $timetable->subjectCode=$request['subName'];
-        $timetable->timeSlot=$adminSemesterRequest['timeSlot'];
-        $timetable->day=$request['selectdateEdit'];
-        $timetable->resourceName=$request['selectResources'];
-        $timetable->lecturerName=$request['reqLect'];
+            $timetable->save();
 
-        $timetable->save();
+            return redirect::route('adminSemesterRequest');
 
-
-
-        return redirect::route('adminSemesterRequest');
+        }
     }
 
-
+    /**
+     * @returns the available resources dynamically
+     *
+     * This function is executed dynamically from the Edit Form of the Semester Request to load the
+     * available resources when the 'Date' is changed.
+     */
     public function loadAvailableResourcesDate()
     {
+        /**
+         * Retrieving the inputs sent from the Edit Form
+         */
         $time= Input::get('option2');
 
+        /**
+         * Isolating start time and end time for later query use
+         */
         list($firsttime, $dash, $lasttime) = explode(" ",$time);
 
         $date= Input::get('option');
@@ -465,6 +596,9 @@ class AdminRequestController extends Controller
             ->where('id','=',$batch)
             ->value('noOfStudents');
 
+        /**
+         * Loading the Available Resources
+         */
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
             ->where([
@@ -477,32 +611,37 @@ class AdminRequestController extends Controller
                 ['requestDate','=',$date],
                 ['timeSlot','LIKE','%'.$lasttime],
             ])
-            //->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
             ->where([
                 ['type','LIKE',$reqResourceType],
-                //['capacity','>',$batchCap],
             ])
-            /*->orWhere([
-                ['type','LIKE',$reqResourceType],
-                ['capacity','=',$batchCap],
-            ])*/
-
-            //->orWhere('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 
         return Response::json($availableHalls);
     }
 
+    /**
+     * @returns the available resources dynamically
+     *
+     * This function is executed dynamically from the Edit Form of the Semester Request to load the
+     * available resources when the 'Time' is changed.
+     */
     public function loadAvailableResourcesTime()
     {
+        /**
+         * Retrieving the inputs sent from the Edit Form
+         */
         $time = Input::get('option');
 
+        /**
+         * Isolating start time and end time for later query use
+         */
         list($firsttime, $dash, $lasttime) = explode(" ",$time);
+
         $date = Input::get('option2');
         $reqResourceType = Input::get('option3');
         $batch = Input::get('option4');
@@ -511,6 +650,9 @@ class AdminRequestController extends Controller
             ->where('id','=',$batch)
             ->value('noOfStudents');
 
+        /**
+         * Loading the Available Resources
+         */
         $nonAvailableHalls=\DB::table('semester_requests')
             ->select('resourceID')
             ->where([
@@ -523,21 +665,13 @@ class AdminRequestController extends Controller
                 ['requestDate','=',$date],
                 ['timeSlot','LIKE','%'.$lasttime],
             ])
-            //->orWhere('timeSlot','LIKE','%'.$lasttime)
             ->lists('resourceID');
 
         $availableHalls=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHalls)
             ->where([
                 ['type','LIKE',$reqResourceType],
-                //['capacity','>',$batchCap],
             ])
-            /*->orWhere([
-                ['type','LIKE',$reqResourceType],
-                //['capacity','=',$batchCap],
-            ])*/
-
-            //->orWhere('capacity','>',$batchCap)
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
 

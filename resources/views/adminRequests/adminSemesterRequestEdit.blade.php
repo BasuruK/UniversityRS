@@ -51,6 +51,15 @@
         <div class="row">
             <div class="col col-sm-7">
                 <div class="box box-primary">
+                    <div class="flash-message">
+                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                            @if(Session::has('alert-' . $msg))
+
+                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                            @endif
+                        @endforeach
+                    </div>
+                    <!-- end .flash-message -->
                     <div class="box-header with-border">
                         <h3 class="box-title">Edit Details</h3>
                     </div>
@@ -352,9 +361,17 @@
                                 <input type="text"  class="form-control"  name="reqLect" id="reqLect" value="{{ $requestedUser->name }}">
                             </div>
 
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="lectID" id="lectID" value="{{ $adminSemesterRequest->lecturerID }}">
+                            </div>
+
                             <div class="form-group">
                                 <label>Semester</label><br>
                                 <p>{{ $adminSemesterRequest->semester }}</p>
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqSemester" id="reqSemester" value="{{ $adminSemesterRequest->semester }}">
                             </div>
 
                             <div class="form-group">
@@ -362,7 +379,9 @@
                                 <p>{{ $adminSemesterRequest->year }}</p>
                             </div>
 
-
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqYear" id="reqYear" value="{{ $adminSemesterRequest->year }}">
+                            </div>
 
                             <!-- select Batch -->
                             <div class="form-group">
@@ -370,12 +389,18 @@
                                 <p>{{ $batch->batchNo }}</p>
                             </div>
 
-
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="reqBatch" id="reqBatch" value="{{ $adminSemesterRequest->batchNo }}">
+                            </div>
 
                             <!-- select Subject -->
                             <div class="form-group">
                                 <label>Subject</label><br>
                                 <p>{{ $selectedSub->subName }}</p>
+                            </div>
+
+                            <div class="form-group"  hidden="">
+                                <input type="text"  class="form-control"  name="subId" id="subId" value="{{ $adminSemesterRequest->subjectCode }}">
                             </div>
 
                             <div class="form-group"  hidden="">

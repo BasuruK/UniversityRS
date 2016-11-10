@@ -37,7 +37,7 @@ class BatchController extends Controller
     {
 
         $this->validate($request,[
-            'batchNo'       => 'bail|numeric|required',
+            'batchNo'       => 'bail|required',
             'year'          => 'bail|numeric|required',
             'noStudents'    => 'numeric|required'
         ]);
@@ -71,7 +71,6 @@ class BatchController extends Controller
      */
     public function edit(Batch $batch)
     {
-        //return $batch;
         return view('batches.batch_edit',compact('batch'));
     }
 
@@ -86,15 +85,10 @@ class BatchController extends Controller
      */
     public function update(Request $request, Batch $batch)
     {
-        //$batch->update($request->all());
         $this->validate($request,[
-            /*'batchNo'       => 'bail|numeric|required',
-            'year'          => 'bail|numeric|required',*/
             'noStudents'    => 'bail|numeric|required'
         ]);
 
-        //$batch->batchNo         = $request['batchNo'];
-        //$batch->year            = $request['year'];
         $batch->noOfStudents    = $request['noStudents'];
         $batch->type            = $request['selectType'];
 
