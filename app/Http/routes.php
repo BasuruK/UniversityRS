@@ -233,6 +233,10 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::patch('/adminRequest/specialRequestUpdate/{adminSpecialRequest}','AdminRequestController@updateSpecialRequests');
 
     Route::get('/adminRequest/specialRequestDelete/{adminSpecialRequest}','AdminRequestController@deleteSpecialRequests');
+    
+    Route::get('/adminRequest/specialRequest/notifySpecialReq/{adminSpecialRequest}','AdminRequestController@notifySpecialRequest');
+
+    Route::get('/adminRequest/notifyNRSpecial/{adminSpecialRequest}','AdminRequestController@notifySpecialRequestNoResources');
 
     //Special Request Management End
 

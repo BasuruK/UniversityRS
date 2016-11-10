@@ -707,8 +707,95 @@ class AdminRequestController extends Controller
         return redirect::route('adminSpecialRequest');
     }
 
+    public function deleteSpecialRequests(Admin_Request $adminSpecialRequest)
+    {
+        Admin_Request::destroy($adminSpecialRequest['id']);
+
+        return redirect::route('adminSpecialRequest');
+    }
+
+    /**
+     * @param Admin_Request $adminSpecialRequest
+     * @return mixed
+     * notify user about the accepted request
+     */
+    public function notifySpecialRequest(Admin_Request $adminSpecialRequest)
+    {
+
+        $user = \DB::table('users')
+            ->select('users.*')
+            ->where('users.staff_id','like',$adminSpecialRequest->lecturerID)
+            ->get();
+
+        $userRequest= \DB::table('requests')
+            ->select('requests.*')
+            ->where('requests.id','=',$adminSpecialRequest->id)
+            ->get();
+
+        $userEmail = array_pluck($user, 'email');
+        $requestedHall = array_pluck($userRequest,'resourceID');
+        $requestStatus = array_pluck($userRequest,'status');
+        $requestDate = array_pluck($userRequest,'requestDate');
+        $requestTimeSlot = array_pluck($userRequest,'timeSlot');
+
+
+
+        Mail::send([], [], function ($message) use ($userEmail,$requestedHall,$requestStatus,$requestDate,$requestTimeSlot) {
+            $message->to($userEmail)
+                ->subject('A Request Has Been Approved')
+
+                ->setBody('Your Request For
+                               Resource: '.$requestedHall[0].'
+                               On: '.$requestDate[0].'
+                               For:  '.$requestTimeSlot[0].' Time Slot
+                               is Approved');
+        });
+
+
+        return redirect::route('adminSpecialRequest');
+    }
+
+    /**
+     * @param Admin_Request $adminSpecialRequest
+     * @return mixed
+     * notify user when resources are not available at that time
+     */
+    public function notifySpecialRequestNoResources(Admin_Request $adminSpecialRequest)
+    {
+
+        $user = \DB::table('users')
+            ->select('users.*')
+            ->where('users.staff_id','like',$adminSpecialRequest->lecturerID)
+            ->get();
+
+        $userRequest= \DB::table('requests')
+            ->select('requests.*')
+            ->where('requests.id','=',$adminSpecialRequest->id)
+            ->get();
+
+        $userEmail = array_pluck($user, 'email');
+        $requestedHall = array_pluck($userRequest,'resourceID');
+        $requestStatus = array_pluck($userRequest,'status');
+        $requestDate = array_pluck($userRequest,'requestDate');
+        $requestTimeSlot = array_pluck($userRequest,'timeSlot');
+
+        Mail::send([], [], function ($message) use ($userEmail,$requestedHall,$requestStatus,$requestDate,$requestTimeSlot,$adminSpecialRequest) {
+            $message->to($userEmail)
+                ->subject('No Resources Available for the Request')
+
+                ->setBody('Your Request For
+                               Type: '.$adminSpecialRequest->ResourceType.'
+                               On: '.$requestDate[0].'
+                               For:  '.$requestTimeSlot[0].' Time Slot
+                               Has no available resources to be assigned.');
+        });
+
+
+        return redirect::route('adminSpecialRequest');
+    }
+
     /**
      * Special Requests End
      */
-    
+
 }
