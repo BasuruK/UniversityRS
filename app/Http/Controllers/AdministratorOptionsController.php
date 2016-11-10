@@ -42,7 +42,7 @@ class AdministratorOptionsController extends Controller
      */
     public function sendMail()
     {
-        Queue::push(function($job,Mailer $mailer)
+        Queue::push(function($job)
         {
             //Get all of user information
             $userData   = User::all();
@@ -50,7 +50,7 @@ class AdministratorOptionsController extends Controller
             $semester   = $dateData->semester;
             $date       = $dateData->deadline;
             $year       = $dateData->year;
-
+            $mailer = new Mailer();
             //Send an email for each user
             foreach ($userData as $UserDetails)
             {
