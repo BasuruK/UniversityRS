@@ -429,9 +429,10 @@ class AdminRequestController extends Controller
      *
      * This functions deletes a Semester Request Record from the Database
      */
-    public function deleteSemesterRequest(AdminSemesterRequest $adminSemesterRequest)
+    public function deleteSemesterRequest(Request $request,AdminSemesterRequest $adminSemesterRequest)
     {
         AdminSemesterRequest::destroy($adminSemesterRequest['id']);
+        $request->session()->flash('alert-success', 'Request was successfully Deleted!');
         return redirect::to('/adminRequest/semesterRequest');
     }
 
@@ -481,6 +482,13 @@ class AdminRequestController extends Controller
      */
     public function updateSemesterRequest(Request $request,AdminSemesterRequest $adminSemesterRequest)
     {
+        $lectID = $request['lectID'];
+        $selectDateEdit = $request['selectdateEdit'];
+        $selectTimeEdit = $request['selectTimeEdit'];
+        $slotTypeEdit = $request['SlotTypeEdit'];
+
+        list($startTime,$dash,$endTime) = explode(" ",$selectTimeEdit);
+
         /**
          * Checking for duplicate Records
          */
@@ -505,11 +513,18 @@ class AdminRequestController extends Controller
          * Checking whether the Lecturer is available during the given time slot and day
          */
         elseif (DB::table('semester_requests')
-            ->where('lecturerID', $request['lectID'])
-            ->where('requestDate',$request['selectdateEdit'])
-            ->where('timeSlot',$request['selectTimeEdit'])
-            ->where('timeslotType',$request['SlotTypeEdit'])
-            ->where('status','Accepted')
+            ->where([
+                ['lecturerID', $lectID],
+                ['requestDate',$selectDateEdit],
+                ['timeSlot','LIKE',$startTime.'%'],
+                ['status','Accepted'],
+            ])
+            ->orWhere([
+                ['lecturerID', $lectID],
+                ['requestDate',$selectDateEdit],
+                ['timeSlot','LIKE','%'.$endTime],
+                ['status','Accepted'],
+            ])
             ->first()
         )
         {
@@ -543,6 +558,7 @@ class AdminRequestController extends Controller
 
             $timetable->save();
 
+            $request->session()->flash('alert-success', 'Request was successfully Approved!');
             return redirect::route('adminSemesterRequest');
 
         }
