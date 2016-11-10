@@ -281,7 +281,6 @@ desired effect
                     <li><a href="/adminRequest/specialRequest">Special Requests</a></li>
                 </ul>
             </li>
-            <li><a href="#">Data Management</a></li>
             <li><a href="/resource/show">Resource Management</a></li>
             <li><a href="/subject">Subject Management</a></li>
             <li><a href="/batch">Batch Management</a></li>
