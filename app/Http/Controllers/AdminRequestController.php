@@ -117,19 +117,33 @@ class AdminRequestController extends Controller
 
         $dateFinal="test";
         if($dayName=="Mon")
+        {
             $dateFinal="monday";
+        }
         else if ($dayName=="Tue")
+        {
             $dateFinal="tuesday";
+        }
         else if ($dayName=="Wed")
+        {
             $dateFinal="wednesday";
+        }
         else if ($dayName=="Thu")
+        {
             $dateFinal="thursday";
+        }
         else if ($dayName=="Fri")
+        {
             $dateFinal="friday";
+        }
         else if ($dayName=="Sat")
+        {
             $dateFinal="saturday";
+        }
         else if ($dayName=="Sun")
+        {
             $dateFinal="sunday";
+        }
 
         /**
          * Isolates the start time and end time for later query use
@@ -303,7 +317,6 @@ class AdminRequestController extends Controller
                                For:  '.$request_timeslot[0].' Time Slot
                                is Approved');
         });
-
 
         return redirect::route('adminRequestShow');
     }
@@ -581,6 +594,7 @@ class AdminRequestController extends Controller
             ->whereNotIn('hallNo',$nonAvailableHalls)
             ->where([
                 ['type','LIKE',$reqResourceType],
+                ['capacity','>=',(int)$batchCap],
             ])
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
@@ -635,6 +649,7 @@ class AdminRequestController extends Controller
             ->whereNotIn('hallNo',$nonAvailableHalls)
             ->where([
                 ['type','LIKE',$reqResourceType],
+                ['capacity','>=',(int)$batchCap],
             ])
             ->orderBy('id', 'desc')
             ->lists('type','hallNo');
