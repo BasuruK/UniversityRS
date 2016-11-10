@@ -78,7 +78,9 @@
                             <div class="form-group">
                                 <label>Resource</label><br>
                                 <select class="form-control" name="selectResources" id="selectResources">
-
+                                    @foreach($allAvailableHalls as $availableHalls)
+                                        <option value="{{$availableHalls}}">{{$availableHalls}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

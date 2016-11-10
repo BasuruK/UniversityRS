@@ -50,7 +50,10 @@
 
                                             $.each(data, function (key, value) {
 
-                                                selectedbatch.append($("<option></option>").attr("value", value).attr("value", key).text(value));
+                                                selectedbatch
+                                                        .append($("<option></option>")
+                                                                .attr("value", value)
+                                                                .text(value));
                                             });
 
                                         });
@@ -66,7 +69,9 @@
 
                                                 $.each(data, function (key, value) {
 
-                                                    selectedbatch.append($("<option></option>").attr("value", key).text(value)).attr("value", value);
+                                                    selectedbatch.append($("<option></option>")
+                                                            .attr("value", value)
+                                                            .text(value));
                                                 });
                                             });
 
