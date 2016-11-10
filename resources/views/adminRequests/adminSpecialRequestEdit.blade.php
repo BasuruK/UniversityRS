@@ -47,6 +47,11 @@
 
                         <!--Date-->
                             <div class="form-group">
+                                <label>Lecturer</label><br>
+                                <p>{{ $requestedUser->name }}</p>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Date:</label>
 
                                 <div class="input-group date">
@@ -55,10 +60,7 @@
                             </div>
 
                             <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="userID" value="{{Auth::user()->id}}">
-                            </div>
-                            <div class="form-group" hidden="">
-                                <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
+                                <input type="text"  class="form-control"  name="userName" value="{{$requestedUser->name}}">
                             </div>
 
                             <div class="form-group"  hidden="">
