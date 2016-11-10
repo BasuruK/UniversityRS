@@ -99,7 +99,7 @@
                                     {{--}--}}
 
                                 </script>
-                                <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
+                                <table id="dataTablePendingFormalRequests" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
                                     <thead>
                                     <tr role="row">
                                         <th class="" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Prefix: activate to sort column ascending" style="width: 45px;">Lecturer</th>
@@ -123,10 +123,9 @@
                                             <td>{{$request->timeSlot}}</td>
                                             <td>{{$request->ResourceType}}</td>
                                             <td>
-                                                <div class="pull-right">
-                                                    <a class="btn btn-primary" onclick="return isEdit({{$request->id}})">Edit</a>
-                                                    <a class="btn btn-danger" onclick="return isDelete({{$request->id}})">Delete</a>
-                                                    <a class="btn btn-warning" onclick="return isNotify({{$request->id}})">Notify</a>
+                                                <div class="">
+                                                    <a class="btn btn-primary pull-left" onclick="return isEdit({{$request->id}})">Edit</a>
+                                                    <a class="btn btn-danger pull-right" onclick="return isDelete({{$request->id}})">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -195,7 +194,11 @@
                                             <td>{{$acceptedrequest->requestDate}}</td>
                                             <td>{{ $acceptedrequest->timeSlot }}</td>
                                             <td>{{ $acceptedrequest->resourceID }}</td>
-
+                                            <td>
+                                                <div class="">
+                                                    <a class="btn btn-warning" onclick="return isNotify({{$acceptedrequest->id}})">Notify</a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
