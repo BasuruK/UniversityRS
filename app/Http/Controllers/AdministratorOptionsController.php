@@ -66,7 +66,6 @@ class AdministratorOptionsController extends Controller
             }
 
             $job->delete();
-            $mailer->delete();
         });
 
     }
