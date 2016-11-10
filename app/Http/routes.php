@@ -234,12 +234,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
     Route::get('/adminRequest/specialRequestDelete/{adminSpecialRequest}','AdminRequestController@deleteSpecialRequests');
 
-    Route::get('/adminRequest/specialRequestForm/loadHalls','AdminRequestController@loadAvailableResourcesSpecialRequest');
-
-    Route::get('/adminRequest/specialRequestForm/loadHallsDate','AdminRequestController@loadAvailableResourcesDateSpecialRequest');
-
-    Route::get('/adminRequest/SpecialRequestForm/loadHallsTime','AdminRequestController@loadAvailableResourcesTimeSpecialRequest');
-
     //Special Request Management End
 
     /**
