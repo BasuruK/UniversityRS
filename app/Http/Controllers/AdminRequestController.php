@@ -14,6 +14,9 @@ use DB;
 
 class AdminRequestController extends Controller
 {
+    /**
+     * Formal Request Management Methods
+     */
 
     /**
      * This function creates the collection of requests and pass the collection to the
@@ -23,13 +26,17 @@ class AdminRequestController extends Controller
      */
     public function show()
     {
-        $requests = DB::table('requests')
+        $requests = \DB::table('requests')
             ->join('subject', 'requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'requests.batchNo', '=', 'batch.id')
             ->join('users','requests.lecturerID','=', 'users.staff_id')
-            ->select('requests.*','subject.subName','batch.batchNo','users.name')
+            ->join('allowed_users', 'requests.lecturerID','=', 'allowed_users.staff_id')
+            ->select('requests.*','subject.subName','batch.batchNo','users.name','allowed_users.position')
             ->where('requests.status','!=','Accepted')
             ->where('requests.specialEvent',NULL)
+            ->orderBy('requests.year','asc')
+            //->orderBy('batch.batchNo','asc')
+            //->orderBy('allowed_users.position','asc')
             ->get();
 
         $acceptedrequests=\DB::table('requests')
@@ -39,6 +46,8 @@ class AdminRequestController extends Controller
             ->select('requests.*','subject.subName','batch.batchNo','users.name')
             ->where('requests.status','=','Accepted')
             ->where('requests.specialEvent',NULL)
+            //->orderBy('requests.year')
+            //->orderBy('requests.batchNo')
             ->get();
 
         return view("adminRequests.adminRequestMain")->with('requests',$requests)->with('acceptedrequests',$acceptedrequests);
@@ -214,7 +223,7 @@ class AdminRequestController extends Controller
                      $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
                      $i=$i+1;
                  }
-                 elseif ($startTimeSpecial==$lasttime)
+                 if ($startTimeSpecial==$lasttime)
                  {
                      $nonAvailableHalls_Special[$i]=$specialRequest->resourceID;
                      $i=$i+1;
@@ -291,12 +300,61 @@ class AdminRequestController extends Controller
                                Resource: '.$request_hall[0].'
                                On: '.$request_date[0].'
                                For:  '.$request_timeslot[0].' Time Slot
-                               is '.$request_status[0]);
+                               is Approved');
         });
 
 
         return redirect::route('adminRequestShow');
     }
+
+    /**
+     * @param Admin_Request $admin_request <- details of the request
+     * @return to the main view
+     *
+     * This functions takes the details of the request as the parameter, then extracts details
+     * such as user email of the user who made the request and then creates the body of the request
+     * and send an email to the user's email address notifying there are not available resources
+     */
+    public function notifyNoResources(Admin_Request $admin_request)
+    {
+
+        $user = \DB::table('users')
+            ->select('users.*')
+            ->where('users.staff_id','like',$admin_request->lecturerID)
+            ->get();
+
+        $user_request= \DB::table('requests')
+            ->select('requests.*')
+            ->where('requests.id','=',$admin_request->id)
+            ->get();
+
+        $user_email = array_pluck($user, 'email');
+        $request_hall = array_pluck($user_request,'resourceID');
+        $request_status = array_pluck($user_request,'status');
+        $request_date = array_pluck($user_request,'requestDate');
+        $request_timeslot = array_pluck($user_request,'timeSlot');
+        $request_type = array_pluck($user_request,'ResourceType');
+
+
+
+        Mail::send([], [], function ($message) use ($user_email,$request_hall,$request_status,$request_date,$request_timeslot,$admin_request) {
+            $message->to($user_email)
+                ->subject('No Resources Available for the Request')
+
+                ->setBody('Your Request For
+                               Type: '.$admin_request->ResourceType.'
+                               On: '.$request_date[0].'
+                               For:  '.$request_timeslot[0].' Time Slot
+                               Has no available resources to be assigned.');
+        });
+
+
+        return redirect::route('adminRequestShow');
+    }
+
+    /**
+     * End of Formal Request Management Methods
+     */
 
     /**
      * Semester Requests
@@ -308,8 +366,12 @@ class AdminRequestController extends Controller
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
             ->join('batch', 'semester_requests.batchNo', '=', 'batch.id')
             ->join('users','semester_requests.lecturerID','=', 'users.staff_id')
-            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name')
+            ->join('allowed_users','semester_requests.lecturerID','=','allowed_users.staff_id')
+            ->select('semester_requests.*','subject.subName','batch.batchNo','users.name','allowed_users.position')
             ->where('semester_requests.status','!=','Accepted')
+            ->orderBy('allowed_users.position')
+            ->orderBy('semester_requests.year')
+            ->orderBy('batch.batchNo')
             ->get();
         $acceptedSemesterRequests=\DB::table('semester_requests')
             ->join('subject', 'semester_requests.subjectCode', '=', 'subject.id')
