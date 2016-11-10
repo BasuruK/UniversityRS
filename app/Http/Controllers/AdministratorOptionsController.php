@@ -39,10 +39,11 @@ class AdministratorOptionsController extends Controller
 
     /**
      * Sends a mail to all the users notifying the deadlines
+     *
      */
     public function sendMail()
     {
-        Queue::push(function($job)
+        Queue::push(function($job,Mailer $mailer)
         {
             //Get all of user information
             $userData   = User::all();
@@ -50,7 +51,7 @@ class AdministratorOptionsController extends Controller
             $semester   = $dateData->semester;
             $date       = $dateData->deadline;
             $year       = $dateData->year;
-            $mailer = new Mailer();
+
             //Send an email for each user
             foreach ($userData as $UserDetails)
             {
@@ -65,6 +66,7 @@ class AdministratorOptionsController extends Controller
             }
 
             $job->delete();
+            $mailer->delete();
         });
 
     }
