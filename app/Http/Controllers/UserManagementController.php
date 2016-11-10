@@ -161,6 +161,7 @@ class UserManagementController extends Controller
      * @param Allowed_User $staff_id
      *
      * Edits the Authorized user
+     * @return $this
      */
     public function EditAuthorizedUserUpdate(Request $request,Allowed_User $staff_id)
     { 
