@@ -76,7 +76,8 @@
                          * Fills the relevant section in the table according the value generated
                          * */
                         try {
-                            for (var i = 0; i < LecturerTimeData.length; i++) {
+                            for (var i = 0; i < LecturerTimeData.length; i++)
+                            {
 
                                 timeSlotFromDatabase = LecturerTimeData[i].timeSlot;
                                 durationFrom         = timeSlotFromDatabase.split(" ")[0];
@@ -84,7 +85,8 @@
                                 totalHoursNeed       = durationTo - durationFrom;
                                 endTimeOfPeriod      = parseFloat(durationFrom) + totalHoursNeed;
 
-                                for (var k = 0; k < totalHoursNeed; k++) {
+                                for (var k = 0; k < totalHoursNeed; k++)
+                                {
 
                                     hourlyTime           = parseFloat(durationFrom) + 1;
                                     timeOfBeginingAndEnd = durationFrom + " " + "-" + " " + hourlyTime + "0";
@@ -94,7 +96,8 @@
                                     // Css styling
                                     document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-width"]= "2px";
 
-                                    if(totalHoursNeed >= 1) {
+                                    if(totalHoursNeed >= 1)
+                                    {
                                         document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["border-bottom-color"] = "transparent";
                                         document.getElementById(timeOfBeginingAndEnd + "-" + LecturerTimeData[i].day).style["background-color"] = "lightgray";
                                     }
@@ -114,7 +117,8 @@
                          * Create XML header for Excel File
                          * Exports the timetable in excel format
                          */
-                        function exportXLS() {
+                        function exportXLS()
+                        {
 
                             var table_content = '<html xmlns:o="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
                             table_content = table_content + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"/>';
@@ -138,7 +142,8 @@
                         /**
                          * Exports the table as a pdf file
                          */
-                        function exportPDF() {
+                        function exportPDF()
+                        {
 
                             var pdf = new jsPDF('l', 'mm', [550, 400]);
                             pdf.text("Lecturer Timetable",400,20);
@@ -146,7 +151,8 @@
                             source = $('#TableTable')[0];
 
                             specialElementHandlers = {
-                                '#bypassme': function (element, renderer) {
+                                '#bypassme': function (element, renderer)
+                                {
                                     return true
                                 }
                             };
@@ -163,7 +169,8 @@
                                         'width': margins.width, // max width of content on PDF
                                         'elementHandlers': specialElementHandlers
                                     },
-                                    function (dispose) {
+                                    function (dispose)
+                                    {
                                         pdf.save('Semester Timetable.pdf');
                                     }
                                     , margins);
