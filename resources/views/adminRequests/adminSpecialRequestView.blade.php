@@ -73,6 +73,23 @@
                                         });
                                         return false;
                                     }
+                                    function isNotify(id)
+                                    {
+                                        var ID =id;
+                                        $.confirm({
+                                            theme: 'black',
+                                            title: 'Confirm Notification',
+                                            icon: 'fa fa-warning',
+                                            content: 'Are you sure want to notify the User regarding the Special Request?',
+                                            confirmButton: 'Yes',
+                                            confirmButtonClass: 'btn-danger',
+                                            confirm: function(){
+                                                location.href="/adminRequest/specialRequest/notifySpecialReq/"+ID;
+                                            }
+
+                                        });
+                                        return false;
+                                    }
 
                                 </script>
                                 <table id="dataTableRegUsers" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="dataTableRegUsers_info">
@@ -154,7 +171,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Date</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Time Slot</th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTableRegUsers" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 110px;">Resource Type</th>
-
+                                        <th tabindex="0"  rowspan="1" colspan="1" aria-label="notify" style="width: 60px;">Notify</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -166,6 +183,11 @@
                                             <td>{{ $acceptedSpecialRequest->requestDate }}</td>
                                             <td>{{ $acceptedSpecialRequest->timeSlot }}</td>
                                             <td>{{$acceptedSpecialRequest->ResourceType}}</td>
+                                            <td>
+                                            <div class="pull-right">
+                                                <a class="btn btn-warning" onclick="return isNotify({{$acceptedSpecialRequest->id}})">Notify</a>
+                                            </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

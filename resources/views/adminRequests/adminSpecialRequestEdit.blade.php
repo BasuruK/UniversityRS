@@ -16,6 +16,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col col-sm-7">
+                <script>
+                    function isNotify(id)
+                    {
+                        var ID =id;
+                        $.confirm({
+                            theme: 'black',
+                            title: 'Confirm Notification',
+                            icon: 'fa fa-warning',
+                            content: 'Are you sure want to notify the User that the Special Request has no Available Resources?',
+                            confirmButton: 'Yes',
+                            confirmButtonClass: 'btn-danger',
+                            confirm: function(){
+                                location.href="/adminRequest/notifyNRSpecial/"+ID;
+                            }
+
+                        });
+                        return false;
+                    }
+                </script>
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Edit Timeslot</h3>
@@ -28,6 +47,11 @@
 
                         <!--Date-->
                             <div class="form-group">
+                                <label>Lecturer</label><br>
+                                <p>{{ $requestedUser->name }}</p>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Date:</label>
 
                                 <div class="input-group date">
@@ -36,10 +60,7 @@
                             </div>
 
                             <div class="form-group"  hidden="">
-                                <input type="text"  class="form-control"  name="userID" value="{{Auth::user()->id}}">
-                            </div>
-                            <div class="form-group" hidden="">
-                                <input type="text" hidden="" class="form-control"  name="staffID" value="{{Auth::user()->staff_id}}">
+                                <input type="text"  class="form-control"  name="userName" value="{{$requestedUser->name}}">
                             </div>
 
                             <div class="form-group"  hidden="">
@@ -157,6 +178,10 @@
 
 
                             </script>
+
+                            <a href="/adminRequest/specialRequest" class="btn btn-warning">Cancel</a>
+
+                            <a class="btn btn-danger" onclick="return isNotify({{$adminSpecialRequest->id}})">No Resources</a>
 
                             <button id="submitbtn" type="submit " class="btn btn-primary pull-right" onclick="return ValidateCapacity()">Submit</button>
 
