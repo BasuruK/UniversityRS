@@ -6,10 +6,10 @@ use App\Allowed_User;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use phpDocumentor\Reflection\Types\Null_;
+
 
 class UserManagementController extends Controller
 {
@@ -34,10 +34,11 @@ class UserManagementController extends Controller
     }
 
     /**
+     * Adds a User database record to the database
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
-     * Adds a User database record to the database
      */
     public function AddUser(Request $request)
     {
@@ -45,7 +46,7 @@ class UserManagementController extends Controller
        * Validation for the User Add form
        */
         $this->validate($request,[
-            'staff_id'  => 'required|unique:allowed_users|max:10',
+            'staff_id'       => 'required|unique:allowed_users|min:10|max:10|alpha_num',
             'inputPosition'  => 'required'
         ]);
         
@@ -53,16 +54,17 @@ class UserManagementController extends Controller
         $user->staff_id = $request['staff_id'];
         $user->position = $request['inputPosition'];
         $user->save();
-        
+
+        Session::flash('success','Entry added successfully.');
         return back();
     }
 
     /**
+     * Deletes the user
      * @param User $staff_id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      *
-     * Deletes the user
      */
     public function DeleteUser(User $staff_id)
     {
@@ -72,10 +74,11 @@ class UserManagementController extends Controller
 
 
     /**
+     * redirects the user to User Edit Page
+     *
      * @param User $staff_id
      * @return mixed
      *
-     * redirects the user to User Edit Page
      */
     public function EditPageRedirect(User $staff_id)
     {
@@ -91,10 +94,10 @@ class UserManagementController extends Controller
     }
 
     /**
+     * Updates the user
+     *
      * @param Request $request
      * @param User $staff_id
-     *
-     * Updates the user
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -104,7 +107,7 @@ class UserManagementController extends Controller
          * Validation for the User Add form
          */
         $this->validate($request,[
-            'staff_id'  => 'required|exists:allowed_users|max:10',
+            'staff_id'  => 'required|exists:allowed_users|max:10|min:10',
             'name'  => 'required',
             'email' => 'required',
             'inputPosition' => 'required'
@@ -169,7 +172,7 @@ class UserManagementController extends Controller
          * Validation for the User Edit form
          */
         $this->validate($request,[
-            'staff_id'  => 'required|max:10',
+            'staff_id'  => 'required|max:10|min:10|alpha_num',
             'inputPosition' => 'required'
         ]);
 

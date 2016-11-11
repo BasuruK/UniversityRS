@@ -24,15 +24,10 @@
                 <form class="form-horizontal" method="POST" action="/UserManagement/add" role="form">
 
                     <div class="box-body">
-                        <div class="form-group{{ $errors->has('staff_id') ? ' has-error' : '' }}">
-                            <label for="inputStaff_id" class="col-sm-2 control-label">StaffID</label>
+                        <div class="form-group">
+                            <label for="inputStaff_id" class="col-sm-2 control-label">Staff ID </label>
                             <div class="col-sm-10">
                                 <input type="text" name="staff_id" class="form-control" id="inputStaff_id" placeholder="Staff ID Eg: IT14xxxxxxx" value="{{ old('staff_id') }}" required>
-                                @if ($errors->has('staff_id'))
-                                    <span class="help-block">
-                            <strong>{{ $errors->first('staff_id') }}</strong>
-                        </span>
-                                @endif
                             </div>
                         </div>
 
@@ -53,11 +48,6 @@
                                         <option value="{{ $cat->id }}">{{ $cat->priorityName }}</option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('position'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('position') }}</strong>
-                                    </span>
-                                @endif
                             </div>
 
                         </div>
@@ -65,6 +55,25 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary pull-right">Add User</button>
+                        <br><br><br>
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+
+                        @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
                     </div>
                     <!-- /.box-footer -->
                     {{ csrf_field() }}
