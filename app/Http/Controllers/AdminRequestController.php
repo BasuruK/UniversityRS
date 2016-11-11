@@ -1051,7 +1051,7 @@ class AdminRequestController extends Controller
      * @param Admin_Request $adminSpecialRequest
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @param Admin_Request $adminSpecialRequest
-     * Special requests edit view
+     * Special requests edit view and loading available resources
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function editSpecialRequest(Admin_Request $adminSpecialRequest)
@@ -1161,11 +1161,10 @@ class AdminRequestController extends Controller
             ])
             ->lists('resourceID');
 
-        $batchCapacity = (int)($adminSpecialRequest->capacity);
         $availableHallsFormalRequests=\DB::table('resource')
             ->whereNotIn('hallNo',$nonAvailableHallsFormalRequests)
             ->where('type','LIKE',$adminSpecialRequest->ResourceType)
-            ->where('capacity','>',$batchCapacity)
+            ->where('capacity','>',$adminSpecialRequest->capacity)
             ->orderBy('id','desc')
             ->lists('hallNo');
 
@@ -1185,16 +1184,21 @@ class AdminRequestController extends Controller
     {
         $adminSpecialRequest->resourceID=$request['selectResources'];
         $adminSpecialRequest->status='Accepted';
-
         $adminSpecialRequest->save();
 
         return redirect::route('adminSpecialRequest');
     }
 
-    public function deleteSpecialRequests(Admin_Request $adminSpecialRequest)
+    /**
+     * @param Admin_Request $adminSpecialRequest
+     * @return mixed
+     * delete requests
+     */
+    public function deleteSpecialRequests(Request $request,Admin_Request $adminSpecialRequest)
     {
         Admin_Request::destroy($adminSpecialRequest['id']);
 
+        $request->session()->flash('alert-danger', 'Subject was successful deleted!');
         return redirect::route('adminSpecialRequest');
     }
 
@@ -1203,7 +1207,7 @@ class AdminRequestController extends Controller
      * @return mixed
      * notify user about the accepted request
      */
-    public function notifySpecialRequest(Admin_Request $adminSpecialRequest)
+    public function notifySpecialRequest(Request $request,Admin_Request $adminSpecialRequest)
     {
 
         $user = \DB::table('users')
@@ -1235,7 +1239,7 @@ class AdminRequestController extends Controller
                                is Approved');
         });
 
-
+        $request->session()->flash('alert-success', 'Mail has been sent!');
         return redirect::route('adminSpecialRequest');
     }
 
@@ -1244,7 +1248,7 @@ class AdminRequestController extends Controller
      * @return mixed
      * notify user when resources are not available at that time
      */
-    public function notifySpecialRequestNoResources(Admin_Request $adminSpecialRequest)
+    public function notifySpecialRequestNoResources(Request $request,Admin_Request $adminSpecialRequest)
     {
 
         $user = \DB::table('users')
@@ -1274,7 +1278,7 @@ class AdminRequestController extends Controller
                                Has no available resources to be assigned.');
         });
 
-
+        $request->session()->flash('alert-success', 'Mail has been sent!');
         return redirect::route('adminSpecialRequest');
     }
 
