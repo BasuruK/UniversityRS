@@ -59,6 +59,21 @@
                 </div>
             </div>
 
+            <!-- Timetable Management -->
+            <div class="col-md-3">
+                <div class="small-box bg-olive">
+                    <div class="inner">
+                        <h3 style="font-size: 30px;">Timetable <br> Management</h3>
+
+                        <p>View Timetables</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion-clock"></i>
+                    </div>
+                    <a href="/timetable" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
         @if($SemesterRegForm == 1)
             <!-- Semester Request -->
                 <div class="col-md-3">

@@ -100,7 +100,7 @@
                     <div class="inner">
                         <h3 style="font-size: 30px;">Timetable <br> Management</h3>
 
-                        <p>Add or remove Timetables</p>
+                        <p>View Timetables</p>
                     </div>
                     <div class="icon">
                         <i class="ion-clock"></i>
