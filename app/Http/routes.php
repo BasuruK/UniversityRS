@@ -88,6 +88,19 @@ Route::group(['middleware' => 'auth'], function() {
      */
 
     Route::get('/myTables','userTimetableController@index');
+    
+
+    /**
+     * Timetable Management Routes
+     */
+    Route::get('/timetable', 'TimeTableController@showGenerateTimetable');
+
+    Route::get('/timetable/batchTimetableForm/loadBatches', 'TimeTableController@loadBatches');
+
+    Route::post('/timetable/batchTimetableForm/batch_Timetable', 'TimeTableController@show');
+
+    //Timetable Management End
+
 
 });
 
@@ -244,17 +257,6 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/adminRequest/notifyNRSpecial/{adminSpecialRequest}','AdminRequestController@notifySpecialRequestNoResources');
 
     //Special Request Management End
-
-    /**
-     * Timetable Management Routes
-     */
-    Route::get('/timetable', 'TimeTableController@showGenerateTimetable');
-
-    Route::get('/timetable/batchTimetableForm/loadBatches', 'TimeTableController@loadBatches');
-    
-    Route::post('/timetable/batchTimetableForm/batch_Timetable', 'TimeTableController@show');
-    
-    //Timetable Management End
 
     /**
      * Resource Timetable Management Routes
