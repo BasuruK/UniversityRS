@@ -44,54 +44,20 @@ class DatabaseSeeder extends Seeder
 
         //Allowed User Seeds
         $AllowedUser = new Allowed_User();
-        $AllowedUser->staff_id = "IT14020254";
-        $AllowedUser->position = 1;
-        $AllowedUser->save();
-
-        $AllowedUser = new Allowed_User();
-        $AllowedUser->staff_id = "IT14034978";
-        $AllowedUser->position = 2;
-        $AllowedUser->save();
-
-        $AllowedUser = new Allowed_User();
-        $AllowedUser->staff_id = "IT14030222";
-        $AllowedUser->position = 1;
-        $AllowedUser->save();
-
-        $AllowedUser = new Allowed_User();
-        $AllowedUser->staff_id = "IT14024764";
-        $AllowedUser->position = 1;
-        $AllowedUser->save();
-
-        $AllowedUser = new Allowed_User();
         $AllowedUser->staff_id = "IT14000000";
         $AllowedUser->position = 1;
         $AllowedUser->save();
 
+
         //Registered User seeds
         $User = new User();
-        $User->staff_id = "IT14020254";
-        $User->name = "Basuru Kusal";
-        $User->email = "bestbasuru@live.com";
-        $User->password = bcrypt("rrk10ict");
-        $User->admin = 1;
-        $User->save();
-
-        $User = new User();
-        $User->staff_id = "IT14034978";
-        $User->name = "Sandamini Bandara";
-        $User->email = "sheydenb31@gmail.com";
-        $User->password = bcrypt("SandyB12");
-        $User->admin = 0;
-        $User->save();
-
-        $User = new User();
         $User->staff_id = "IT14000000";
-        $User->name = "Default User";
+        $User->name = "Administrator";
         $User->email = "notify.urscheduler@gmail.com";
-        $User->password = bcrypt("1234");
+        $User->password = bcrypt("123456789");
         $User->admin = 1;
         $User->save();
+
 
         //Batch Seeds
 

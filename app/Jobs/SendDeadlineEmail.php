@@ -27,8 +27,6 @@ class SendDeadlineEmail extends Job implements ShouldQueue
     /**
      * Execute the job.
      * Send a mail to every user in the system using redis
-     *
-     *
      */
     public function handle()
     {

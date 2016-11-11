@@ -332,6 +332,7 @@
                                 <option>3</option>
                                 <option>3 Curtin IT</option>
                                 <option>3 Curtin SE</option>
+                                <option>3 SHU SE</option>
                                 <option>4</option>
                             </select>
                         </div>
