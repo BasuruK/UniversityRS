@@ -45,15 +45,14 @@ class AdministratorOptionsController extends Controller
     {
         Queue::push(function($job)
         {
-            //$this->dispatch(new SendDeadlineEmail());
+            $this->dispatch(new SendDeadlineEmail());
 
-            $user = User::findOrFail(1);
-
-            Mail::send('email.testEmail', ['user' => $user], function ($m) use ($user) {
-                $m->from('notify.urscheduler@gmail.com', 'UniversityRS');
-
-                $m->to($user->email, $user->name)->subject('Your Reminder!');
-            });
+//            $user = User::findOrFail(1);
+//            Mail::send('email.testEmail', ['user' => $user], function ($m) use ($user) {
+//                $m->from('notify.urscheduler@gmail.com', 'UniversityRS');
+//
+//                $m->to($user->email, $user->name)->subject('Your Reminder!');
+//            });
 
             $job->delete();
         });
