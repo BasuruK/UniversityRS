@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-md-4 col-md-offset-4">
-            <p>This is to notify that the final date for requesting time slots for semester {{ $semester }} for Year {{ $year }} is due on {{ $date }}</p>
+            <p>This is to notify that the final date for requesting time slots for semester {{ $semester }} of Year {{ $year }} is due on {{ $date }}</p>
             <hr>
         </div>
     </div>
