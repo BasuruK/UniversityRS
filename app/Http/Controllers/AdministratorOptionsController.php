@@ -46,25 +46,6 @@ class AdministratorOptionsController extends Controller
         Queue::push(function($job)
         {
             //$this->dispatch(new SendDeadlineEmail());
-	$mailer = new Mailer();
-        $userData   = User::all();
-         $dateData   = Deadline::all()->last(); 
-        $semester   = $dateData->semester;
-         $date       = $dateData->deadline;
-         $year       = $dateData->year;
-          //Send an email for each user 
-        foreach ($userData as $UserDetails)
-        {       
-      		$name   = $UserDetails->name;      
-	        $email  = $UserDetails->email;     
-         	$mailer->send('email.deadlineNotification', ['date' => $date, 'semester' => $semester, 'year' => $year], function ($message) use($name,$email) 
-		{
-                	$message->from('notify.urscheduler@gmail.com','Admin'); 
-                	$message->to($email,$name);  
-               		$message->subject('Deadline Notification');  
-           	});     
-	}
-
             $job->delete();
         });
 
