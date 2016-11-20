@@ -15,6 +15,15 @@
 @endsection
 
 @section('content')
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 <div class="container-fluid">
     <div class="row">
         <div class="col col-sm-4">
@@ -50,15 +59,7 @@
                   </select>
                 </div>
 
-                 @if (count($errors) > 0)
-                     <div class="alert alert-danger">
-                         <ul>
-                             @foreach ($errors->all() as $error)
-                                 <li>{{ $error }}</li>
-                             @endforeach
-                         </ul>
-                     </div>
-                 @endif
+
 
 
                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
