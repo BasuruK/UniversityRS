@@ -258,6 +258,11 @@ desired effect
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li><a href="/userRequest/requestForm"></i> Place Request</a></li>
+            @if(isset($SemesterRegForm))
+              @if($SemesterRegForm == 1)
+                <li><a href="/userRequest/requestFormSemester/"></i> Place Semester Request</a></li>
+              @endif
+            @endif
             <li class=""><a href="/userRequest/Show"></i>Current Requests</a></li>
             <li class=""><a href="/userRequest/ShowSemesterRequest"></i>Current Semester Requests</a></li>
           </ul>
