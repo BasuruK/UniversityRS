@@ -98,7 +98,7 @@ class subjectController extends Controller
 
         $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
-        if (DB::table('subject')->where('subCode', $request['subjectCode'])->where('subName',$request['subjectName'])->where('year',$request['selectyear'])->where('semester',$request['selectsemester'])->first())
+        if (DB::table('subject')->where('subCode', $request['subjectCode'])->orWhere('subName',$request['subjectName'])->where('year',$request['selectyear'])->where('semester',$request['selectsemester'])->first())
         {
             $request->session()->flash('alert-warning', 'Subject already exists!');
             return Redirect::back();

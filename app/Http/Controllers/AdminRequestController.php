@@ -442,7 +442,7 @@ class AdminRequestController extends Controller
     public function deleteSemesterRequest(Request $request,AdminSemesterRequest $adminSemesterRequest)
     {
         AdminSemesterRequest::destroy($adminSemesterRequest['id']);
-        $request->session()->flash('alert-success', 'Request was successfully Deleted!');
+        
         return redirect::to('/adminRequest/semesterRequest');
     }
 
@@ -1348,8 +1348,6 @@ class AdminRequestController extends Controller
     public function deleteSpecialRequests(Request $request,Admin_Request $adminSpecialRequest)
     {
         Admin_Request::destroy($adminSpecialRequest['id']);
-
-        $request->session()->flash('alert-danger', 'Subject was successful deleted!');
         return redirect::route('adminSpecialRequest');
     }
 
