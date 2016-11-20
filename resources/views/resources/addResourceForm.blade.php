@@ -15,6 +15,23 @@
 @endsection
 
 @section('content')
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <div class="flash-message" id="errordisplay">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
+    </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col col-sm-4">
@@ -50,15 +67,7 @@
                   </select>
                 </div>
 
-                 @if (count($errors) > 0)
-                     <div class="alert alert-danger">
-                         <ul>
-                             @foreach ($errors->all() as $error)
-                                 <li>{{ $error }}</li>
-                             @endforeach
-                         </ul>
-                     </div>
-                 @endif
+
 
 
                  <button type="submit " class="btn btn-primary pull-right">Submit</button>
@@ -168,14 +177,7 @@ function isEdit(id) {
                       <div class="dataTables_paginate paging_simple_numbers" id="dataTableRegUsers_paginate"></div>
                   </div>
               </div>
-              <div class="flash-message" id="errordisplay">
-                  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                      @if(Session::has('alert-' . $msg))
 
-                          <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                      @endif
-                  @endforeach
-              </div>
             </div>
         </div>
             <!-- /.box-body -->     
