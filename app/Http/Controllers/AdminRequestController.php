@@ -556,11 +556,26 @@ class AdminRequestController extends Controller
             /**
              * Creating the record in the 'timetable' table
              */
+
+            if($adminSemesterRequest->timeSlotType=2 && $adminSemesterRequest->ResourceType='LectureHall')
+            {
+                $title = $request['subName'].' (Lec)';
+            }
+            else if ($adminSemesterRequest->timeSlotType=2 && $adminSemesterRequest->ResourceType='Lab')
+            {
+                $title = $request['subName'].' (Lab)';
+            }
+            else if ($adminSemesterRequest->timeSlotType=1)
+            {
+                $title = $request['subName'].' (Tute)';
+            }
+
+
             $timetable = new TimeTable();
 
             $timetable->year = $adminSemesterRequest['year'];
             $timetable->batchNo = $adminSemesterRequest['batchNo'];
-            $timetable->subjectCode = $request['subName'];
+            $timetable->subjectCode = $title;
             $timetable->timeSlot = $adminSemesterRequest['timeSlot'];
             $timetable->day = $request['selectdateEdit'];
             $timetable->resourceName = $request['selectResources'];
