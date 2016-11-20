@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
             'time' => '7.30 - 8.30',
             'time24Format' => '19.30 - 20.30',
         ]);
-        
+
 
     }
 }
