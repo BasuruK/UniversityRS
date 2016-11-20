@@ -45,7 +45,8 @@ class ResourceController extends Controller
 
         $resource->save();
 
-        return redirect::to('resource/show');
+        $request->session()->flash('alert-success', 'Resource was successfully added!');
+        return redirect::route('Resources');
     }
 
     /**
