@@ -292,7 +292,7 @@ class AdministratorOptionsController extends Controller
             'Content-Type: application/gzip',
         );
         //File path for the newly created backup file
-        $file = "/home/forge/universityrssliit.com/storage/app/databaseBackup/" . $date . ".sql.gz";
+        $file = storage_path() . "/app/databaseBackup/" . $date . ".sql.gz";
 	
         return Response::download($file,'databasebackup.sql.gz',$headers);
     }
@@ -324,7 +324,8 @@ class AdministratorOptionsController extends Controller
             return back()->withErrors(['Uploaded file does not contain a Gzip content type!']);
         }
 
-        $destination = "/home/forge/default/storage/app/databaseBackup/";
+        $destination = storage_path() . "/app/databaseBackup/";
+	//return $destination;
         //Move the file to the destination
         $request->file('dbSQL')->move($destination,"upload.sql.gz");
 
@@ -343,7 +344,7 @@ class AdministratorOptionsController extends Controller
         ]);
 
         //remove the redundant backup file
-        unlink("/home/forge/default/storage/app/databaseBackup/upload.sql.gz");
+      	unlink(storage_path() . "/app/databaseBackup/upload.sql.gz");
 
         return back();
     }
