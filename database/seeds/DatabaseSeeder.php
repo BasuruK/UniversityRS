@@ -59,123 +59,6 @@ class DatabaseSeeder extends Seeder
         $User->save();
 
 
-        //Batch Seeds
-
-        $batch = new Batch();
-        $batch->batchNo = '1';
-        $batch->year = '1';
-        $batch->noOfStudents = '120';
-        $batch->type = 'weekday';
-        $batch->save();
-
-        $batch = new Batch();
-        $batch->batchNo = '2';
-        $batch->year = '1';
-        $batch->noOfStudents = '135';
-        $batch->type = 'weekday';
-        $batch->save();
-
-        $batch = new Batch();
-        $batch->batchNo = '3';
-        $batch->year = '1';
-        $batch->noOfStudents = '90';
-        $batch->type = 'weekend';
-        $batch->save();
-
-        $batch = new Batch();
-        $batch->batchNo = '1';
-        $batch->year = '2';
-        $batch->noOfStudents = '70';
-        $batch->type = 'weekday';
-        $batch->save();
-
-        $batch = new Batch();
-        $batch->batchNo = '2';
-        $batch->year = '2';
-        $batch->noOfStudents = '65';
-        $batch->type = 'weekend';
-        $batch->save();
-
-        $batch = new Batch();
-        $batch->batchNo = '1';
-        $batch->year = '3';
-        $batch->noOfStudents = '20';
-        $batch->type = 'weekday';
-        $batch->save();
-
-        //end of Batch seeds
-
-        //Resource Seeds
-        $Resource= new Resource();
-        $Resource->hallNo = "B501";
-        $Resource->type = "LectureHall";
-        $Resource->capacity = "100";
-        $Resource->save();
-
-        $Resource= new Resource();
-        $Resource->hallNo = "B502";
-        $Resource->type = "LectureHall";
-        $Resource->capacity = "130";
-        $Resource->save();
-
-        $Resource= new Resource();
-        $Resource->hallNo = "B506";
-        $Resource->type = "LectureHall";
-        $Resource->capacity = "70";
-        $Resource->save();
-
-        $Resource= new Resource();
-        $Resource->hallNo = "B403";
-        $Resource->type = "Lab";
-        $Resource->capacity = "46";
-        $Resource->save();
-
-        $Resource= new Resource();
-        $Resource->hallNo = "D201";
-        $Resource->type = "LectureHall";
-        $Resource->capacity = "46";
-        $Resource->save();
-
-        //end of resource seeds
-
-
-        //Subject Seeds
-        $subject = new Subject();
-        $subject->subCode = "SC400";
-        $subject->semester = "1";
-        $subject->subName = "Software Components";
-        $subject->year = "3";
-        $subject->save();
-
-        $subject = new Subject();
-        $subject->subCode = "PDM300";
-        $subject->semester = "1";
-        $subject->subName = "Project Design and Management";
-        $subject->year = "3";
-        $subject->save();
-
-        $subject = new Subject();
-        $subject->subCode = "IT300";
-        $subject->semester = "2";
-        $subject->subName = "Operating Systems";
-        $subject->year = "3";
-        $subject->save();
-
-        $subject = new Subject();
-        $subject->subCode = "IT240";
-        $subject->semester = "1";
-        $subject->subName = "Computer Graphics and Multimedia";
-        $subject->year = "2";
-        $subject->save();
-
-        $subject = new Subject();
-        $subject->subCode = "IT200";
-        $subject->semester = "2";
-        $subject->subName = "Mathematics for Information Technology";
-        $subject->year = "1";
-        $subject->save();
-
-
         // Time Seeds
         
         DB::table('timeFormatTable')->insert([
@@ -237,9 +120,7 @@ class DatabaseSeeder extends Seeder
             'time' => '7.30 - 8.30',
             'time24Format' => '19.30 - 20.30',
         ]);
-
-
-
+        
 
     }
 }
