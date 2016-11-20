@@ -286,13 +286,14 @@ class AdministratorOptionsController extends Controller
             '--compression'      => 'gzip'
         ]);
 
+
         //Specify the file type for Response Facade in Laravel.
         $headers = array(
             'Content-Type: application/gzip',
         );
         //File path for the newly created backup file
-        $file = "/home/forge/default/storage/app/databaseBackup/" . $date . ".sql.gz";
-
+        $file = "/home/forge/universityrssliit.com/storage/app/databaseBackup/" . $date . ".sql.gz";
+	
         return Response::download($file,'databasebackup.sql.gz',$headers);
     }
 
