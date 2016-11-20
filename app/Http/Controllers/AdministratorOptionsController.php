@@ -346,6 +346,7 @@ class AdministratorOptionsController extends Controller
         //remove the redundant backup file
       	unlink(storage_path() . "/app/databaseBackup/upload.sql.gz");
 
+        Session::flash('success','Database restored Successfully!.');
         return back();
     }
 
