@@ -185,12 +185,12 @@
                                             <td class="sorting_1">{{ $acceptedrequest->id }}</td>
                                             <td>{{ $acceptedrequest->batchNo }}</td>
                                             <td>{{ $acceptedrequest->year }}</td>
-                                            <td>{{$request->semester}}</td>
+                                            <td>{{ $acceptedrequest->semester}}</td>
                                             <td>{{ $acceptedrequest->subName }}</td>
-                                            <td>{{$acceptedrequest->requestDate}}</td>
+                                            <td>{{ $acceptedrequest->requestDate}}</td>
                                             <td>{{ $acceptedrequest->timeSlot }}</td>
-                                            <td>{{$acceptedrequest->ResourceType}}</td>
-                                            <td>{{$acceptedrequest->resourceID}}</td>
+                                            <td>{{ $acceptedrequest->ResourceType}}</td>
+                                            <td>{{ $acceptedrequest->resourceID}}</td>
 
                                         </tr>
                                     @endforeach

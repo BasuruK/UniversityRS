@@ -277,7 +277,7 @@ class AdministratorOptionsController extends Controller
      */
     public function createDatabaseBackup()
     {
-        $date           = Carbon::now()->toW3cString();
+        $date = Carbon::now()->toW3cString();
         //Call the artisan command to create the backup
         Artisan::call('db:backup',[
             '--database'         => 'mysql',
