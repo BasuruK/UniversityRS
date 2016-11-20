@@ -19,7 +19,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 style="font-size: 30px;">Requests Management</h3>
+                        <h3 style="font-size: 30px;">Requests <br> Management</h3>
 
                         <p>View Requests</p>
                     </div>
@@ -34,7 +34,7 @@
             <div class="col-md-4">
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3 style="font-size: 30px;">User Management</h3>
+                        <h3 style="font-size: 30px;"> User <br> Management</h3>
 
                         <p>User Registrations</p>
                     </div>
@@ -49,7 +49,7 @@
             <div class="col-md-4">
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3 style="font-size: 30px;">Resource Management</h3>
+                        <h3 style="font-size: 30px;">Resource <br> Management</h3>
 
                         <p>Resource Management</p>
                     </div>

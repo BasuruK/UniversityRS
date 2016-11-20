@@ -78,7 +78,7 @@
             <!-- Semester Request -->
                 <div class="col-md-3">
                     <!-- small box -->
-                    <div class="small-box bg-olive">
+                    <div class="small-box bg-maroon-active">
                         <div class="inner">
                             <h3 style="font-size: 30px;">Semester <br>Requests<sup style="font-size: 20px"></sup></h3>
 
