@@ -1,0 +1,44 @@
+Project BitBucket URL:
+
+https://bitbucket.org/inaros/universityrs
+
+============================================================================================================================================
+1. Instruction on how to checkout the branch.
+============================================================================================================================================
+
+Develeopment Branch is the main branch. Make sure you do not do any modifications without permission as this branch is directly managing
+the application on Laravel Forge.
+
+* Using SourceTree or using terminal enter the following command (Make sure you set the /inaros/universityrs as the project).
+
+-> git fetch && git checkout Development
+
+===========================================================================================================================================
+2. Using in a local branch.
+===========================================================================================================================================
+
+Prerequisites :- Composer , PHP 5.6 or later, mySQL, WAMP( if windows ), LAMP ( if Unix ).
+
+if using in a local environment, the following steps should be followed as non of the laravel core functionalities are downloaded while the
+checkout process,
+	1. cd in to the project folder.
+	2. Create a file with only .env ( do not give a name other than the extention ) then copy the contents from .env_example to the 
+	created file.
+	3. Create a Database with name=universityrs, and no password on port 3306.
+	4. Run the following commands one after the other.
+		
+		-> composer upgrade
+		-> php artisan key:generate
+		-> php artisan migrate:refresh --seed --force
+		-> php artisan queue:listen
+
+	** the last command is only necessary if testing email on administrator options section is needed, the command will run a deamon
+	process handling a queue on Laravel.
+
+	5. open a new terminal and Start the server using the following command,
+
+		-> php artisan serve
+
+	6. Login using username=notify.urscheduler@gmail.com password=123456789
+		
+		
