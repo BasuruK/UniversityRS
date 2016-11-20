@@ -96,11 +96,19 @@ class subjectController extends Controller
             'selectyear' => 'required|numeric'
         );
 
-        $validator = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
+        $validator              = Validator::make(Input::only('subjectCode', 'subjectName', 'selectsemester', 'selectyear'), $rules);
 
-        if (DB::table('subject')->where('subCode', $request['subjectCode'])->orWhere('subName',$request['subjectName'])->where('year',$request['selectyear'])->where('semester',$request['selectsemester'])->first())
+        $checkDuplicated        = DB::table('subject')->where('subName',$request['subjectName'])->where('id','!=',$subject->id)->get();
+        $checkDuplicatedSubId   = DB::table('subject')->where('subCode',$request['subjectCode'])->where('id','!=',$subject->id)->get();
+
+        if($checkDuplicated != null)
         {
-            $request->session()->flash('alert-warning', 'Subject already exists!');
+            $request->session()->flash('alert-danger', 'Subject name has taken by another entry!');
+            return Redirect::back();
+        }
+        if ($checkDuplicatedSubId != null)
+        {
+            $request->session()->flash('alert-danger', 'Subject with the same Subject Code already exists!');
             return Redirect::back();
         }
         else if($validator->fails())
@@ -115,10 +123,10 @@ class subjectController extends Controller
         }
         else
         {
-            $subject->subCode = $request['subjectCode'];
-            $subject->subName = $request['subjectName'];
-            $subject->semester = $request['selectsemester'];
-            $subject->year = $request['selectyear'];
+            $subject->subCode   = $request['subjectCode'];
+            $subject->subName   = $request['subjectName'];
+            $subject->semester  = $request['selectsemester'];
+            $subject->year      = $request['selectyear'];
 
             $subject->save();
 

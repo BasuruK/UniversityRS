@@ -94,7 +94,6 @@ class BatchController extends Controller
         $batch->type            = $request['selectType'];
 
         $batch->save();
-        
         $request->session()->flash('alert-success', 'Batch updated successfully!');
         return Redirect::route('batchShow');
     }
