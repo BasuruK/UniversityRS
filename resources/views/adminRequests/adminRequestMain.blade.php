@@ -27,6 +27,17 @@
                             <div class="col-sm-6"></div>
                         </div>
                         <div class="row">
+
+                            <div class="flash-message">
+                                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                    @if(Session::has('alert-' . $msg))
+
+                                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <!-- end .flash-message -->
+
                             <div class="col-sm-12">
                                 <script>
                                     /**

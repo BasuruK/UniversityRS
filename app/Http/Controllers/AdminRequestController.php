@@ -285,6 +285,8 @@ class AdminRequestController extends Controller
         $admin_request->status='Accepted';
         $admin_request->save();
 
+        $request->session()->flash('alert-success', 'Request Successfully Approved!');
+
         return redirect::route('adminRequestShow');
     }
 
@@ -296,7 +298,7 @@ class AdminRequestController extends Controller
      * such as user email of the user who made the request and then creates the body of the request
      * and send an email to the user's email address
      */
-    public function notify(Admin_Request $admin_request)
+    public function notify(Request $request, Admin_Request $admin_request)
     {
 
         $user = \DB::table('users')
@@ -328,6 +330,8 @@ class AdminRequestController extends Controller
                                Resource: '.$request_hall[0]
                     );
         });
+        
+        $request->session()->flash('alert-success', 'Notification successfully sent!');
 
         return redirect::route('adminRequestShow');
     }
@@ -341,7 +345,7 @@ class AdminRequestController extends Controller
      * and send an email to the user's email address notifying there are no available resources
      * for the time period and day requested.
      */
-    public function notifyNoResources(Admin_Request $admin_request)
+    public function notifyNoResources(Request $request, Admin_Request $admin_request)
     {
 
         /**
@@ -384,6 +388,7 @@ class AdminRequestController extends Controller
                                Has no available resources to be assigned.');
         });
 
+        $request->session()->flash('alert-success', 'Notification successfully sent!');
 
         return redirect::route('adminRequestShow');
     }
