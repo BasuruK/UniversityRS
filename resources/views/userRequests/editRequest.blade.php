@@ -42,7 +42,7 @@
                             $(function() {
                                 $('input[name="selectdateEdit"]').daterangepicker({
                                     singleDatePicker: true,
-                                 //   minDate:new Date(),
+                                    minDate:new Date(),
                                     maxDate:'2016-12-31',
                                     locale: {
                                         format: 'YYYY-MM-DD-ddd'
